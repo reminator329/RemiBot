@@ -3,7 +3,7 @@ plugins {
     id'com.github.johnrengelman.shadow' version '5.2.0'
 }
 
-mainClassName = 'reminator.RemiBot.bot.Bot'
+mainClassName = 'reminator.RemiBot.bot.RemiBot'
 
 version '1.0'
 def jdaVersion = '4.2.0_168'
