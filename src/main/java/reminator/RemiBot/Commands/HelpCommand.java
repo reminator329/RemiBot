@@ -5,6 +5,8 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import reminator.RemiBot.Categories.Categorie;
+import reminator.RemiBot.bot.Controller;
 import reminator.RemiBot.bot.RemiBot;
 
 import java.awt.*;
@@ -12,10 +14,10 @@ import java.util.ArrayList;
 
 public class HelpCommand extends Command {
 
-    private final Commands commands;
+    private final Controller controller;
 
-    public HelpCommand(Commands commands) {
-        this.commands = commands;
+    public HelpCommand(Controller controller) {
+        this.controller = controller;
 
         this.setPrefix(RemiBot.prefix);
         this.setLabel("help");
@@ -26,16 +28,36 @@ public class HelpCommand extends Command {
     public MessageEmbed setHelp() {
         EmbedBuilder builder = new EmbedBuilder();
 
-        final String titre = "Liste des commandes du RémiBot !";
+        final String titre = "Liste des commandes du RémiBot";
         final String imageI = "https://image.flaticon.com/icons/png/512/1301/1301429.png";
 
         builder.setThumbnail(imageI);
         builder.setColor(Color.RED);
         builder.setTitle(titre, "https://www.remontees-mecaniques.net/");
         builder.appendDescription("Utilise `r!help <commande>` pour plus d'informations sur une commande.");
+        return builder.build();
+    }
 
-        builder.addField("Bilal", "Les commandes liées à Bilal.\n`album` `musique`", false);
-        builder.addField("Autres", "Les commandes autres.\n`ping` `elorya`", false);
+    private MessageEmbed help() {
+
+        EmbedBuilder builder = new EmbedBuilder();
+        ArrayList<Categorie> categories = controller.getCategories();
+
+        final String titre = "Liste des commandes du RémiBot";
+        final String imageI = "https://image.flaticon.com/icons/png/512/1301/1301429.png";
+
+        builder.setThumbnail(imageI);
+        builder.setColor(Color.RED);
+        builder.setTitle(titre, "https://www.remontees-mecaniques.net/");
+        builder.appendDescription("Utilise `r!help <commande>` pour plus d'informations sur une commande.");
+        for (Categorie cat : categories) {
+            String titreField = cat.getNom();
+            StringBuilder descriptionField = new StringBuilder(cat.getDescription() + "\n");
+            for (Command c : cat.getCommands()) {
+                descriptionField.append("`").append(c.getLabel()).append("` ");
+            }
+            builder.addField(titreField, descriptionField.toString(), false);
+        }
         return builder.build();
     }
 
@@ -50,15 +72,15 @@ public class HelpCommand extends Command {
         MessageEmbed message = null;
         if (args.length == 1) {
             if (member != null) {
-                EmbedBuilder preMessage = new EmbedBuilder(this.getHelp());
+                EmbedBuilder preMessage = new EmbedBuilder(this.help());
                 preMessage.setFooter(member.getUser().getName(), member.getUser().getAvatarUrl());
                 message = preMessage.build();
             } else {
-                message = this.getHelp();
+                message = this.help();
             }
             channel.sendMessage(message).queue();
         } else {
-            ArrayList<Command> commands = this.commands.getCommands();
+            ArrayList<Command> commands = this.controller.getCommands();
 
             for (Command c : commands) {
                 if (c.getLabel().equalsIgnoreCase(args[1])) {

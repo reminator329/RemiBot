@@ -3,6 +3,7 @@ package reminator.RemiBot.Commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import reminator.RemiBot.Categories.AutresCategorie;
 import reminator.RemiBot.bot.RemiBot;
 
 import java.awt.*;

@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import reminator.RemiBot.Commands.Commands;
 
 public class RemiBot {
 
@@ -15,8 +14,7 @@ public class RemiBot {
     public static void main(String[] arguments) throws Exception {
         token = arguments[0];
         JDA api = new JDABuilder(AccountType.BOT).setToken(token).build();
-        api.addEventListener(new Commands());
+        api.addEventListener(new Controller());
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.listening("r!help"));
     }
-
 }

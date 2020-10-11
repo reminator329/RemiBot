@@ -3,8 +3,9 @@ package reminator.RemiBot.Commands;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import reminator.RemiBot.Categories.Categorie;
 
-public abstract class Command extends ListenerAdapter {
+public abstract class Command {
 
     private String prefix;
     private String label;
