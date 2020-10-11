@@ -8,9 +8,9 @@ import reminator.RemiBot.bot.RemiBot;
 import java.awt.*;
 import java.util.List;
 
-public class Ping extends Command {
+public class PingCommand extends Command {
 
-    public Ping() {
+    public PingCommand() {
         this.setPrefix(RemiBot.prefix);
         this.setLabel("ping");
         this.setHelp(setHelp());

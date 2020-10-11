@@ -12,11 +12,11 @@ public class Commands extends ListenerAdapter {
     private final ArrayList<Command> commands = new ArrayList<>();
 
     public Commands() {
-        commands.add(new Ping());
-        commands.add(new Album());
-        commands.add(new EloryaBilal());
-        commands.add(new Spam());
-        commands.add(new Help(this));
+        commands.add(new PingCommand());
+        commands.add(new AlbumCommand());
+        commands.add(new EcouteBilalCommand());
+        commands.add(new SpamCommand());
+        commands.add(new HelpCommand(this));
     }
 
     @Override

@@ -7,12 +7,12 @@ import reminator.RemiBot.bot.RemiBot;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Spam extends Command {
+public class SpamCommand extends Command {
 
     private static boolean execute = false;
     Timer timer;
 
-    public Spam() {
+    public SpamCommand() {
         this.setPrefix(RemiBot.prefix);
         this.setLabel("spam");
         this.setHelp(setHelp());

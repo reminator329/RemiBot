@@ -10,11 +10,11 @@ import reminator.RemiBot.bot.RemiBot;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Help extends Command {
+public class HelpCommand extends Command {
 
     private final Commands commands;
 
-    public Help(Commands commands) {
+    public HelpCommand(Commands commands) {
         this.commands = commands;
 
         this.setPrefix(RemiBot.prefix);

@@ -10,12 +10,12 @@ import java.awt.*;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Album extends Command {
+public class AlbumCommand extends Command {
 
     // year : année - 1900 ; mouth : Calendar.MOUTH ; date/h/m : date - 1H
     private static final Date prochainAlbum = new Date(2020-1900, Calendar.NOVEMBER, 5, 23, 0);
 
-    public Album() {
+    public AlbumCommand() {
         this.setPrefix(RemiBot.prefix);
         this.setLabel("album");
         this.setHelp(setHelp());
