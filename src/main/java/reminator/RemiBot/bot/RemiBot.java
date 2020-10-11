@@ -10,7 +10,7 @@ import reminator.RemiBot.Commands.Commands;
 public class RemiBot {
 
     public static String prefix = "r!";
-    public static String token = "NzY0MjI3MDE0MjQ0MzAyODc4.X4DL3g.0kYjyw0BfvJ1MgXHvYNLs-8MDBw";
+    public static String token = "${{ secrets.TOKEN }}";
 
     public static void main(String[] arguments) throws Exception {
         JDA api = new JDABuilder(AccountType.BOT).setToken(token).build();
