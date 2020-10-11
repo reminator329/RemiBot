@@ -10,9 +10,10 @@ import reminator.RemiBot.Commands.Commands;
 public class RemiBot {
 
     public static String prefix = "r!";
-    public static String token = "${{ secrets.TOKEN }}";
+    public static String token;
 
     public static void main(String[] arguments) throws Exception {
+        token = arguments[0];
         JDA api = new JDABuilder(AccountType.BOT).setToken(token).build();
         api.addEventListener(new Commands());
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.listening("r!help"));
