@@ -5,6 +5,8 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import reminator.RemiBot.Categories.Categorie;
 
+import java.util.Objects;
+
 public abstract class Command {
 
     private String prefix;
@@ -38,4 +40,19 @@ public abstract class Command {
     public abstract MessageEmbed setHelp();
 
     public abstract void executerCommande(GuildMessageReceivedEvent event);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Command command = (Command) o;
+        return prefix.equals(command.prefix) &&
+                label.equals(command.label) &&
+                Objects.equals(help, command.help);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(prefix, label, help);
+    }
 }
