@@ -30,7 +30,6 @@ public class PingCommand extends Command {
     @Override
     public void executerCommande(GuildMessageReceivedEvent event) {
         MessageChannel channel = event.getChannel();
-        channel.sendTyping().queue();
         Member member = event.getMember();
 
         EmbedBuilder builder = new EmbedBuilder();

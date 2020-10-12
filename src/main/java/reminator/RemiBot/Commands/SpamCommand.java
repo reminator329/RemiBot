@@ -29,7 +29,6 @@ public class SpamCommand extends Command {
         MessageChannel channel = event.getChannel();
 
         if (execute) {
-            channel.sendTyping().queue();
             channel.sendMessage("Arrêt de la commande").queue();
             timer.cancel();
             timer.purge();
@@ -40,7 +39,6 @@ public class SpamCommand extends Command {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    channel.sendTyping().queue();
                     channel.sendMessage("Je spam").queue();
                 }
             }, 0, 2500);

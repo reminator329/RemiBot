@@ -8,13 +8,14 @@ import reminator.RemiBot.Categories.BilalCategorie;
 import reminator.RemiBot.bot.RemiBot;
 
 import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class AlbumCommand extends Command {
 
     // year : année - 1900 ; mouth : Calendar.MOUTH ; date/h/m : date - 1H
-    private static final Date prochainAlbum = new Date(2020-1900, Calendar.NOVEMBER, 5, 23, 0);
+    private static final Date prochainAlbum = new Date(2020, Calendar.NOVEMBER, 6);
 
     public AlbumCommand() {
         this.setPrefix(RemiBot.prefix);
@@ -37,85 +38,10 @@ public class AlbumCommand extends Command {
     @Override
     public void executerCommande(GuildMessageReceivedEvent event) {
         MessageChannel channel = event.getChannel();
-        channel.sendTyping().queue();
 
         Date date = new Date();
-
-        String message;
-        if (date.compareTo(prochainAlbum) < 0) {
-            message = "Prochain album de Bilal dans :\n";
-            boolean flag = false;
-            long diff = prochainAlbum.getTime() - date.getTime();
-
-            float jours = ((float)diff) /(1000*60*60*24);
-            if (jours >= 2) {
-                message += (int)jours + " jours";
-                flag = true;
-            } else if (jours >= 1) {
-                message += (int)jours + " jour";
-                flag = true;
-            }
-            float heures = jours - ((int) jours);
-            heures *= 24;
-            if (heures >= 2) {
-                if (flag) {
-                    message += ", ";
-                }
-                message += (int)heures + " heures";
-                flag = true;
-            } else if (heures >= 1){
-                if (flag) {
-                    message += ", ";
-                }
-                message += (int)heures + " heure";
-                flag = true;
-            }
-            float minutes = heures - ((int) heures);
-            minutes *= 60;
-            if (minutes >= 2) {
-                if (flag) {
-                    message += ", ";
-                }
-                message += (int)minutes + " minutes";
-                flag = true;
-            } else if (minutes >= 1){
-                if (flag) {
-                    message += ", ";
-                }
-                message += (int)minutes + " minute";
-                flag = true;
-            }
-            float secondes = minutes - ((int) minutes);
-            secondes *= 60;
-            if (secondes >= 2) {
-                if (flag) {
-                    message += ", ";
-                }
-                message += (int)secondes + " secondes";
-                flag = true;
-            } else if (secondes >= 1){
-                if (flag) {
-                    message += ", ";
-                }
-                message += (int)secondes + " secondes";
-                flag = true;
-            }
-            float mili = secondes - ((int) secondes);
-            mili *= 1000;
-            if (mili >= 2) {
-                if (flag) {
-                    message += ", ";
-                }
-                message += (int)mili + " milisecondes";
-            } else if (mili >= 1){
-                if (flag) {
-                    message += ", ";
-                }
-                message += (int)mili + " milisecondes";
-            }
-        } else {
-            message = "Pas de date pour le moment :/";
-        }
+        String message = new SimpleDateFormat("d 'jours', h 'heures', m 'minutes', s 'seconds', S 'millisecondes'")
+                .format(new Date(prochainAlbum.getTime()-date.getTime()));
 
         channel.sendMessage(message).queue();
     }

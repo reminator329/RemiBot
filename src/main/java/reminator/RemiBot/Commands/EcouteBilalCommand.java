@@ -38,13 +38,11 @@ public class EcouteBilalCommand extends Command {
         MessageChannel channel = event.getChannel();
 
         if (execute) {
-            channel.sendTyping().queue();
             channel.sendMessage("Arrêt de la commande").queue();
             timer.cancel();
             timer.purge();
             execute = false;
         } else {
-            channel.sendTyping().queue();
             channel.sendMessage("Début de la commande").queue();
             execute = true;
             List<Member> members = event.getGuild().getMembers();
@@ -74,8 +72,7 @@ public class EcouteBilalCommand extends Command {
                                     if (rp.getState() != null) {
                                         if (rp.getState().equalsIgnoreCase("Bilal Hassani")) {
                                             if (!titre[i].equalsIgnoreCase(rp.getDetails())) {
-                                                channel.sendTyping().queue();
-                                                event.getChannel().sendMessage(finalBilal.getAsMention() + " ! " + m.getUser().getAsMention() + " écoute " + rp.getDetails() + " de " + rp.getState()).queue();
+                                                channel.sendMessage(finalBilal.getAsMention() + " ! " + m.getUser().getAsMention() + " écoute " + rp.getDetails() + " de " + rp.getState()).queue();
                                             }
                                         }
                                         titre[i] = rp.getDetails();
