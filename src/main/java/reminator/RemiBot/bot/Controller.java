@@ -20,6 +20,7 @@ public class Controller extends ListenerAdapter {
     private final EcouteBilalCommand ecouteBilalCommand;
     private final SpamCommand spamCommand;
     private final HelpCommand helpCommand;
+    private final BilalCommand bilalCommand;
 
     private final ArrayList<Categorie> categories = new ArrayList<>();
     private final BilalCategorie bilalCategorie = new BilalCategorie();
@@ -34,15 +35,18 @@ public class Controller extends ListenerAdapter {
         ecouteBilalCommand = new EcouteBilalCommand();
         spamCommand = new SpamCommand();
         helpCommand = new HelpCommand(this);
+        bilalCommand = new BilalCommand();
 
         commands.add(pingCommand);
         commands.add(albumCommand);
         commands.add(ecouteBilalCommand);
         commands.add(spamCommand);
         commands.add(helpCommand);
+        commands.add(bilalCommand);
 
         bilalCategorie.addCommand(ecouteBilalCommand);
         bilalCategorie.addCommand(albumCommand);
+        bilalCategorie.addCommand(bilalCommand);
 
         autresCategorie.addCommand(pingCommand);
         autresCategorie.addCommand(spamCommand);
