@@ -20,7 +20,7 @@ import java.util.Base64;
 public class YoutubeurCommand extends Command {
 
     private final static byte[] SALT = {-121, -63, -7, -17, 123, 122, -100, 20, -111, -28, -114, -116, -120, 73, -91, 50};
-    private final static String HASH = "5KBtTJ3UNnQeLJxji6+e3A==";
+    private final static String HASH = "e9bX7ferwaUUug+z6+3BhQ==";
 
     public YoutubeurCommand() {
         this.setPrefix(RemiBot.prefix);
@@ -28,7 +28,7 @@ public class YoutubeurCommand extends Command {
         this.setHelp(setHelp());
     }
 
-    private static String hash(String input) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public static String hash(String input) throws NoSuchAlgorithmException, InvalidKeySpecException {
         KeySpec spec = new PBEKeySpec(input.toCharArray(), SALT, 65536, 128);
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 
@@ -41,7 +41,7 @@ public class YoutubeurCommand extends Command {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Color.RED);
         builder.setTitle("Commande youtubeur");
-        builder.appendDescription("Devine qui est ce youtubeur :face_with_monocle:");
+        builder.appendDescription("Devine qui est le youtubeur :face_with_monocle:");
 
         builder.addField("Signature", "`r!youtubeur`", false);
 
@@ -56,7 +56,7 @@ public class YoutubeurCommand extends Command {
         final long channelId = channel.getIdLong();
 
         EmbedBuilder embed = new EmbedBuilder();
-        embed.setImage("https://cdn.discordapp.com/attachments/763502426300481568/765671422080450580/unknown.png") // we specify this in sendFile as "cat.png"
+        embed.setImage("https://cdn.discordapp.com/attachments/763502426300481568/766243876754948106/unknown.png")
                 .setDescription("Qui est ce youtubeur ? :face_with_monocle:");
         channel.sendMessage(embed.build()).queue();
 
