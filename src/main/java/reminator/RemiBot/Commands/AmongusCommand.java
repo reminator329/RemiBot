@@ -71,7 +71,7 @@ public class AmongusCommand extends Command{
                             String j = a.getName();
                             if (j.equalsIgnoreCase("Among Us")) {
                                 if (!jeu[i].equalsIgnoreCase(j)) {
-                                    channel.sendMessage(finalEveryone.getAsMention() + "\n" + m.getUser().getAsMention() + " joue a Umong Us !!!").queue();
+                                    channel.sendMessage(finalEveryone.getAsMention() + "\n" + m.getUser().getAsMention() + " joue a Among Us !!!").queue();
                                 }
                                 playsAmong = true;
                                 jeu[i] = j;
