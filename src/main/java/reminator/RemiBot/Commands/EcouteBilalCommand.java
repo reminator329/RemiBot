@@ -3,7 +3,6 @@ package reminator.RemiBot.Commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import reminator.RemiBot.Categories.BilalCategorie;
 import reminator.RemiBot.bot.RemiBot;
 
 import java.awt.*;
@@ -29,7 +28,7 @@ public class EcouteBilalCommand extends Command {
         builder.setColor(Color.RED);
         builder.setTitle("Commande ecoute-bilal");
         builder.appendDescription("Permet de notifier les Bilal lorsque quelqu'un écoute une musique de Bilal Hassani.\nQuand la commande est exécuté, elle active ou désactive l'envoi des messages.\nLes messages seront envoyés dans le salon où la commande a été exécutée.");
-        builder.addField("Signature", "`r!elorya`", false);
+        builder.addField("Signature", "`r!ecoute-bilal`", false);
         return builder.build();
     }
 

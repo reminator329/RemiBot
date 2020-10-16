@@ -23,6 +23,7 @@ public class Controller extends ListenerAdapter {
     private final BilalCommand bilalCommand;
     private final YoutubeurCommand youtubeurCommand;
     private final DevinetteCommand devinetteCommand;
+    private final AmongusCommand amongusCommand;
 
     private final ArrayList<Categorie> categories = new ArrayList<>();
     private final BilalCategorie bilalCategorie = new BilalCategorie();
@@ -40,6 +41,7 @@ public class Controller extends ListenerAdapter {
         bilalCommand = new BilalCommand();
         youtubeurCommand = new YoutubeurCommand();
         devinetteCommand = new DevinetteCommand();
+        amongusCommand = new AmongusCommand();
 
         commands.add(pingCommand);
         commands.add(albumCommand);
@@ -49,6 +51,7 @@ public class Controller extends ListenerAdapter {
         commands.add(bilalCommand);
         commands.add(youtubeurCommand);
         commands.add(devinetteCommand);
+        commands.add(amongusCommand);
 
         bilalCategorie.addCommand(ecouteBilalCommand);
         bilalCategorie.addCommand(albumCommand);
@@ -59,6 +62,7 @@ public class Controller extends ListenerAdapter {
         autresCategorie.addCommand(spamCommand);
         autresCategorie.addCommand(helpCommand);
         autresCategorie.addCommand(youtubeurCommand);
+        autresCategorie.addCommand(amongusCommand);
     }
 
     @Override

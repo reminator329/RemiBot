@@ -1,8 +1,6 @@
 package reminator.RemiBot.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
@@ -16,8 +14,9 @@ import javax.annotation.Nonnull;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class DevinetteCommand extends Command {
     private final static Random random = new Random();
@@ -53,8 +52,6 @@ public class DevinetteCommand extends Command {
         MessageChannel channel = event1.getChannel();
 
         final int[] tryAmount = {1};
-
-        Member member = event1.getMember();
         User user = event1.getAuthor();
 
         long channelId = channel.getIdLong();
