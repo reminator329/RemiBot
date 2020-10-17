@@ -7,10 +7,8 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import reminator.RemiBot.bot.RemiBot;
-import reminator.RemiBot.music.Song;
 
 import javax.annotation.Nonnull;
-import javax.swing.*;
 import java.awt.*;
 
 public class PlusMoinsCommand extends Command {
@@ -95,8 +93,7 @@ public class PlusMoinsCommand extends Command {
 
                     tryAmount[0]++;
 
-                } catch (NumberFormatException e){
-                    return;
+                } catch (NumberFormatException ignored){
                 }
             }
         });
