@@ -1,5 +1,6 @@
 package reminator.RemiBot.bot;
 
+import com.sun.org.apache.xpath.internal.operations.Plus;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -7,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Categories.AutresCategorie;
 import reminator.RemiBot.Categories.BilalCategorie;
 import reminator.RemiBot.Categories.Categorie;
+import reminator.RemiBot.Categories.JeuCategorie;
 import reminator.RemiBot.Commands.*;
 
 import java.lang.reflect.Array;
@@ -24,15 +26,20 @@ public class Controller extends ListenerAdapter {
     private final YoutubeurCommand youtubeurCommand;
     private final DevinetteCommand devinetteCommand;
     private final AmongusCommand amongusCommand;
+    private final PlusMoinsCommand plusMoinsCommand;
 
     private final ArrayList<Categorie> categories = new ArrayList<>();
     private final BilalCategorie bilalCategorie = new BilalCategorie();
     private final AutresCategorie autresCategorie = new AutresCategorie();
+    private final JeuCategorie jeuCategorie = new JeuCategorie();
 
     public Controller() {
+        // Catégories
         categories.add(bilalCategorie);
         categories.add(autresCategorie);
+        categories.add(jeuCategorie);
 
+        // Commandes
         pingCommand = new PingCommand();
         albumCommand = new AlbumCommand();
         ecouteBilalCommand = new EcouteBilalCommand();
@@ -42,7 +49,9 @@ public class Controller extends ListenerAdapter {
         youtubeurCommand = new YoutubeurCommand();
         devinetteCommand = new DevinetteCommand();
         amongusCommand = new AmongusCommand();
+        plusMoinsCommand = new PlusMoinsCommand();
 
+        // Ajout de la commande dans la liste
         commands.add(pingCommand);
         commands.add(albumCommand);
         commands.add(ecouteBilalCommand);
@@ -52,7 +61,9 @@ public class Controller extends ListenerAdapter {
         commands.add(youtubeurCommand);
         commands.add(devinetteCommand);
         commands.add(amongusCommand);
+        commands.add(plusMoinsCommand);
 
+        // Ajout de la commande dans la catégorie
         bilalCategorie.addCommand(ecouteBilalCommand);
         bilalCategorie.addCommand(albumCommand);
         bilalCategorie.addCommand(bilalCommand);
@@ -63,6 +74,8 @@ public class Controller extends ListenerAdapter {
         autresCategorie.addCommand(helpCommand);
         autresCategorie.addCommand(youtubeurCommand);
         autresCategorie.addCommand(amongusCommand);
+
+        jeuCategorie.addCommand(plusMoinsCommand);
     }
 
     @Override

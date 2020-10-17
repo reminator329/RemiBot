@@ -27,7 +27,7 @@ public class EcouteBilalCommand extends Command {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Color.RED);
         builder.setTitle("Commande ecoute-bilal");
-        builder.appendDescription("Permet de notifier les Bilal lorsque quelqu'un écoute une musique de Bilal Hassani.\nQuand la commande est exécuté, elle active ou désactive l'envoi des messages.\nLes messages seront envoyés dans le salon où la commande a été exécutée.");
+        builder.appendDescription("Permet de notifier les Bilal lorsque quelqu'un écoute une musique de Bilal Hassani.\n\nQuand la commande est exécuté, elle active ou désactive l'envoi des messages.\nLes messages seront envoyés dans le salon où la commande a été exécutée.");
         builder.addField("Signature", "`r!ecoute-bilal`", false);
         return builder.build();
     }

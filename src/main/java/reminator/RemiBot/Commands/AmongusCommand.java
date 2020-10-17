@@ -27,7 +27,7 @@ public class AmongusCommand extends Command{
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Color.RED);
         builder.setTitle("Commande ecoute-among-us");
-        builder.appendDescription("Permet de notifier tout le monde lorsque quelqu'un joue à Among Us.\nQuand la commande est exécuté, elle active ou désactive l'envoi des messages.\nLes messages seront envoyés dans le salon où la commande a été exécutée.");
+        builder.appendDescription("Permet de notifier tout le monde lorsque quelqu'un joue à Among Us.\n\nQuand la commande est exécuté, elle active ou désactive l'envoi des messages.\nLes messages seront envoyés dans le salon où la commande a été exécutée.");
         builder.addField("Signature", "`r!ecoute-among-us`", false);
         return builder.build();
     }

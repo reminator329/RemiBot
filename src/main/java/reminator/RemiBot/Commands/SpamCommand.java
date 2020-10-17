@@ -1,10 +1,12 @@
 package reminator.RemiBot.Commands;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import reminator.RemiBot.Categories.AutresCategorie;
 import reminator.RemiBot.bot.RemiBot;
 
+import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,7 +23,12 @@ public class SpamCommand extends Command {
 
     @Override
     public MessageEmbed setHelp() {
-        return null;
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setColor(Color.RED);
+        builder.setTitle("Commande spam");
+        builder.appendDescription("Permet d'envoyer un message toutes les 2 secondes.\n\nQuand la commande est exécuté, elle active ou désactive l'envoi des messages.\nLes messages seront envoyés dans le salon où la commande a été exécutée.");
+        builder.addField("Signature", "`r!spam`", false);
+        return builder.build();
     }
 
     @Override
