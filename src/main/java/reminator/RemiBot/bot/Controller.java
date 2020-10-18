@@ -7,6 +7,7 @@ import reminator.RemiBot.Categories.*;
 import reminator.RemiBot.Commands.*;
 
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 public class Controller extends ListenerAdapter {
 
@@ -30,6 +31,8 @@ public class Controller extends ListenerAdapter {
     private final EdtCategorie edtCategorie = new EdtCategorie();
 
     public Controller() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
+
         // Catégories
         categories.add(bilalCategorie);
         categories.add(edtCategorie);
