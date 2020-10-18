@@ -45,7 +45,7 @@ public class AlbumCommand extends Command {
             message = new SimpleDateFormat("d 'jours', h 'heures', m 'minutes', s 'seconds', S 'millisecondes'")
                     .format(new Date(prochainAlbum.getTime()-date.getTime() - 2000*3600));
 
-            } else {
+        } else {
             message = "Pas de date pour le moment :/";
         }
         channel.sendMessage(message).queue();

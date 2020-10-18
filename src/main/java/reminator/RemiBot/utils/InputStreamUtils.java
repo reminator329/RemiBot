@@ -14,7 +14,7 @@ public class InputStreamUtils {
             while ((line = reader.readLine()) != null) {
                 strBuilder.append(line.trim()).append("\n");
             }
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         inputStream.close();
         return strBuilder.toString();
