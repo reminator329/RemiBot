@@ -1,12 +1,10 @@
 package reminator.RemiBot.edt;
 
-import com.sun.org.apache.xerces.internal.xs.LSInputList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import reminator.RemiBot.music.HTTPRequest;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,6 +44,42 @@ public class Edt {
             }
         }
         return prochainCours;
+    }
+
+    public String getTypeCours(JSONObject cours) {
+        String type = null;
+        try {
+            String csv = new HTTPRequest("https://docs.google.com/spreadsheets/u/1/d/13SY9w4EKKCH4v5Sbi6z0qF3-hpl9XE5_cv3xC4tn67M/export?format=csv&id=13SY9w4EKKCH4v5Sbi6z0qF3-hpl9XE5_cv3xC4tn67M&gid=0").GET();
+
+            SimpleDateFormat formatJour = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatHeure = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat formatCours = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+
+            Date date = formatCours.parse(cours.getJSONObject("start").getString("dateTime"));
+
+            String[] joursListe = csv.split("\n");
+            String jour = null;
+            for (String s : joursListe) {
+                String[] jourList = s.split(",");
+                if(formatJour.format(date).equals(jourList[0])) {
+                    jour = s;
+                }
+            }
+
+            if (jour != null) {
+                String[] jourList = jour.split(",");
+                for (int i=2; i<9; i+=2) {
+                    String heure = jourList[i];
+                    if (heure.equals(formatHeure.format(date))) {
+                        type = jourList[i+1];
+                    }
+                }
+            }
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return type;
     }
 
     private void updateEdt() {

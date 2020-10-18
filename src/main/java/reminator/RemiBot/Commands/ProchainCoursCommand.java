@@ -34,16 +34,22 @@ public class ProchainCoursCommand extends Command {
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("'Le 'dd/MM' à 'HH:mm");
 
         Edt edt = new Edt();
-        JSONObject o = edt.getNextCourse();
+        JSONObject cours = edt.getNextCourse();
+        String typeCours = edt.getTypeCours(cours);
+
+
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Color.RED);
         builder.setTitle("Prochain cours");
-        builder.appendDescription(o.getString("summary"));
+        builder.appendDescription(cours.getString("summary"));
+
+
         try {
-            builder.addField("Date", dateFormat2.format(new Date(dateFormat1.parse(o.getJSONObject("start").getString("dateTime")).getTime())), false);
+            builder.addField("Date", dateFormat2.format(new Date(dateFormat1.parse(cours.getJSONObject("start").getString("dateTime")).getTime())), false);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        builder.addField("Type", typeCours, false);
         channel.sendMessage(builder.build()).queue();
     }
 }
