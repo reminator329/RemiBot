@@ -12,6 +12,7 @@ import sun.java2d.pipe.SpanShapeRenderer;
 import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ProchainCoursCommand extends Command {
 
@@ -39,7 +40,7 @@ public class ProchainCoursCommand extends Command {
         builder.setTitle("Prochain cours");
         builder.appendDescription(o.getString("summary"));
         try {
-            builder.addField("Date", dateFormat2.format(dateFormat1.parse(o.getJSONObject("start").getString("dateTime"))), false);
+            builder.addField("Date", dateFormat2.format(new Date(dateFormat1.parse(o.getJSONObject("start").getString("dateTime")).getTime())), false);
         } catch (ParseException e) {
             e.printStackTrace();
         }
