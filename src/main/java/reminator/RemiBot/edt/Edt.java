@@ -20,6 +20,7 @@ public class Edt {
     private String edt1;
     private String edt2;
 
+    ArrayList<Cours> prochainCours = new ArrayList<>();
     ArrayList<Cours> courses;
     String csv;
 
@@ -32,7 +33,7 @@ public class Edt {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
         Date date = new Date();
 
-        ArrayList<Cours> prochainCours = new ArrayList<>();
+        prochainCours.clear();
         for (Cours c : courses) {
             String summary = c.getSummary();
             if (summary.contains("ELU")) {
@@ -93,6 +94,7 @@ public class Edt {
     }
 
     private void updateEdt() {
+        courses.clear();
         updateCsv();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
         Date date = new Date();
