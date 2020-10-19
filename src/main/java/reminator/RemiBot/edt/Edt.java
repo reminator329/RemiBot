@@ -18,6 +18,7 @@ public class Edt {
     }
 
     public JSONObject getNextCourse() {
+        updateEdt();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
         Date date = new Date();
 
