@@ -35,7 +35,7 @@ public class Edt {
                     try {
                         Date nouveauPCours = dateFormat.parse(cours.getJSONObject("start").getString("dateTime"));
                         Date pCours = dateFormat.parse(prochainCours.getJSONObject("start").getString("dateTime"));
-                        if (nouveauPCours.compareTo(pCours) < 0) {
+                        if (date.compareTo(nouveauPCours) < 0 && nouveauPCours.compareTo(pCours) < 0) {
                             prochainCours = cours;
                         }
                     } catch (ParseException e) {
