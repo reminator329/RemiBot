@@ -6,11 +6,13 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.json.JSONObject;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.edt.Cours;
 import reminator.RemiBot.edt.Edt;
 
 import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ProchainCoursCommand extends Command {
@@ -40,7 +42,9 @@ public class ProchainCoursCommand extends Command {
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("'Le 'dd/MM' à 'HH:mm");
 
         Edt edt = new Edt();
-        JSONObject cours = edt.getNextCourse();
-        edt.printCourse(cours, channel);
+        ArrayList<Cours> courss = edt.getNextCourse();
+        for (Cours cours : courss) {
+            edt.printCourse(cours, channel);
+        }
     }
 }

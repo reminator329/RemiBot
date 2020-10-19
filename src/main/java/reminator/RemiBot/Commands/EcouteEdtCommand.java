@@ -5,13 +5,12 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.json.JSONObject;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.edt.Cours;
 import reminator.RemiBot.edt.Edt;
 
 import java.awt.*;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class EcouteEdtCommand extends Command {
 
@@ -49,16 +48,20 @@ public class EcouteEdtCommand extends Command {
             java.util.List<Member> members = event.getGuild().getMembers();
 
             timer = new Timer();
-            final JSONObject[] cours = {null};
-            final JSONObject[] pCours = {null};
+            final ArrayList<Cours>[] cours = new ArrayList[]{new ArrayList<>()};
+            final ArrayList<Cours>[] pCours = new ArrayList[]{new ArrayList<>()};
             Edt edt = new Edt();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    pCours[0] = edt.getNextCourse();
-                    if (cours[0] == null || !pCours[0].toString().equals(cours[0].toString())) {
-                        cours[0] = pCours[0];
-                        edt.printCourse(cours[0], channel);
+                    pCours[0].clear();
+                    pCours[0].addAll(edt.getNextCourse());
+                    if (cours[0].size() == 0 || !cours[0].containsAll(pCours[0])) {
+                        cours[0].clear();
+                        cours[0].addAll(pCours[0]);
+                        for (Cours c : cours[0]) {
+                            edt.printCourse(c, channel);
+                        }
                     }
                 }
             }, 0, 1000 * 60/*500 * 3600*/);

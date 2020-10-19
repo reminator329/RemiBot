@@ -10,36 +10,43 @@ import java.awt.*;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Edt {
 
-    private String edt;
+    private String edt01;
+    private String edt02;
+    private String edt1;
+    private String edt2;
+
+    ArrayList<Cours> courses;
+    String csv;
 
     public Edt() {
-        updateEdt();
+        courses = new ArrayList<>();
     }
 
-    public JSONObject getNextCourse() {
+    public ArrayList<Cours> getNextCourse() {
         updateEdt();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
         Date date = new Date();
 
-        JSONArray courss = new JSONObject(edt).getJSONArray("items");
-        JSONObject prochainCours = null;
-        for (int i=0; i<courss.length(); i++) {
-            JSONObject cours = courss.getJSONObject(i);
-
-            String summary = cours.getString("summary");
+        ArrayList<Cours> prochainCours = new ArrayList<>();
+        for (Cours c : courses) {
+            String summary = c.getSummary();
             if (summary.contains("ELU")) {
-                if (prochainCours == null) {
-                    prochainCours = cours;
+                if (prochainCours.size() == 0) {
+                    prochainCours.add(c);
                 } else {
                     try {
-                        Date nouveauPCours = dateFormat.parse(cours.getJSONObject("start").getString("dateTime"));
-                        Date pCours = dateFormat.parse(prochainCours.getJSONObject("start").getString("dateTime"));
-                        if ((new Date (date.getTime() - 500 * 3600)).compareTo(nouveauPCours) < 0 && nouveauPCours.compareTo(pCours) < 0) {
-                            prochainCours = cours;
+                        Date nouveauPCours = dateFormat.parse(c.getStart());
+                        Date pCours = dateFormat.parse(prochainCours.get(0).getStart());
+                        if (nouveauPCours.compareTo(pCours) == 0) {
+                            prochainCours.add(c);
+                        } else if ((new Date (date.getTime() - 500 * 3600)).compareTo(nouveauPCours) < 0 && nouveauPCours.compareTo(pCours) < 0) {
+                            prochainCours.clear();
+                            prochainCours.add(c);
                         }
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -50,16 +57,15 @@ public class Edt {
         return prochainCours;
     }
 
-    public String[] getTypeCours(JSONObject cours) {
+    public String[] getTypeCours(Cours cours) {
         String[] type = new String[2];
         try {
-            String csv = new HTTPRequest("https://docs.google.com/spreadsheets/u/1/d/13SY9w4EKKCH4v5Sbi6z0qF3-hpl9XE5_cv3xC4tn67M/export?format=csv&id=13SY9w4EKKCH4v5Sbi6z0qF3-hpl9XE5_cv3xC4tn67M&gid=0").GET();
 
             SimpleDateFormat formatJour = new SimpleDateFormat("dd/MM/yyyy");
             SimpleDateFormat formatHeure = new SimpleDateFormat("HH:mm:ss");
             SimpleDateFormat formatCours = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
 
-            Date date = formatCours.parse(cours.getJSONObject("start").getString("dateTime"));
+            Date date = formatCours.parse(cours.getStart());
 
             String[] joursListe = csv.split("\n");
             String jour = null;
@@ -72,58 +78,114 @@ public class Edt {
 
             if (jour != null) {
                 String[] jourList = jour.split(",");
-                for (int i=2; i<12; i+=3) {
+                for (int i=2; i<jourList.length - 2; i+=3) {
                     String heure = jourList[i];
                     if (heure.equals(formatHeure.format(date))) {
                         type[0] = jourList[i+1];
-                        if (jourList.length > i+2) {
-                            type[1] = jourList[i + 2];
-                        }
+                        type[1] = jourList[i + 2];
                     }
                 }
             }
 
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
+        } catch (ParseException | NullPointerException ignored) {
         }
         return type;
     }
 
     private void updateEdt() {
+        updateCsv();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
         Date date = new Date();
 
         try {
-            this.edt = new HTTPRequest("https://clients6.google.com/calendar/v3/calendars/jjr0au21evqc6guauvan3034ug@group.calendar.google.com/events?calendarId=jjr0au21evqc6guauvan3034ug%40group.calendar.google.com&singleEvents=true&timeZone=Europe%2FParis&maxAttendees=1&maxResults=250&sanitizeHtml=true&" +
+            this.edt01 = new HTTPRequest("https://clients6.google.com/calendar/v3/calendars/jjr0au21evqc6guauvan3034ug@group.calendar.google.com/events?calendarId=jjr0au21evqc6guauvan3034ug%40group.calendar.google.com&singleEvents=true&timeZone=Europe%2FParis&maxAttendees=1&maxResults=250&sanitizeHtml=true&" +
                     "timeMin=" + dateFormat.format(date).replace(":", "%3A").replace("+", "%2B") + "&" +
                     "timeMax=" + dateFormat.format(new Date(date.getTime() + 1000 * 3600 * 24 * 7)).replace(":", "%3A").replace("+", "%2B") + "&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs").GET();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        try {
+            this.edt02 = new HTTPRequest("https://clients6.google.com/calendar/v3/calendars/8nam511995lbsisujjcq80h964@group.calendar.google.com/events?calendarId=8nam511995lbsisujjcq80h964@group.calendar.google.com&singleEvents=true&timeZone=Europe/Paris&maxAttendees=1&maxResults=250&sanitizeHtml=true&" +
+                    "timeMin=" + dateFormat.format(date).replace(":", "%3A").replace("+", "%2B") + "&" +
+                    "timeMax=" + dateFormat.format(new Date(date.getTime() + 1000 * 3600 * 24 * 7)).replace(":", "%3A").replace("+", "%2B") + "&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs").GET();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            this.edt1 = new HTTPRequest("https://clients6.google.com/calendar/v3/calendars/4jpbp5hcdimlmov6kscioe4am8@group.calendar.google.com/events?calendarId=4jpbp5hcdimlmov6kscioe4am8@group.calendar.google.com&singleEvents=true&timeZone=Europe/Paris&maxAttendees=1&maxResults=250&sanitizeHtml=true&" +
+                    "timeMin=" + dateFormat.format(date).replace(":", "%3A").replace("+", "%2B") + "&" +
+                    "timeMax=" + dateFormat.format(new Date(date.getTime() + 1000 * 3600 * 24 * 7)).replace(":", "%3A").replace("+", "%2B") + "&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs").GET();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            this.edt2 = new HTTPRequest("https://clients6.google.com/calendar/v3/calendars/e44ep4hdrj5b2defqf9mmcpd2k@group.calendar.google.com/events?calendarId=e44ep4hdrj5b2defqf9mmcpd2k@group.calendar.google.com&singleEvents=true&timeZone=Europe/Paris&maxAttendees=1&maxResults=250&sanitizeHtml=true&" +
+                    "timeMin=" + dateFormat.format(date).replace(":", "%3A").replace("+", "%2B") + "&" +
+                    "timeMax=" + dateFormat.format(new Date(date.getTime() + 1000 * 3600 * 24 * 7)).replace(":", "%3A").replace("+", "%2B") + "&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs").GET();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject jEdt01 = new JSONObject(edt01);
+        JSONObject jEdt02 = new JSONObject(edt02);
+        JSONObject jEdt1 = new JSONObject(edt1);
+        JSONObject jEdt2 = new JSONObject(edt2);
+
+        JSONArray jCourss01 = jEdt01.getJSONArray("items");
+        JSONArray jCourss02 = jEdt02.getJSONArray("items");
+        JSONArray jCourss1 = jEdt1.getJSONArray("items");
+        JSONArray jCourss2 = jEdt2.getJSONArray("items");
+
+        ajoutCourss(jCourss01);
+        ajoutCourss(jCourss02);
+        ajoutCourss(jCourss1);
+        ajoutCourss(jCourss2);
     }
 
-    public void printCourse(JSONObject cours, MessageChannel channel) {
+    private void updateCsv() {
+        try {
+            csv = new HTTPRequest("https://docs.google.com/spreadsheets/u/1/d/13SY9w4EKKCH4v5Sbi6z0qF3-hpl9XE5_cv3xC4tn67M/export?format=csv&id=13SY9w4EKKCH4v5Sbi6z0qF3-hpl9XE5_cv3xC4tn67M&gid=0").GET();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void ajoutCourss(JSONArray courss) {
+
+        for (int i=0; i<courss.length(); i++) {
+            Cours c = new Cours(courss.getJSONObject(i));
+            String[] type = getTypeCours(c);
+            c.setType(type[0]);
+            c.setLien(type[1]);
+            courses.add(c);
+        }
+    }
+
+    public void printCourse(Cours cours, MessageChannel channel) {
         EmbedBuilder builder = new EmbedBuilder();
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("'Le 'dd/MM' à 'HH:mm");
-        String[] typeCours = getTypeCours(cours);
 
         builder.setColor(Color.RED);
         builder.setTitle("Prochain cours");
-        builder.appendDescription(cours.getString("summary"));
+        builder.appendDescription(cours.getSummary());
         try {
-            builder.addField("Date", dateFormat2.format(new Date(dateFormat1.parse(cours.getJSONObject("start").getString("dateTime")).getTime())), false);
+            builder.addField("Date", dateFormat2.format(new Date(dateFormat1.parse(cours.getStart()).getTime())), false);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        builder.addField("Type", typeCours[0], false);
-        if (typeCours[1] != null && typeCours[1] != "") {
-            if (typeCours[1].contains("discord")) {
-                builder.addField("Discord", typeCours[1], false);
-            } else if ( typeCours[1].contains("zoom")) {
-                builder.addField("Zoom", typeCours[1], false);
+        builder.addField("Type", cours.getType(), false);
+        String lien = cours.getLien();
+        if (lien != null && !lien.equals("")) {
+            if (lien.contains("discord")) {
+                builder.addField("Discord", lien, false);
+            } else if (lien.contains("zoom")) {
+                builder.addField("Zoom", lien, false);
             } else {
-                builder.addField("Lien", typeCours[1], false);
+                builder.addField("Lien", lien, false);
             }
         }
         channel.sendMessage(builder.build()).queue();
