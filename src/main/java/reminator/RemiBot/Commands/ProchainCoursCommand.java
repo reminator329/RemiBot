@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.json.JSONObject;
 import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.edt.Edt;
-import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.awt.*;
 import java.text.ParseException;
@@ -24,7 +23,14 @@ public class ProchainCoursCommand extends Command {
 
     @Override
     public MessageEmbed setHelp() {
-        return null;
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setColor(Color.RED);
+        builder.setTitle("Commande prochain-cours");
+        builder.appendDescription("Donne les détail du prochain cours.");
+
+        builder.addField("Signature", "`r!prochain-cours`", false);
+
+        return builder.build();
     }
 
     @Override
@@ -35,28 +41,6 @@ public class ProchainCoursCommand extends Command {
 
         Edt edt = new Edt();
         JSONObject cours = edt.getNextCourse();
-        String[] typeCours = edt.getTypeCours(cours);
-
-
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Prochain cours");
-        builder.appendDescription(cours.getString("summary"));
-
-
-        try {
-            builder.addField("Date", dateFormat2.format(new Date(dateFormat1.parse(cours.getJSONObject("start").getString("dateTime")).getTime())), false);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        builder.addField("Type", typeCours[0], false);
-        if (typeCours[1] != null && typeCours[1] != "") {
-            if (typeCours[1].contains("discord")) {
-                builder.addField("Discord", typeCours[1], false);
-            } else {
-                builder.addField("Zoom", typeCours[1], false);
-            }
-        }
-        channel.sendMessage(builder.build()).queue();
+        edt.printCourse(cours, channel);
     }
 }

@@ -1,9 +1,12 @@
 package reminator.RemiBot.edt;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import reminator.RemiBot.music.HTTPRequest;
 
+import java.awt.*;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,7 +38,7 @@ public class Edt {
                     try {
                         Date nouveauPCours = dateFormat.parse(cours.getJSONObject("start").getString("dateTime"));
                         Date pCours = dateFormat.parse(prochainCours.getJSONObject("start").getString("dateTime"));
-                        if (date.compareTo(nouveauPCours) < 0 && nouveauPCours.compareTo(pCours) < 0) {
+                        if ((new Date (date.getTime() - 500 * 3600)).compareTo(nouveauPCours) < 0 && nouveauPCours.compareTo(pCours) < 0) {
                             prochainCours = cours;
                         }
                     } catch (ParseException e) {
@@ -97,5 +100,32 @@ public class Edt {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void printCourse(JSONObject cours, MessageChannel channel) {
+        EmbedBuilder builder = new EmbedBuilder();
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("'Le 'dd/MM' à 'HH:mm");
+        String[] typeCours = getTypeCours(cours);
+
+        builder.setColor(Color.RED);
+        builder.setTitle("Prochain cours");
+        builder.appendDescription(cours.getString("summary"));
+        try {
+            builder.addField("Date", dateFormat2.format(new Date(dateFormat1.parse(cours.getJSONObject("start").getString("dateTime")).getTime())), false);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        builder.addField("Type", typeCours[0], false);
+        if (typeCours[1] != null && typeCours[1] != "") {
+            if (typeCours[1].contains("discord")) {
+                builder.addField("Discord", typeCours[1], false);
+            } else if ( typeCours[1].contains("zoom")) {
+                builder.addField("Zoom", typeCours[1], false);
+            } else {
+                builder.addField("Lien", typeCours[1], false);
+            }
+        }
+        channel.sendMessage(builder.build()).queue();
     }
 }
