@@ -12,7 +12,7 @@ public class RemiBot {
     public static String token;
 
     public static void main(String[] arguments) throws Exception {
-        token = arguments[0];
+        token = "NzY0OTM3NTQ1NzE1OTQxNDA2.X4Nhmg.KbtSgevDh8KfxuerhvRL-ZCz3YI";
         JDA api = new JDABuilder(AccountType.BOT).setToken(token).build();
         api.addEventListener(new Controller());
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.listening("r!help"));
