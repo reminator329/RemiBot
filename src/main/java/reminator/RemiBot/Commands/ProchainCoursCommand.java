@@ -35,7 +35,7 @@ public class ProchainCoursCommand extends Command {
 
         Edt edt = new Edt();
         JSONObject cours = edt.getNextCourse();
-        String typeCours = edt.getTypeCours(cours);
+        String[] typeCours = edt.getTypeCours(cours);
 
 
         EmbedBuilder builder = new EmbedBuilder();
@@ -49,7 +49,14 @@ public class ProchainCoursCommand extends Command {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        builder.addField("Type", typeCours, false);
+        builder.addField("Type", typeCours[0], false);
+        if (typeCours[1] != null && typeCours[1] != "") {
+            if (typeCours[1].contains("discord")) {
+                builder.addField("Discord", typeCours[1], false);
+            } else {
+                builder.addField("Zoom", typeCours[1], false);
+            }
+        }
         channel.sendMessage(builder.build()).queue();
     }
 }

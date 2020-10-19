@@ -46,8 +46,8 @@ public class Edt {
         return prochainCours;
     }
 
-    public String getTypeCours(JSONObject cours) {
-        String type = null;
+    public String[] getTypeCours(JSONObject cours) {
+        String[] type = new String[2];
         try {
             String csv = new HTTPRequest("https://docs.google.com/spreadsheets/u/1/d/13SY9w4EKKCH4v5Sbi6z0qF3-hpl9XE5_cv3xC4tn67M/export?format=csv&id=13SY9w4EKKCH4v5Sbi6z0qF3-hpl9XE5_cv3xC4tn67M&gid=0").GET();
 
@@ -68,10 +68,13 @@ public class Edt {
 
             if (jour != null) {
                 String[] jourList = jour.split(",");
-                for (int i=2; i<9; i+=2) {
+                for (int i=2; i<12; i+=3) {
                     String heure = jourList[i];
                     if (heure.equals(formatHeure.format(date))) {
-                        type = jourList[i+1];
+                        type[0] = jourList[i+1];
+                        if (jourList.length > i+2) {
+                            type[1] = jourList[i + 2];
+                        }
                     }
                 }
             }
