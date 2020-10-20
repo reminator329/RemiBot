@@ -72,6 +72,7 @@ public class Edt {
             String jour = null;
             for (String s : joursListe) {
                 String[] jourList = s.split(",");
+                if (jourList.length == 0) continue;
                 if(formatJour.format(date).equals(jourList[0])) {
                     jour = s;
                 }
@@ -107,7 +108,7 @@ public class Edt {
         try {
             this.edt01 = new HTTPRequest("https://clients6.google.com/calendar/v3/calendars/jjr0au21evqc6guauvan3034ug@group.calendar.google.com/events?calendarId=jjr0au21evqc6guauvan3034ug%40group.calendar.google.com&singleEvents=true&timeZone=Europe%2FParis&maxAttendees=1&maxResults=250&sanitizeHtml=true&" +
                     "timeMin=" + dateFormat.format(date).replace(":", "%3A").replace("+", "%2B") + "&" +
-                    "timeMax=" + dateFormat.format(new Date(date.getTime() + 1000 * 3600 * 24 * 7)).replace(":", "%3A").replace("+", "%2B") + "&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs").GET();
+                    "timeMax=" + dateFormat.format(new Date(date.getTime() + 1000 * 3600 * 24 * 14)).replace(":", "%3A").replace("+", "%2B") + "&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs").GET();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -115,7 +116,7 @@ public class Edt {
         try {
             this.edt02 = new HTTPRequest("https://clients6.google.com/calendar/v3/calendars/8nam511995lbsisujjcq80h964@group.calendar.google.com/events?calendarId=8nam511995lbsisujjcq80h964@group.calendar.google.com&singleEvents=true&timeZone=Europe/Paris&maxAttendees=1&maxResults=250&sanitizeHtml=true&" +
                     "timeMin=" + dateFormat.format(date).replace(":", "%3A").replace("+", "%2B") + "&" +
-                    "timeMax=" + dateFormat.format(new Date(date.getTime() + 1000 * 3600 * 24 * 7)).replace(":", "%3A").replace("+", "%2B") + "&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs").GET();
+                    "timeMax=" + dateFormat.format(new Date(date.getTime() + 1000 * 3600 * 24 * 14)).replace(":", "%3A").replace("+", "%2B") + "&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs").GET();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -123,7 +124,7 @@ public class Edt {
         try {
             this.edt1 = new HTTPRequest("https://clients6.google.com/calendar/v3/calendars/4jpbp5hcdimlmov6kscioe4am8@group.calendar.google.com/events?calendarId=4jpbp5hcdimlmov6kscioe4am8@group.calendar.google.com&singleEvents=true&timeZone=Europe/Paris&maxAttendees=1&maxResults=250&sanitizeHtml=true&" +
                     "timeMin=" + dateFormat.format(date).replace(":", "%3A").replace("+", "%2B") + "&" +
-                    "timeMax=" + dateFormat.format(new Date(date.getTime() + 1000 * 3600 * 24 * 7)).replace(":", "%3A").replace("+", "%2B") + "&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs").GET();
+                    "timeMax=" + dateFormat.format(new Date(date.getTime() + 1000 * 3600 * 24 * 14)).replace(":", "%3A").replace("+", "%2B") + "&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs").GET();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -131,7 +132,7 @@ public class Edt {
         try {
             this.edt2 = new HTTPRequest("https://clients6.google.com/calendar/v3/calendars/e44ep4hdrj5b2defqf9mmcpd2k@group.calendar.google.com/events?calendarId=e44ep4hdrj5b2defqf9mmcpd2k@group.calendar.google.com&singleEvents=true&timeZone=Europe/Paris&maxAttendees=1&maxResults=250&sanitizeHtml=true&" +
                     "timeMin=" + dateFormat.format(date).replace(":", "%3A").replace("+", "%2B") + "&" +
-                    "timeMax=" + dateFormat.format(new Date(date.getTime() + 1000 * 3600 * 24 * 7)).replace(":", "%3A").replace("+", "%2B") + "&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs").GET();
+                    "timeMax=" + dateFormat.format(new Date(date.getTime() + 1000 * 3600 * 24 * 14)).replace(":", "%3A").replace("+", "%2B") + "&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs").GET();
         } catch (IOException e) {
             e.printStackTrace();
         }
