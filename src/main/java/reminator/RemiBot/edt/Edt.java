@@ -79,11 +79,15 @@ public class Edt {
 
             if (jour != null) {
                 String[] jourList = jour.split(",");
-                for (int i=2; i<jourList.length - 2; i+=3) {
+                for (int i=2; i<jourList.length; i+=3) {
                     String heure = jourList[i];
                     if (heure.equals(formatHeure.format(date))) {
                         type[0] = jourList[i+1];
-                        type[1] = jourList[i + 2];
+                        if (jourList.length < i+2) {
+                            type[1] = jourList[i + 2];
+                        } else {
+                            type[1] = null;
+                        }
                     }
                 }
             }
