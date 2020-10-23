@@ -19,6 +19,7 @@ public class Edt {
     private String edt02;
     private String edt1;
     private String edt2;
+    private String groupe;
 
     ArrayList<Cours> prochainCours = new ArrayList<>();
     ArrayList<Cours> courses;
@@ -26,6 +27,7 @@ public class Edt {
 
     public Edt() {
         courses = new ArrayList<>();
+        groupe = "1";
     }
 
     public ArrayList<Cours> getNextCourse() {
@@ -74,7 +76,23 @@ public class Edt {
                 String[] jourList = s.split(",");
                 if (jourList.length == 0) continue;
                 if(formatJour.format(date).equals(jourList[0])) {
-                    jour = s;
+                    if (!"0".equals(jourList[1])) {
+                        if ("1".equals(groupe)) {
+                            if ("1".equals(jourList[1])) {
+                                groupe = "2";
+                                jour = s;
+                            } else {
+                                continue;
+                            }
+                        } else if ("2".equals(jourList[2])) {
+                            groupe = "1";
+                            jour = s;
+                        } else {
+                            continue;
+                        }
+                    } else {
+                        jour = s;
+                    }
                 }
             }
 
@@ -178,6 +196,9 @@ public class Edt {
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("'Le 'dd/MM' à 'HH:mm");
 
         builder.setColor(Color.RED);
+
+
+
         builder.setTitle("Prochain cours");
         builder.appendDescription(cours.getSummary());
         try {

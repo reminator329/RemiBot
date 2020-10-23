@@ -10,6 +10,7 @@ public class Cours {
     private String end;
     private String type;
     private String lien;
+    private int groupe;
 
     public Cours(JSONObject jCours) {
         this.summary = jCours.getString("summary");
@@ -48,5 +49,9 @@ public class Cours {
 
     public String getLien() {
         return lien;
+    }
+
+    public int getGroupe() {
+        return groupe;
     }
 }
