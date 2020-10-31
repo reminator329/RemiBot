@@ -75,7 +75,8 @@ public class Edt {
             for (String s : joursListe) {
                 String[] jourList = s.split(",");
                 if (jourList.length == 0) continue;
-                if(formatJour.format(date).equals(jourList[0])) {
+                if (formatJour.format(date).equals(jourList[0])) {
+
                     if (!"0".equals(jourList[1])) {
                         if ("1".equals(groupe)) {
                             if ("1".equals(jourList[1])) {
@@ -97,7 +98,11 @@ public class Edt {
                 for (int i=2; i<jourList.length; i+=3) {
                     String heure = jourList[i];
                     if (heure.equals(formatHeure.format(date))) {
-                        type[0] = jourList[i+1];
+                        if (jourList.length > i+1) {
+                            type[0] = jourList[i+1];
+                        } else {
+                            type[0] = null;
+                        }
                         if (jourList.length > i+2) {
                             type[1] = jourList[i + 2];
                         } else {
@@ -202,7 +207,10 @@ public class Edt {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        builder.addField("Type", cours.getType(), false);
+        String type = cours.getType();
+        if (type != null) {
+            builder.addField("Type", cours.getType(), false);
+        }
         String lien = cours.getLien();
         if (lien != null && !lien.equals("")) {
             if (lien.contains("discord")) {
