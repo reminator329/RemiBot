@@ -76,18 +76,7 @@ public class Edt {
                 String[] jourList = s.split(",");
                 if (jourList.length == 0) continue;
                 if (formatJour.format(date).equals(jourList[0])) {
-
-                    if (!"0".equals(jourList[1])) {
-                        if ("1".equals(groupe)) {
-                            if ("1".equals(jourList[1])) {
-                                groupe = "2";
-                                jour = s;
-                            }
-                        } else if ("2".equals(jourList[2])) {
-                            groupe = "1";
-                            jour = s;
-                        }
-                    } else {
+                    if (cours.getGroupe().equals(jourList[1])) {
                         jour = s;
                     }
                 }
@@ -166,10 +155,10 @@ public class Edt {
         JSONArray jCourss1 = jEdt1.getJSONArray("items");
         JSONArray jCourss2 = jEdt2.getJSONArray("items");
 
-        ajoutCourss(jCourss01);
-        ajoutCourss(jCourss02);
-        ajoutCourss(jCourss1);
-        ajoutCourss(jCourss2);
+        ajoutCourss(jCourss01, "0");
+        ajoutCourss(jCourss02, "0");
+        ajoutCourss(jCourss1, "1");
+        ajoutCourss(jCourss2, "2");
     }
 
     private void updateCsv() {
@@ -180,10 +169,10 @@ public class Edt {
         }
     }
 
-    private void ajoutCourss(JSONArray courss) {
+    private void ajoutCourss(JSONArray courss, String groupe) {
 
         for (int i=0; i<courss.length(); i++) {
-            Cours c = new Cours(courss.getJSONObject(i));
+            Cours c = new Cours(courss.getJSONObject(i), groupe);
             String[] type = getTypeCours(c);
             c.setType(type[0]);
             c.setLien(type[1]);
@@ -198,10 +187,14 @@ public class Edt {
 
         builder.setColor(Color.RED);
 
-
-
-        builder.setTitle("Prochain cours");
+        String groupe = cours.getGroupe();
+        if ("0".equals(groupe)) {
+            builder.setTitle("Prochain cours");
+        } else {
+            builder.setTitle("Prochain cours, groupe " + groupe);
+        }
         builder.appendDescription(cours.getSummary());
+
         try {
             builder.addField("Date", dateFormat2.format(new Date(dateFormat1.parse(cours.getStart()).getTime())), false);
         } catch (ParseException e) {

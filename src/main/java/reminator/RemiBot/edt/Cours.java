@@ -10,9 +10,9 @@ public class Cours {
     private String end;
     private String type;
     private String lien;
-    private int groupe;
+    private String groupe;
 
-    public Cours(JSONObject jCours) {
+    public Cours(JSONObject jCours, String groupe) {
         this.summary = jCours.getString("summary");
         try {
             this.start = jCours.getJSONObject("start").getString("dateTime");
@@ -21,6 +21,7 @@ public class Cours {
             this.start = null;
             this.end = null;
         }
+        this.groupe = groupe;
     }
 
     public void setType (String type) {
@@ -51,7 +52,11 @@ public class Cours {
         return lien;
     }
 
-    public int getGroupe() {
+    public String getGroupe() {
         return groupe;
+    }
+
+    public void setGroupe(String groupe) {
+        this.groupe = groupe;
     }
 }
