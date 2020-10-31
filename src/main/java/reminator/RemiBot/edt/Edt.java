@@ -81,14 +81,10 @@ public class Edt {
                             if ("1".equals(jourList[1])) {
                                 groupe = "2";
                                 jour = s;
-                            } else {
-                                continue;
                             }
                         } else if ("2".equals(jourList[2])) {
                             groupe = "1";
                             jour = s;
-                        } else {
-                            continue;
                         }
                     } else {
                         jour = s;
