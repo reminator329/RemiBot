@@ -42,6 +42,10 @@ public class PingCommand extends Command {
                 if (a.getName().equalsIgnoreCase("Spotify")) {
                     RichPresence rp = a.asRichPresence();
                     if (rp != null) {
+                        try {
+                            builder.setImage(rp.getLargeImage().getUrl());
+                        } catch (NullPointerException ignored) {}
+                        System.out.println(rp.getDetails());
                         String message = member.getUser().getName() + " écoute " + rp.getDetails() + " de " + rp.getState();
                         builder.setFooter(message, member.getUser().getAvatarUrl());
                     }
