@@ -69,7 +69,7 @@ public class EcouteBilalCommand extends Command {
                                 RichPresence rp = a.asRichPresence();
                                 if (rp != null) {
                                     if (rp.getState() != null) {
-                                        if (rp.getState().equalsIgnoreCase("Bilal Hassani")) {
+                                        if (rp.getState().contains("Bilal Hassani")) {
                                             if (!titre[i].equalsIgnoreCase(rp.getDetails())) {
                                                 channel.sendMessage(finalBilal.getAsMention() + " ! " + m.getUser().getAsMention() + " écoute " + rp.getDetails() + " de " + rp.getState()).queue();
                                             }
