@@ -86,27 +86,28 @@ public class JeuxMultiCommand extends Command{
             boolean flag = true;
             for (int i = 2; i < lignes.length; i++) {
                 String[] ligne = lignes[i].split(",");
-                System.out.println(ligne[0]);
-                    for (int j = 2; j < ligne.length; j = j + 2) {
-                        System.out.println(lignes[0].split(",")[j]);
-                        if (estJoueur(lignes[0].split(",")[j], args)) {
-                            System.out.println(lignes[0].split(",")[j]);
-                            if (ligne[j] != null) {
-                                if (!ligne[j].toUpperCase().contains("oui".toUpperCase())) {
-                                    flag = false;
-                                    break;
-                                }
-                            } else {
+                if (ligne.length > 1 && ligne[1] != null && !ligne[1].equals("")) {
+                    if (Integer.parseInt(ligne[1]) < nbJoueurs) {
+                        continue;
+                    }
+                }
+                for (int j = 2; j < ligne.length; j = j + 2) {
+                    if (estJoueur(lignes[0].split(",")[j], args)) {
+                        if (ligne[j] != null) {
+                            if (!ligne[j].toUpperCase().contains("oui".toUpperCase())) {
                                 flag = false;
                                 break;
                             }
-                            nbJoueurs--;
-                        }
-                        System.out.println(nbJoueurs);
-                        if (nbJoueurs == 0) {
+                        } else {
+                            flag = false;
                             break;
                         }
+                        nbJoueurs--;
                     }
+                    if (nbJoueurs == 0) {
+                        break;
+                    }
+                }
                 if (flag && nbJoueurs == 0) {
                     System.out.println("non");
                     jeux.add(ligne[0]);
@@ -124,6 +125,7 @@ public class JeuxMultiCommand extends Command{
 
         builder.setTitle("Jeux en commun :");
         builder.addField(" ", jeuxS.toString(), false);
+        assert member != null;
         builder.setFooter(member.getUser().getName(), member.getUser().getAvatarUrl());
         channel.sendMessage(builder.build()).queue();
     }
