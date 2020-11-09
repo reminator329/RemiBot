@@ -27,6 +27,7 @@ public class Controller extends ListenerAdapter {
     private final DevinetteCommand devinetteCommand;
     private final AmongusCommand amongusCommand;
     private final PlusMoinsCommand plusMoinsCommand;
+    private final JeuxMultiCommand jeuxMultiCommand;
 
     private final ArrayList<Categorie> categories = new ArrayList<>();
     private final BilalCategorie bilalCategorie = new BilalCategorie();
@@ -52,6 +53,7 @@ public class Controller extends ListenerAdapter {
         devinetteCommand = new DevinetteCommand();
         amongusCommand = new AmongusCommand();
         plusMoinsCommand = new PlusMoinsCommand();
+        jeuxMultiCommand = new JeuxMultiCommand();
 
         // Ajout de la commande dans la liste
         commands.add(pingCommand);
@@ -64,6 +66,7 @@ public class Controller extends ListenerAdapter {
         commands.add(devinetteCommand);
         commands.add(amongusCommand);
         commands.add(plusMoinsCommand);
+        commands.add(jeuxMultiCommand);
 
         // Ajout de la commande dans la catégorie
         bilalCategorie.addCommand(ecouteBilalCommand);
@@ -78,6 +81,7 @@ public class Controller extends ListenerAdapter {
         autresCategorie.addCommand(amongusCommand);
 
         jeuCategorie.addCommand(plusMoinsCommand);
+        jeuCategorie.addCommand(jeuxMultiCommand);
     }
 
     @Override
