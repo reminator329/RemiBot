@@ -1,6 +1,7 @@
 package reminator.RemiBot.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -29,7 +30,7 @@ public class JeuxMultiCommand extends Command{
         builder.setTitle("Commande jeux-multi");
         builder.appendDescription("Affiche les jeux communs des membres de la Secte");
 
-        builder.addField("Signature", "`r!jeux-multi <joueurs>`", false);
+        builder.addField("Signature", "`r!jeux-multi [<joueurs>]`", false);
 
         return builder.build();
     }
@@ -37,6 +38,7 @@ public class JeuxMultiCommand extends Command{
     @Override
     public void executerCommande(GuildMessageReceivedEvent event) {
         MessageChannel channel = event.getChannel();
+        Member member = event.getMember();
 
         String[] args = event.getMessage().getContentRaw().split("\\s+");
 
@@ -122,6 +124,7 @@ public class JeuxMultiCommand extends Command{
 
         builder.setTitle("Jeux en commun :");
         builder.addField(" ", jeuxS.toString(), false);
+        builder.setFooter(member.getUser().getName(), member.getUser().getAvatarUrl());
         channel.sendMessage(builder.build()).queue();
     }
 
