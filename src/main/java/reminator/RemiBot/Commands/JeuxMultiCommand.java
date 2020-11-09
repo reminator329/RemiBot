@@ -4,14 +4,13 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.music.HTTPRequest;
 
 import java.awt.*;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class JeuxMultiCommand extends Command{
 
@@ -90,13 +89,8 @@ public class JeuxMultiCommand extends Command{
                         System.out.println(lignes[0].split(",")[j]);
                         if (estJoueur(lignes[0].split(",")[j], args)) {
                             System.out.println(lignes[0].split(",")[j]);
-                            if (j < ligne.length) {
-                                if (ligne[j] != null) {
-                                    if (!ligne[j].toUpperCase().contains("oui".toUpperCase())) {
-                                        flag = false;
-                                        break;
-                                    }
-                                } else {
+                            if (ligne[j] != null) {
+                                if (!ligne[j].toUpperCase().contains("oui".toUpperCase())) {
                                     flag = false;
                                     break;
                                 }
@@ -120,22 +114,19 @@ public class JeuxMultiCommand extends Command{
             }
         }
 
-        String jeuxS = "";
+        StringBuilder jeuxS = new StringBuilder();
         for (String jeu : jeux) {
-            jeuxS += jeu + "\n";
+            jeuxS.append(jeu).append("\n");
         }
 
 
         builder.setTitle("Jeux en commun :");
-        builder.addField(" ", jeuxS, false);
+        builder.addField(" ", jeuxS.toString(), false);
         channel.sendMessage(builder.build()).queue();
     }
 
     private boolean estJoueur(String s, String[] args) {
-        ArrayList<String> joueurs = new ArrayList<>();
-        for (int i=1; i<args.length; i++) {
-            joueurs.add(args[i]);
-        }
+        ArrayList<String> joueurs = new ArrayList<>(Arrays.asList(args).subList(1, args.length));
         for (String joueur : joueurs) {
             if (s.toUpperCase().contains(joueur.toUpperCase()) || joueur.toUpperCase().contains(s.toUpperCase())) {
                 return true;
