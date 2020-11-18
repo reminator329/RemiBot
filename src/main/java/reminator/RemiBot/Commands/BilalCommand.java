@@ -31,6 +31,7 @@ public class BilalCommand extends Command {
     public BilalCommand() {
         this.setPrefix(RemiBot.prefix);
         this.setLabel("bilal");
+        this.addAlias("b");
         this.setHelp(setHelp());
     }
 

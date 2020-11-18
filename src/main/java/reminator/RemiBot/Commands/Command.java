@@ -5,13 +5,19 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import reminator.RemiBot.Categories.Categorie;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public abstract class Command {
 
     private String prefix;
     private String label;
+    private ArrayList<String> aliass = new ArrayList<>();
     private MessageEmbed help;
+
+    public Command() {
+        aliass = new ArrayList<>();
+    }
 
     public String getPrefix() {
         return prefix;
@@ -40,6 +46,12 @@ public abstract class Command {
     public abstract MessageEmbed setHelp();
 
     public abstract void executerCommande(GuildMessageReceivedEvent event);
+
+    protected void addAlias (String alias) {
+        aliass.add(alias);
+    }
+
+    public boolean isAlias(String alias) { return aliass.contains(alias); }
 
     @Override
     public boolean equals(Object o) {

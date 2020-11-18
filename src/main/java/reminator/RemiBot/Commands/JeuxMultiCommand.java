@@ -20,6 +20,7 @@ public class JeuxMultiCommand extends Command{
     public JeuxMultiCommand() {
         this.setPrefix(RemiBot.prefix);
         this.setLabel("jeux-multi");
+        this.addAlias("jeux");
         this.setHelp(setHelp());
     }
 
@@ -31,6 +32,7 @@ public class JeuxMultiCommand extends Command{
         builder.appendDescription("Affiche les jeux communs des membres de la Secte");
 
         builder.addField("Signature", "`r!jeux-multi [<joueurs>]`", false);
+        builder.addField("Alias", "`r!jeux`", false);
 
         return builder.build();
     }
