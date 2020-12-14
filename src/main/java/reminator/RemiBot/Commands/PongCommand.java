@@ -1,13 +1,13 @@
 package reminator.RemiBot.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import reminator.RemiBot.bot.RemiBot;
 
 import java.awt.*;
+import java.time.Duration;
+import java.util.List;
 
 public class PongCommand extends Command {
 
@@ -29,7 +29,7 @@ public class PongCommand extends Command {
 
     @Override
     public void executerCommande(GuildMessageReceivedEvent event) {
-        MessageChannel channel = event.getChannel();
+        MessageChannel channel2 = event.getChannel();
         Member member = event.getMember();
 
         EmbedBuilder builder = new EmbedBuilder();
@@ -37,8 +37,30 @@ public class PongCommand extends Command {
         builder.setTitle("Ping !");
         builder.setFooter(member.getNickname(), member.getUser().getAvatarUrl());
 
-        channel.sendMessage(builder.build()).queue();
-        channel.sendMessage("https://tenor.com/view/scary-gif-5252759").queue();
+
+        if (member != null) {
+            List<Activity> activities = member.getActivities();
+            for (Activity a : activities) {
+                if (a.getName().equalsIgnoreCase("Spotify")) {
+                    RichPresence rp = a.asRichPresence();
+                    if (rp != null) {
+                        try {
+                            builder.setImage(rp.getLargeImage().getUrl());
+                        } catch (NullPointerException ignored) {}
+                        System.out.println(rp.getDetails());
+                        String message = member.getUser().getName() + " écoute " + rp.getDetails() + " de " + rp.getState();
+                        builder.setFooter(message, member.getUser().getAvatarUrl());
+                    }
+                }
+            }
+        }
+
+        channel2.sendMessage(builder.build()).queue();
+
+
+        event.getAuthor().openPrivateChannel()
+                .flatMap(channel -> channel.sendMessage("https://tenor.com/view/scary-gif-5252759"))
+                .queue();
 
     }
 
