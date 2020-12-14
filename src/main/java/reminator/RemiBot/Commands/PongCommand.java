@@ -13,7 +13,7 @@ public class PongCommand extends Command {
 
     public PongCommand() {
         this.setPrefix(RemiBot.prefix);
-        this.setLabel("ping");
+        this.setLabel("pong");
         this.setHelp(setHelp());
     }
 
