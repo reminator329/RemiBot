@@ -18,6 +18,7 @@ public class Controller extends ListenerAdapter {
 
     private final ArrayList<Command> commands = new ArrayList<>();
     private final PingCommand pingCommand;
+    private final PongCommand pongCommand;
     private final AlbumCommand albumCommand;
     private final EcouteBilalCommand ecouteBilalCommand;
     private final SpamCommand spamCommand;
@@ -44,6 +45,7 @@ public class Controller extends ListenerAdapter {
 
         // Commandes
         pingCommand = new PingCommand();
+        pongCommand = new PongCommand();
         albumCommand = new AlbumCommand();
         ecouteBilalCommand = new EcouteBilalCommand();
         spamCommand = new SpamCommand();
@@ -57,6 +59,7 @@ public class Controller extends ListenerAdapter {
 
         // Ajout de la commande dans la liste
         commands.add(pingCommand);
+        commands.add(pongCommand);
         commands.add(albumCommand);
         commands.add(ecouteBilalCommand);
         commands.add(spamCommand);
@@ -75,6 +78,7 @@ public class Controller extends ListenerAdapter {
         bilalCategorie.addCommand(devinetteCommand);
 
         autresCategorie.addCommand(pingCommand);
+        autresCategorie.addCommand(pongCommand);
         autresCategorie.addCommand(spamCommand);
         autresCategorie.addCommand(helpCommand);
         autresCategorie.addCommand(youtubeurCommand);
