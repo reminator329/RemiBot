@@ -34,7 +34,7 @@ public class PongCommand extends Command {
 
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Color.RED);
-        builder.setTitle("Pong !");
+        builder.setTitle("Ping !");
         builder.setFooter(member.getNickname(), member.getUser().getAvatarUrl());
 
         channel.sendMessage(builder.build()).queue();
