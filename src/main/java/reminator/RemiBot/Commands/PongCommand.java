@@ -36,7 +36,7 @@ public class PongCommand extends Command {
         builder.setColor(Color.RED);
         builder.setTitle("Ping !");
         builder.setFooter(member.getNickname(), member.getUser().getAvatarUrl());
-        builder.setImage(member.getUser.getLargeImage.getUrl());
+        builder.setImage(member.getUser().getAvatarUrl());
 
         if (member != null) {
             List<Activity> activities = member.getActivities();
