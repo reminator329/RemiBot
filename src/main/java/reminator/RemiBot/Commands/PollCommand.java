@@ -163,7 +163,8 @@ public class PollCommand extends Command {
                 sondage.addField("Clique sur les réactions en dessous pour voter !", "", false);
 
                 channel2.sendMessage(sondage.build()).queue(reactPoll -> {
-                    for (String emoji : emojis) {
+                    for (int i = 0; i < 20 && i < emojis.size(); i++) {
+                        String emoji = emojis.get(i);
                         if (emoji.startsWith("<:")) {
                             reactPoll.addReaction(emoji.substring(2, emoji.length() - 1)).queue();
                         } else {
@@ -171,6 +172,21 @@ public class PollCommand extends Command {
                         }
                     }
                 });
+                System.out.println("ouiiiiiiiiiii");
+                for (int i = 20; i < emojis.size(); i += 20) {
+                    System.out.println(i + " " + emojis.size());
+                    int finalI = i;
+                    channel2.sendMessage(".").queue(reactPoll -> {
+                        for (int j = finalI; j < finalI + 20 && j < emojis.size(); j++) {
+                            String emoji = emojis.get(j);
+                            if (emoji.startsWith("<:")) {
+                                reactPoll.addReaction(emoji.substring(2, emoji.length() - 1)).queue();
+                            } else {
+                                reactPoll.addReaction(emoji).queue();
+                            }
+                        }
+                    });
+                }
             }
 
 
