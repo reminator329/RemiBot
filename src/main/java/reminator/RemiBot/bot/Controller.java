@@ -19,11 +19,11 @@ public class Controller extends ListenerAdapter {
     private final ArrayList<Command> commands = new ArrayList<>();
     private final PingCommand pingCommand;
     private final PongCommand pongCommand;
-    private final AlbumCommand albumCommand;
+    //private final AlbumCommand albumCommand;
     private final EcouteBilalCommand ecouteBilalCommand;
     private final SpamCommand spamCommand;
     private final HelpCommand helpCommand;
-    //private final BilalCommand bilalCommand;
+    private final BilalCommand bilalCommand;
     private final YoutubeurCommand youtubeurCommand;
     private final DevinetteCommand devinetteCommand;
     private final AmongusCommand amongusCommand;
@@ -47,11 +47,11 @@ public class Controller extends ListenerAdapter {
         // Commandes
         pingCommand = new PingCommand();
         pongCommand = new PongCommand();
-        albumCommand = new AlbumCommand();
+        //albumCommand = new AlbumCommand();
         ecouteBilalCommand = new EcouteBilalCommand();
         spamCommand = new SpamCommand();
         helpCommand = new HelpCommand(this);
-        //bilalCommand = new BilalCommand();
+        bilalCommand = new BilalCommand();
         youtubeurCommand = new YoutubeurCommand();
         devinetteCommand = new DevinetteCommand();
         amongusCommand = new AmongusCommand();
@@ -62,11 +62,11 @@ public class Controller extends ListenerAdapter {
         // Ajout de la commande dans la liste
         commands.add(pingCommand);
         commands.add(pongCommand);
-        commands.add(albumCommand);
+        //commands.add(albumCommand);
         commands.add(ecouteBilalCommand);
         commands.add(spamCommand);
         commands.add(helpCommand);
-        //commands.add(bilalCommand);
+        commands.add(bilalCommand);
         commands.add(youtubeurCommand);
         commands.add(devinetteCommand);
         commands.add(amongusCommand);
@@ -76,8 +76,8 @@ public class Controller extends ListenerAdapter {
 
         // Ajout de la commande dans la catégorie
         bilalCategorie.addCommand(ecouteBilalCommand);
-        bilalCategorie.addCommand(albumCommand);
-        //bilalCategorie.addCommand(bilalCommand);
+        //bilalCategorie.addCommand(albumCommand);
+        bilalCategorie.addCommand(bilalCommand);
         bilalCategorie.addCommand(devinetteCommand);
 
         autresCategorie.addCommand(pingCommand);
