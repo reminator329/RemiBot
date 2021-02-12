@@ -2,13 +2,15 @@ package reminator.RemiBot.bot;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Categories.*;
 import reminator.RemiBot.Commands.*;
+import reminator.RemiBot.Commands.Devoir.DevoirAddCommand;
+import reminator.RemiBot.Commands.Devoir.DevoirCommand;
+import reminator.RemiBot.Commands.Devoir.DevoirFiniCommand;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -30,11 +32,15 @@ public class Controller extends ListenerAdapter {
     private final PlusMoinsCommand plusMoinsCommand;
     private final JeuxMultiCommand jeuxMultiCommand;
     private final PollCommand pollCommand;
+    private final DevoirCommand devoirCommand;
+    private final DevoirAddCommand devoirAddCommand;
+    private final DevoirFiniCommand devoirFiniCommand;
 
     private final ArrayList<Categorie> categories = new ArrayList<>();
     private final BilalCategorie bilalCategorie = new BilalCategorie();
     private final AutresCategorie autresCategorie = new AutresCategorie();
     private final JeuCategorie jeuCategorie = new JeuCategorie();
+    private final DevoirCategorie devoirCategorie = new DevoirCategorie();
 
     public Controller() {
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
@@ -43,6 +49,7 @@ public class Controller extends ListenerAdapter {
         categories.add(bilalCategorie);
         categories.add(jeuCategorie);
         categories.add(autresCategorie);
+        categories.add(devoirCategorie);
 
         // Commandes
         pingCommand = new PingCommand();
@@ -58,6 +65,9 @@ public class Controller extends ListenerAdapter {
         plusMoinsCommand = new PlusMoinsCommand();
         jeuxMultiCommand = new JeuxMultiCommand();
         pollCommand = new PollCommand();
+        devoirCommand = new DevoirCommand();
+        devoirAddCommand = new DevoirAddCommand();
+        devoirFiniCommand = new DevoirFiniCommand();
 
         // Ajout de la commande dans la liste
         commands.add(pingCommand);
@@ -73,6 +83,9 @@ public class Controller extends ListenerAdapter {
         commands.add(plusMoinsCommand);
         commands.add(jeuxMultiCommand);
         commands.add(pollCommand);
+        commands.add(devoirCommand);
+        commands.add(devoirAddCommand);
+        commands.add(devoirFiniCommand);
 
         // Ajout de la commande dans la catégorie
         bilalCategorie.addCommand(ecouteBilalCommand);
@@ -90,6 +103,10 @@ public class Controller extends ListenerAdapter {
 
         jeuCategorie.addCommand(plusMoinsCommand);
         jeuCategorie.addCommand(jeuxMultiCommand);
+
+        devoirCategorie.addCommand(devoirCommand);
+        devoirCategorie.addCommand(devoirAddCommand);
+        devoirCategorie.addCommand(devoirFiniCommand);
     }
 
     @Override

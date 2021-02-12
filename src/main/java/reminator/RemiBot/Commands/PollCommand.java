@@ -12,6 +12,7 @@ import reminator.RemiBot.bot.RemiBot;
 import javax.annotation.Nonnull;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PollCommand extends Command {
 
@@ -172,9 +173,7 @@ public class PollCommand extends Command {
                         }
                     }
                 });
-                System.out.println("ouiiiiiiiiiii");
                 for (int i = 20; i < emojis.size(); i += 20) {
-                    System.out.println(i + " " + emojis.size());
                     int finalI = i;
                     channel2.sendMessage(".").queue(reactPoll -> {
                         for (int j = finalI; j < finalI + 20 && j < emojis.size(); j++) {
