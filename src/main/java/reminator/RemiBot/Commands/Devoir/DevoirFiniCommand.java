@@ -28,7 +28,7 @@ public class DevoirFiniCommand extends Command {
         builder.setColor(Color.RED);
         builder.setTitle("Commande devoir");
         builder.appendDescription("Supprime un devoir de votre liste de devoirs");
-        builder.addField("Signature", "`r!devoir-fini <numéro du devoir>", false);
+        builder.addField("Signature", "`r!devoir-fini <numéro du devoir>`", false);
         return builder.build();
     }
 
