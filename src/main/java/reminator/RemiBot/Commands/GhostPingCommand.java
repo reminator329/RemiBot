@@ -32,7 +32,6 @@ public class GhostPingCommand extends Command {
 
     @Override
     public void executerCommande(GuildMessageReceivedEvent event) {
-        event.getMessage().delete().queue();
         if (event.getMember() == null) {
             return;
         }
@@ -40,6 +39,7 @@ public class GhostPingCommand extends Command {
             event.getChannel().sendMessage("Tu n'as pas la permission pour faire cette commande.").queue();
             return;
         }
+        event.getMessage().delete().queue();
         Guild guild = event.getGuild();
         String[] args = event.getMessage().getContentRaw().split("\\s+");
         StringBuilder message = new StringBuilder();
