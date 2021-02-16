@@ -1,5 +1,6 @@
 package reminator.RemiBot.bot;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -14,11 +15,15 @@ import reminator.RemiBot.Commands.Devoir.DevoirAddCommand;
 import reminator.RemiBot.Commands.Devoir.DevoirCommand;
 import reminator.RemiBot.Commands.Devoir.DevoirFiniCommand;
 
+import java.awt.*;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.TimeZone;
 
 public class Controller extends ListenerAdapter {
+
+    private ArrayList<Message> messages = new ArrayList<>();
+    private final int nbMessageMax = 5000;
 
     private final ArrayList<Command> commands = new ArrayList<>();
     private final PingCommand pingCommand;
@@ -44,6 +49,7 @@ public class Controller extends ListenerAdapter {
     private final AutresCategorie autresCategorie = new AutresCategorie();
     private final JeuCategorie jeuCategorie = new JeuCategorie();
     private final DevoirCategorie devoirCategorie = new DevoirCategorie();
+
 
     public Controller() {
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
@@ -145,19 +151,53 @@ public class Controller extends ListenerAdapter {
     public void onGuildMessageUpdate(@NotNull GuildMessageUpdateEvent event) {
         Guild guild = event.getGuild();
         Member remi = guild.getMemberById("368733622246834188");
+
+        Message newMessage = event.getMessage();
+        Message ancienMessage = null;
+
+        for (Message m : this.messages) {
+            if (m.getId().equals(newMessage.getId())) {
+                this.messages.remove(m);
+                ancienMessage = m;
+                break;
+            }
+        }
+        if (this.messages.size() >= this.nbMessageMax) {
+            this.messages.remove(0);
+        }
+        this.messages.add(newMessage);
+        if (ancienMessage == null) {
+            return;
+        }
         if (remi == null) {
             return;
         }
+        Message finalAncienMessage = ancienMessage;
+
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+
+        embedBuilder.setColor(Color.RED);
+        embedBuilder.setTitle("Modification de message (" + guild.getName() + ")", newMessage.getJumpUrl());
+        embedBuilder.appendDescription(ancienMessage.getAuthor().getName());
+        embedBuilder.addField("Ancien message", ancienMessage.getContentDisplay(), false);
+        embedBuilder.addField("Nouveau message", newMessage.getContentDisplay(), false);
+        embedBuilder.setFooter(event.getAuthor().getName(), event.getAuthor().getAvatarUrl());
+
         remi.getUser().openPrivateChannel()
                 .flatMap(privateChannel -> privateChannel
-                        .sendMessage(event.getAuthor().getName() + " dans le serveur " + guild.getName() + " a modifié " + event.getMessage().getContentDisplay()))
+                        .sendMessage(embedBuilder.build()))
                 .queue();
     }
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
+
         this.guild = event.getGuild();
+        if (this.messages.size() >= this.nbMessageMax) {
+            this.messages.remove(0);
+        }
+        this.messages.add(event.getMessage());
         /*
         int n = 1 + (int)(Math.random() * ((10 - 1) + 1));
         if (n == 5) {
