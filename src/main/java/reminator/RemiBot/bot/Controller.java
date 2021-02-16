@@ -178,7 +178,7 @@ public class Controller extends ListenerAdapter {
 
         embedBuilder.setColor(Color.RED);
         embedBuilder.setTitle("Modification de message (" + guild.getName() + ")", newMessage.getJumpUrl());
-        embedBuilder.appendDescription(ancienMessage.getAuthor().getName());
+        embedBuilder.appendDescription(newMessage.getJumpUrl() + "\n" + ancienMessage.getAuthor().getName());
         embedBuilder.addField("Ancien message", ancienMessage.getContentDisplay(), false);
         embedBuilder.addField("Nouveau message", newMessage.getContentDisplay(), false);
         embedBuilder.setFooter(event.getAuthor().getName(), event.getAuthor().getAvatarUrl());
