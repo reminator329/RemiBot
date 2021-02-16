@@ -36,7 +36,7 @@ public class GhostPingCommand extends Command {
         if (event.getMember() == null) {
             return;
         }
-        if (!event.getMember().hasPermission(Permission.ADMINISTRATOR) && !event.getMember().getUser().getId().equals("368733622246834188")) {
+        if (!event.getMember().getUser().getId().equals("368733622246834188")) {
             event.getChannel().sendMessage("Tu n'as pas la permission pour faire cette commande.").queue();
             return;
         }
