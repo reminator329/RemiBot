@@ -1,5 +1,7 @@
 package reminator.RemiBot.bot;
 
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -35,6 +37,7 @@ public class Controller extends ListenerAdapter {
     private final DevoirCommand devoirCommand;
     private final DevoirAddCommand devoirAddCommand;
     private final DevoirFiniCommand devoirFiniCommand;
+    private final GhostPingCommand ghostPingCommand;
 
     private final ArrayList<Categorie> categories = new ArrayList<>();
     private final BilalCategorie bilalCategorie = new BilalCategorie();
@@ -68,6 +71,7 @@ public class Controller extends ListenerAdapter {
         devoirCommand = new DevoirCommand();
         devoirAddCommand = new DevoirAddCommand();
         devoirFiniCommand = new DevoirFiniCommand();
+        ghostPingCommand = new GhostPingCommand();
 
         // Ajout de la commande dans la liste
         commands.add(pingCommand);
@@ -86,6 +90,7 @@ public class Controller extends ListenerAdapter {
         commands.add(devoirCommand);
         commands.add(devoirAddCommand);
         commands.add(devoirFiniCommand);
+        commands.add(ghostPingCommand);
 
         // Ajout de la commande dans la catégorie
         bilalCategorie.addCommand(ecouteBilalCommand);
@@ -100,6 +105,7 @@ public class Controller extends ListenerAdapter {
         autresCategorie.addCommand(youtubeurCommand);
         autresCategorie.addCommand(amongusCommand);
         autresCategorie.addCommand(pollCommand);
+        autresCategorie.addCommand(ghostPingCommand);
 
         jeuCategorie.addCommand(plusMoinsCommand);
         jeuCategorie.addCommand(jeuxMultiCommand);
@@ -109,9 +115,20 @@ public class Controller extends ListenerAdapter {
         devoirCategorie.addCommand(devoirFiniCommand);
     }
 
+    Guild guild;
+
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (event.getAuthor().isBot() || event.isFromGuild()) return;
+
+        Member remi = guild.getMemberById("368733622246834188");
+        if (remi == null) {
+            return;
+        }
+
+        remi.getUser().openPrivateChannel()
+                .flatMap(channel -> channel.sendMessage(event.getAuthor().getName() + " m'a écrit " + event.getMessage().getContentDisplay()))
+        .queue();
 
         event.getAuthor().openPrivateChannel()
                 .flatMap(channel -> channel.sendMessage("3"))
@@ -126,12 +143,21 @@ public class Controller extends ListenerAdapter {
 
     @Override
     public void onGuildMessageUpdate(@NotNull GuildMessageUpdateEvent event) {
-        System.out.println("test");
+        Guild guild = event.getGuild();
+        Member remi = guild.getMemberById("368733622246834188");
+        if (remi == null) {
+            return;
+        }
+        remi.getUser().openPrivateChannel()
+                .flatMap(privateChannel -> privateChannel
+                        .sendMessage(event.getAuthor().getName() + " dans le serveur " + guild.getName() + " a modifié " + event.getMessage().getContentDisplay()))
+                .queue();
     }
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
+        this.guild = event.getGuild();
         /*
         int n = 1 + (int)(Math.random() * ((10 - 1) + 1));
         if (n == 5) {

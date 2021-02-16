@@ -5,6 +5,8 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Model.BDDevoir;
+import reminator.RemiBot.Model.BDDevoirArray;
+import reminator.RemiBot.Model.BDDevoirJson;
 import reminator.RemiBot.bot.RemiBot;
 
 import java.awt.*;
@@ -14,7 +16,7 @@ import java.util.regex.Pattern;
 
 public class DevoirAddCommand extends Command {
 
-    private static final BDDevoir bdDevoir = BDDevoir.getInstance();
+    private static final BDDevoir bdDevoir = BDDevoirJson.getInstance();
 
     public DevoirAddCommand() {
         this.setPrefix(RemiBot.prefix);
@@ -38,6 +40,7 @@ public class DevoirAddCommand extends Command {
         String[] args = event.getMessage().getContentRaw().split("\\s+");
         if (args.length < 4) {
             channel.sendMessage("Commande mal utilisé, voir `r!help devoir-add`").queue();
+            return;
         }
         StringBuilder description = new StringBuilder();
         for (int i = 3; i < args.length; i++) {
@@ -54,11 +57,16 @@ public class DevoirAddCommand extends Command {
             Matcher matcher = pattern.matcher(mention);
             if (matcher.find()) {
                 ids.add(matcher.group(1));
+            } else {
+                channel.sendMessage("Commande mal utilisé, voir `r!help devoir-add`").queue();
+                return;
             }
 
             for (String id : ids) {
                 Member member = server.getMemberById(id);
-                if (member == null) return;
+                if (member == null) {
+                    return;
+                }
                 users.add(member.getUser());
             }
         } else if (mention.contains("&")) {
@@ -69,6 +77,7 @@ public class DevoirAddCommand extends Command {
                     users.add(member.getUser());
                 }
             } else {
+                channel.sendMessage("Commande mal utilisé, voir `r!help devoir-add`").queue();
                 return;
             }
         } else if (mention.equals("@everyone")) {
@@ -79,9 +88,14 @@ public class DevoirAddCommand extends Command {
 
             for (String id : ids) {
                 Member member = server.getMemberById(id);
-                if (member == null) return;
+                if (member == null) {
+                    return;
+                }
                 users.add(member.getUser());
             }
+        } else {
+            channel.sendMessage("Commande mal utilisé, voir `r!help devoir-add`").queue();
+            return;
         }
         bdDevoir.addDevoir(users, args[2], description.toString(), all);
         channel.sendMessage("devoir ajouté pour " + args[1]).queue();

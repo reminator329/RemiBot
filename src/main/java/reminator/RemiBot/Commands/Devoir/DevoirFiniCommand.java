@@ -6,15 +6,16 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Model.BDDevoir;
+import reminator.RemiBot.Model.BDDevoirArray;
+import reminator.RemiBot.Model.BDDevoirJson;
 import reminator.RemiBot.Model.Devoir;
 import reminator.RemiBot.bot.RemiBot;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class DevoirFiniCommand extends Command {
 
-    private static final BDDevoir bdDevoir = BDDevoir.getInstance();
+    private static final BDDevoir bdDevoir = BDDevoirJson.getInstance();
 
     public DevoirFiniCommand(){
         this.setPrefix(RemiBot.prefix);
@@ -41,7 +42,7 @@ public class DevoirFiniCommand extends Command {
             return;
         }
 
-        int numeroDevoir = -1;
+        int numeroDevoir;
         try {
             numeroDevoir = Integer.parseInt(args[1]);
         } catch (Exception e) {
@@ -50,6 +51,10 @@ public class DevoirFiniCommand extends Command {
         }
 
         Devoir devoir = bdDevoir.finiDevoir(event.getAuthor(), numeroDevoir);
-        channel.sendMessage("Le devoir " + devoir + " a bien été supprimé.").queue();
+        if (devoir == null) {
+            channel.sendMessage("Erreur lors de la suppression du devoir. Vérifier le numéro du devoir `r!devoir`").queue();
+        } else {
+            channel.sendMessage("Le devoir " + devoir + " a bien été supprimé.").queue();
+        }
     }
 }

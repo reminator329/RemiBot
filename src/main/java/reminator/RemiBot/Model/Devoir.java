@@ -1,5 +1,7 @@
 package reminator.RemiBot.Model;
 
+import org.json.JSONObject;
+
 public class Devoir {
 
     private final String course;
@@ -26,6 +28,14 @@ public class Devoir {
 
     @Override
     public String toString() {
-        return description;
+        return "`" + course + " : " + description + "`";
+    }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("course", course);
+        json.put("description", description);
+        json.put("all", all);
+        return json;
     }
 }

@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Model.BDDevoir;
+import reminator.RemiBot.Model.BDDevoirArray;
+import reminator.RemiBot.Model.BDDevoirJson;
 import reminator.RemiBot.Model.Devoir;
 import reminator.RemiBot.bot.RemiBot;
 
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 
 public class DevoirCommand extends Command {
 
-    private static final BDDevoir bdDevoir = BDDevoir.getInstance();
+    private static final BDDevoir bdDevoir = BDDevoirJson.getInstance();
 
     public DevoirCommand() {
         this.setPrefix(RemiBot.prefix);
@@ -71,8 +73,6 @@ public class DevoirCommand extends Command {
             numeroDevoir = ajoutDevoirs(message, devoirsPerso, numeroDevoir);
             embedBuilder.addField("Devoirs perso", message.toString(), false);
         }
-        System.out.println(devoirsPerso);
-        System.out.println(devoirsAll);
 
         embedBuilder.setFooter(user.getName() + " Il vous reste " + (numeroDevoir-1) + " devoir(s) à faire.", user.getAvatarUrl());
         channel.sendMessage(embedBuilder.build()).queue();
