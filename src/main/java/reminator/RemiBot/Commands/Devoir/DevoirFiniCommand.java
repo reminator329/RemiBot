@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Model.BDDevoir;
-import reminator.RemiBot.Model.BDDevoirArray;
 import reminator.RemiBot.Model.BDDevoirJson;
 import reminator.RemiBot.Model.Devoir;
 import reminator.RemiBot.bot.RemiBot;
