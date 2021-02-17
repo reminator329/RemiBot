@@ -24,7 +24,7 @@ public enum Gif {
 
     private final String url;
 
-    private Gif(String url) {
+    Gif(String url) {
         this.url = url;
     }
 
