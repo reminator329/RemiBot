@@ -3,6 +3,7 @@ package reminator.RemiBot.Commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import reminator.RemiBot.Model.Gif;
 import reminator.RemiBot.bot.RemiBot;
 
 import java.awt.*;
@@ -56,9 +57,8 @@ public class PongCommand extends Command {
 
         channel2.sendMessage(builder.build()).queue();
 
-
         event.getAuthor().openPrivateChannel()
-                .flatMap(channel -> channel.sendMessage("https://tenor.com/view/scary-gif-5252759"))
+                .flatMap(channel -> channel.sendMessage(Gif.getRandom().getUrl()))
                 .queue();
 
     }

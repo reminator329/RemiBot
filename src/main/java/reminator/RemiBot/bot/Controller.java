@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -149,6 +150,7 @@ public class Controller extends ListenerAdapter {
 
     @Override
     public void onGuildMessageUpdate(@NotNull GuildMessageUpdateEvent event) {
+        if (event.getAuthor().isBot()) return;
         Guild guild = event.getGuild();
         Member remi = guild.getMemberById("368733622246834188");
 
@@ -172,7 +174,6 @@ public class Controller extends ListenerAdapter {
         if (remi == null) {
             return;
         }
-        Message finalAncienMessage = ancienMessage;
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
@@ -182,6 +183,42 @@ public class Controller extends ListenerAdapter {
         embedBuilder.addField("Ancien message", ancienMessage.getContentDisplay(), false);
         embedBuilder.addField("Nouveau message", newMessage.getContentDisplay(), false);
         embedBuilder.setFooter(event.getAuthor().getName(), event.getAuthor().getAvatarUrl());
+
+        remi.getUser().openPrivateChannel()
+                .flatMap(privateChannel -> privateChannel
+                        .sendMessage(embedBuilder.build()))
+                .queue();
+    }
+
+    @Override
+    public void onGuildMessageDelete(@NotNull GuildMessageDeleteEvent event) {
+        Guild guild = event.getGuild();
+        Member remi = guild.getMemberById("368733622246834188");
+
+        String messageId = event.getMessageId();
+        Message ancienMessage = null;
+
+        for (Message m : this.messages) {
+            if (m.getId().equals(messageId)) {
+                this.messages.remove(m);
+                ancienMessage = m;
+                break;
+            }
+        }
+        if (ancienMessage == null) {
+            return;
+        }
+        if (remi == null) {
+            return;
+        }
+
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+
+        embedBuilder.setColor(Color.RED);
+        embedBuilder.setTitle("Supression de message (" + guild.getName() + ")");
+        embedBuilder.appendDescription(event.getChannel().getAsMention() + "\n" + ancienMessage.getAuthor().getName());
+        embedBuilder.addField("Ancien message", ancienMessage.getContentDisplay(), false);
+        embedBuilder.setFooter(ancienMessage.getAuthor().getName(), ancienMessage.getAuthor().getAvatarUrl());
 
         remi.getUser().openPrivateChannel()
                 .flatMap(privateChannel -> privateChannel
