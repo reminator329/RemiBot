@@ -52,6 +52,7 @@ public class DevoirAddCommand extends Command {
         ArrayList<String> ids = new ArrayList<>();
         boolean all = false;
         ArrayList<User> users = new ArrayList<>();
+        System.out.println(mention);
         if (mention.contains("!")) {
             Pattern pattern = Pattern.compile("<@!([0-9]+)>");
             Matcher matcher = pattern.matcher(mention);
@@ -94,8 +95,22 @@ public class DevoirAddCommand extends Command {
                 users.add(member.getUser());
             }
         } else {
-            channel.sendMessage("Commande mal utilisé, voir `r!help devoir-add`").queue();
-            return;
+            Pattern pattern = Pattern.compile("<@([0-9]+)>");
+            Matcher matcher = pattern.matcher(mention);
+            if (matcher.find()) {
+                ids.add(matcher.group(1));
+            } else {
+                channel.sendMessage("Commande mal utilisé, voir `r!help devoir-add`").queue();
+                return;
+            }
+
+            for (String id : ids) {
+                Member member = server.getMemberById(id);
+                if (member == null) {
+                    return;
+                }
+                users.add(member.getUser());
+            }
         }
         bdDevoir.addDevoir(users, args[2], description.toString(), all);
         channel.sendMessage("devoir ajouté pour " + args[1]).queue();
