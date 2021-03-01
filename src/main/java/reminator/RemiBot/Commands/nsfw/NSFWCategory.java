@@ -19,7 +19,9 @@ public enum NSFWCategory {
     PUBLIC("public"),
     SQUIRT("squirt"),
     TEEN("teen"),
-    jananese("japanese");
+    JAPANESE("japanese"),
+    PUSSY("pussy");
+
 
     private final static Random random = new Random();
 
