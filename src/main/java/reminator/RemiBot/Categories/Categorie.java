@@ -8,7 +8,7 @@ public abstract class Categorie {
 
     private String nom;
     private String description;
-    private ArrayList<Command> commands = new ArrayList<>();
+    private final ArrayList<Command> commands = new ArrayList<>();
 
     public String getNom() {
         return nom;

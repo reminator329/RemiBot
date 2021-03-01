@@ -1,12 +1,11 @@
 package reminator.RemiBot.music;
 
 
-import reminator.RemiBot.utils.InputStreamUtils;
+import reminator.RemiBot.utils.IOUtils;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,7 +40,7 @@ public class HTTPRequest {
         connection.setRequestMethod("GET");
 
 
-        return InputStreamUtils.readAsString(connection.getInputStream());
+        return IOUtils.readAsString(connection.getInputStream());
     }
 
 //    public String POST(String path, String data) throws IOException {

@@ -15,6 +15,8 @@ import reminator.RemiBot.Commands.*;
 import reminator.RemiBot.Commands.Devoir.DevoirAddCommand;
 import reminator.RemiBot.Commands.Devoir.DevoirCommand;
 import reminator.RemiBot.Commands.Devoir.DevoirFiniCommand;
+import reminator.RemiBot.Commands.nsfw.NSFWCommand;
+import reminator.RemiBot.Commands.nsfw.NSFWUploadCommand;
 
 import java.awt.*;
 import java.time.Duration;
@@ -23,7 +25,7 @@ import java.util.TimeZone;
 
 public class Controller extends ListenerAdapter {
 
-    private ArrayList<Message> messages = new ArrayList<>();
+    private final ArrayList<Message> messages = new ArrayList<>();
     private final int nbMessageMax = 5000;
 
     private final ArrayList<Command> commands = new ArrayList<>();
@@ -44,12 +46,15 @@ public class Controller extends ListenerAdapter {
     private final DevoirAddCommand devoirAddCommand;
     private final DevoirFiniCommand devoirFiniCommand;
     private final GhostPingCommand ghostPingCommand;
+    private final NSFWCommand nsfwCommand;
+    private final NSFWUploadCommand nsfwUploadCommand;
 
     private final ArrayList<Categorie> categories = new ArrayList<>();
     private final BilalCategorie bilalCategorie = new BilalCategorie();
     private final AutresCategorie autresCategorie = new AutresCategorie();
     private final JeuCategorie jeuCategorie = new JeuCategorie();
     private final DevoirCategorie devoirCategorie = new DevoirCategorie();
+    private final NsfwCategorie nsfwCategorie = new NsfwCategorie();
 
 
     public Controller() {
@@ -60,6 +65,7 @@ public class Controller extends ListenerAdapter {
         categories.add(jeuCategorie);
         categories.add(autresCategorie);
         categories.add(devoirCategorie);
+        categories.add(nsfwCategorie);
 
         // Commandes
         pingCommand = new PingCommand();
@@ -80,6 +86,9 @@ public class Controller extends ListenerAdapter {
         devoirFiniCommand = new DevoirFiniCommand();
         ghostPingCommand = new GhostPingCommand();
 
+        nsfwCommand = new NSFWCommand();
+        nsfwUploadCommand = new NSFWUploadCommand();
+
         // Ajout de la commande dans la liste
         commands.add(pingCommand);
         commands.add(pongCommand);
@@ -98,6 +107,8 @@ public class Controller extends ListenerAdapter {
         commands.add(devoirAddCommand);
         commands.add(devoirFiniCommand);
         commands.add(ghostPingCommand);
+        commands.add(nsfwCommand);
+        commands.add(nsfwUploadCommand);
 
         // Ajout de la commande dans la catégorie
         bilalCategorie.addCommand(ecouteBilalCommand);
@@ -120,6 +131,9 @@ public class Controller extends ListenerAdapter {
         devoirCategorie.addCommand(devoirCommand);
         devoirCategorie.addCommand(devoirAddCommand);
         devoirCategorie.addCommand(devoirFiniCommand);
+
+        nsfwCategorie.addCommand(nsfwCommand);
+        nsfwCategorie.addCommand(nsfwUploadCommand);
     }
 
     Guild guild;
