@@ -1,5 +1,4 @@
 build/
 .gradle
 src/main/java/reminator/RemiBot/bot/RemiBot.java
-nsfw/
 serviceAccountKey.json
