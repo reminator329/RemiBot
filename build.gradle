@@ -17,6 +17,8 @@ repositories {
 dependencies {
     compile "net.dv8tion:JDA:$jdaVersion"
     compile "org.json:json:20200518"
+
+    compile 'com.google.firebase:firebase-admin:7.1.0'
 }
 
 compileJava.options.encoding = 'UTF-8'
