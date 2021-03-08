@@ -14,7 +14,7 @@ public class RandomImagePicker {
     private List<File> imageFiles;
 
     public RandomImagePicker(String directoryPath) throws URISyntaxException {
-        directory = new File(getClass().getResource(directoryPath).toURI());
+        directory = new File(directoryPath);
         if(!directory.isDirectory()) {
             throw new RuntimeException(directoryPath + " is not a directory.");
         }

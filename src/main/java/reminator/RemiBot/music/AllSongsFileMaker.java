@@ -17,7 +17,7 @@ public class AllSongsFileMaker {
     private static final String oAuthToken = "";
 
     public static void main(String[] args) throws IOException {
-        File allMusics = new File("allSongs.txt");
+        File allMusics = new File("song/allSongs.txt");
         if (!allMusics.exists()) {
             allMusics.createNewFile();
         }

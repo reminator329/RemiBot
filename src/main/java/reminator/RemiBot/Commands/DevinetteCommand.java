@@ -27,9 +27,10 @@ public class DevinetteCommand extends Command {
         this.setPrefix(RemiBot.prefix);
         this.setLabel("devinette");
         this.setHelp(setHelp());
-        SongsReader songsReader = new SongsReader(new File("allSongs.txt"));
+        SongsReader songsReader = new SongsReader(getClass().getResourceAsStream("/song/allSongs.txt"));
         try {
             songs = songsReader.readSongs();
+            System.out.println("Songs : "+songs.size());
         } catch (IOException e) {
             e.printStackTrace();
         }
