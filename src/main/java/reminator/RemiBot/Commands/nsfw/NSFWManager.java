@@ -62,16 +62,29 @@ public class NSFWManager {
         categories.clear();
 
         try {
+            categories.put("girl", new Category("girl", "Girl", false));
+            categories.put("boy", new Category("boy", "Boy", true));
+
             ApiFuture<QuerySnapshot> query = db.collection("categories").get();
             QuerySnapshot querySnapshot = query.get();
             List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
             for (QueryDocumentSnapshot document : documents) {
                 String title = document.getString("title");
-                categories.put(document.getId(), new Category(document.getId(), title));
+                categories.put(document.getId(), new Category(document.getId(), title, false));
+            }
+
+            query = db.collection("categories_boy").get();
+            querySnapshot = query.get();
+            documents = querySnapshot.getDocuments();
+            for (QueryDocumentSnapshot document : documents) {
+                String title = document.getString("title");
+                String id = categories.containsKey(document.getId()) ? "boy_"+document.getId() : document.getId();
+                categories.put(id, new Category(id, title, true));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("[NSFWManager] Updated categories.");
     }
 
     public void updateImages() {
@@ -88,14 +101,29 @@ public class NSFWManager {
                 allImagesURL.add(imageURL);
 
                 List<String> categories = (List<String>) document.get("categories");
-                if(categories == null) {
-                    continue;
+                if(categories != null && categories.size() > 0) {
+                    categories.add("girl");
+                    for (String category : categories) {
+                        imagesURLByCategory.computeIfAbsent(category, k -> new ArrayList<>())
+                                .add(imageURL);
+
+                        this.categories.computeIfAbsent(category, k -> new Category(category, category, false))
+                                .incrImagesAmount();
+                    }
                 }
-                for (String category : categories) {
-                    imagesURLByCategory.computeIfAbsent(category, k -> new ArrayList<>())
-                            .add(imageURL);
-                    this.categories.computeIfAbsent(category, k -> new Category(category, category))
-                            .incrImagesAmount();
+                categories = (List<String>) document.get("categories_boy");
+                if(categories != null && categories.size() > 0) {
+                    categories.add("boy");
+                    for (String category : categories) {
+                        if(this.categories.containsKey("boy_"+category)) {
+                            category = "boy_"+category;
+                        }
+                        imagesURLByCategory.computeIfAbsent(category, k -> new ArrayList<>())
+                                .add(imageURL);
+                        String finalCategory = category;
+                        this.categories.computeIfAbsent(category, k -> new Category(finalCategory, finalCategory, true))
+                                .incrImagesAmount();
+                    }
                 }
             }
 
@@ -105,6 +133,7 @@ public class NSFWManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("[NSFWManager] Updated images.");
     }
 
     public Category getCategoryById(String id) {
@@ -129,6 +158,14 @@ public class NSFWManager {
 
     public int getImagesAmount() {
         return allImagesURL.size();
+    }
+
+    public int getBoyImagesAmount() {
+        return imagesURLByCategory.get("boy").size();
+    }
+
+    public int getGirlImagesAmount() {
+        return imagesURLByCategory.get("girl").size();
     }
 
     private String createImageURL(String filename, String ext) {

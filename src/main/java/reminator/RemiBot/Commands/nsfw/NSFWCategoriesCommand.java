@@ -9,6 +9,7 @@ import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.bot.RemiBot;
 
 import java.awt.*;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class NSFWCategoriesCommand extends Command {
@@ -39,10 +40,20 @@ public class NSFWCategoriesCommand extends Command {
                 .setTitle("Rémi NSFW")
                 .setFooter(member.getUser().getName(), member.getUser().getAvatarUrl());
 
-        String msg = nsfw.getCategories().values().stream()
-                .sorted()
+        Collection<Category> allCategories = nsfw.getCategories().values();
+        String boyCategories = allCategories.stream().filter(cat -> cat.isBoy() && !cat.getId().equals("boy")).sorted()
                 .map(cat -> String.format("**%s** (%d)", cat.getId(), cat.getImagesAmount()))
-        .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(", "));
+
+        String girlCategories = allCategories.stream().filter(cat -> !cat.isBoy() && !cat.getId().equals("girl")).sorted()
+                .map(cat -> String.format("**%s** (%d)", cat.getId(), cat.getImagesAmount()))
+                .collect(Collectors.joining(", "));
+
+        String msg = "**BOY** ("+nsfw.getBoyImagesAmount()+")\n\n";
+        msg += boyCategories;
+        msg += "\n\n";
+        msg += "**GIRL** ("+nsfw.getGirlImagesAmount()+")\n\n";
+        msg += girlCategories;
 
         msg += "\n\n**TOTAL :** " + nsfw.getImagesAmount() + " images uniques.";
 

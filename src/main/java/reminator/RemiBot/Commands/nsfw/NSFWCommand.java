@@ -54,11 +54,11 @@ public class NSFWCommand extends Command {
                 .setFooter(member.getUser().getName(), member.getUser().getAvatarUrl());
 
         if (args.length > 1) {
-            Category category = nsfw.getCategoryById(args[1]);
+            Category category = nsfw.getCategoryById(args[1].toLowerCase());
 
             if (category == null) {
                 embed.setColor(Color.RED);
-                embed.appendDescription("La catégorie `" + args[1] + "` n'existe pas.");
+                embed.appendDescription("La catégorie `" + args[1].toLowerCase() + "` n'existe pas.");
                 channel.sendMessage(embed.build()).queue();
                 return;
             }
