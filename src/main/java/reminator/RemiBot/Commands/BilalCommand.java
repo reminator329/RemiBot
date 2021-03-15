@@ -12,17 +12,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 public class BilalCommand extends Command {
     private RandomImagePicker randomImagePicker;
 
     {
         try {
-            randomImagePicker = new RandomImagePicker("/images");
+            randomImagePicker = new RandomImagePicker("images");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

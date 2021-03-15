@@ -15,8 +15,9 @@ import reminator.RemiBot.Commands.*;
 import reminator.RemiBot.Commands.Devoir.DevoirAddCommand;
 import reminator.RemiBot.Commands.Devoir.DevoirCommand;
 import reminator.RemiBot.Commands.Devoir.DevoirFiniCommand;
+import reminator.RemiBot.Commands.nsfw.NSFWCategoriesCommand;
 import reminator.RemiBot.Commands.nsfw.NSFWCommand;
-import reminator.RemiBot.Commands.nsfw.NSFWUploadCommand;
+import reminator.RemiBot.Commands.nsfw.NSFWUpdateCommand;
 
 import java.awt.*;
 import java.time.Duration;
@@ -47,7 +48,8 @@ public class Controller extends ListenerAdapter {
     private final DevoirFiniCommand devoirFiniCommand;
     private final GhostPingCommand ghostPingCommand;
     private final NSFWCommand nsfwCommand;
-    private final NSFWUploadCommand nsfwUploadCommand;
+    private final NSFWUpdateCommand nsfwUpdateCommand;
+    private final NSFWCategoriesCommand nsfwCategoriesCommand;
 
     private final ArrayList<Categorie> categories = new ArrayList<>();
     private final BilalCategorie bilalCategorie = new BilalCategorie();
@@ -87,7 +89,8 @@ public class Controller extends ListenerAdapter {
         ghostPingCommand = new GhostPingCommand();
 
         nsfwCommand = new NSFWCommand();
-        nsfwUploadCommand = new NSFWUploadCommand();
+        nsfwUpdateCommand = new NSFWUpdateCommand();
+        nsfwCategoriesCommand = new NSFWCategoriesCommand();
 
         // Ajout de la commande dans la liste
         commands.add(pingCommand);
@@ -108,7 +111,8 @@ public class Controller extends ListenerAdapter {
         commands.add(devoirFiniCommand);
         commands.add(ghostPingCommand);
         commands.add(nsfwCommand);
-        commands.add(nsfwUploadCommand);
+        commands.add(nsfwUpdateCommand);
+        commands.add(nsfwCategoriesCommand);
 
         // Ajout de la commande dans la catégorie
         bilalCategorie.addCommand(ecouteBilalCommand);
@@ -133,7 +137,8 @@ public class Controller extends ListenerAdapter {
         devoirCategorie.addCommand(devoirFiniCommand);
 
         nsfwCategorie.addCommand(nsfwCommand);
-        nsfwCategorie.addCommand(nsfwUploadCommand);
+        nsfwCategorie.addCommand(nsfwUpdateCommand);
+        nsfwCategorie.addCommand(nsfwCategoriesCommand);
     }
 
     Guild guild;

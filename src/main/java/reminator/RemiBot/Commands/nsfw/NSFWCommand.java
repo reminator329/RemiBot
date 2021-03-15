@@ -10,8 +10,6 @@ import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.bot.RemiBot;
 
 import java.awt.*;
-import java.io.*;
-import java.net.MalformedURLException;
 
 public class NSFWCommand extends Command {
 
@@ -19,6 +17,9 @@ public class NSFWCommand extends Command {
         this.setPrefix(RemiBot.prefix);
         this.setLabel("nsfw");
         this.setHelp(setHelp());
+
+        // Init
+        NSFWManager.get();
     }
 
     @Override
@@ -27,7 +28,7 @@ public class NSFWCommand extends Command {
         builder.setColor(Color.RED);
         builder.setTitle("Commande NSFW");
         builder.appendDescription("Affichage une image NSFW aléatoire.");
-        builder.addField("Signature", "`r!nsfw [categorie]`", false);
+        builder.addField("Signature", "`r!nsfw (categorie)`", false);
         return builder.build();
     }
 
@@ -42,32 +43,43 @@ public class NSFWCommand extends Command {
 
         Member member = event.getMember();
 
-        String[] args = event.getMessage().getContentRaw().split(" ");
+        NSFWManager nsfw = NSFWManager.get();
 
+        String[] args = event.getMessage().getContentRaw().split("\\s+");
 
-        EmbedBuilder embed = new EmbedBuilder();
-        NSFWCategory category = null;
-        try {
-            category = args.length == 1 ? NSFWCategory.random() : NSFWCategory.fromString(args[1]).orElseThrow(() -> new RuntimeException("Le catégorie `"+args[1]+"` n'existe pas."));
-            File image = category.getImageManager().getRandomImage();
-            InputStream inputStream = new FileInputStream(image);
-            embed.setImage("attachment://nsfw.png")
-                    .setDescription(category.label()+" :smirk:");
-            embed.setFooter(member.getUser().getName(), member.getUser().getAvatarUrl());
-            channel.sendFile(inputStream, "nsfw.png").embed(embed.build()).queue();
-        } catch (IllegalArgumentException e) {
-            embed.setColor(Color.RED);
-            embed.setTitle("RémiNSFW");
-            embed.appendDescription("**Erreur :** Il n'y a aucune image dans la catégorie `"+category.label()+"`.");
-            channel.sendMessage(embed.build()).queue();
-        }catch (RuntimeException e) {
-            embed.setColor(Color.RED);
-            embed.setTitle("RémiNSFW");
-            embed.appendDescription("**Erreur :** "+e.getMessage()+".");
-            channel.sendMessage(embed.build()).queue();
+        String imageURL;
+
+        EmbedBuilder embed = new EmbedBuilder()
+                .setTitle("Rémi NSFW")
+                .setFooter(member.getUser().getName(), member.getUser().getAvatarUrl());
+
+        if (args.length > 1) {
+            Category category = nsfw.getCategoryById(args[1]);
+
+            if (category == null) {
+                embed.setColor(Color.RED);
+                embed.appendDescription("La catégorie `" + args[1] + "` n'existe pas.");
+                channel.sendMessage(embed.build()).queue();
+                return;
+            }
+
+            imageURL = nsfw.getRandomImageURL(category);
+
+            if (imageURL == null) {
+                embed.setColor(Color.RED);
+                embed.appendDescription("Aucune image trouvée dans la catégorie `" + category.getTitle() + "`.");
+                channel.sendMessage(embed.build()).queue();
+                return;
+            }
+
+            embed.setDescription(category.getTitle() + " :smirk:");
+        }else{
+            imageURL = nsfw.getRandomImageURL();
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        embed.setColor(Color.PINK)
+                .setImage(imageURL);
+
+        channel.sendMessage(embed.build()).queue();
     }
 }
