@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.bot.RemiBot;
@@ -32,7 +33,13 @@ public class NSFWCommand extends Command {
 
     @Override
     public void executerCommande(GuildMessageReceivedEvent event) {
-        MessageChannel channel = event.getChannel();
+        TextChannel channel = event.getChannel();
+
+        if (!channel.isNSFW()) {
+            channel.sendMessage("Ce n'est pas un channel NSFW !!").queue();
+            return;
+        }
+
         Member member = event.getMember();
 
         String[] args = event.getMessage().getContentRaw().split(" ");
