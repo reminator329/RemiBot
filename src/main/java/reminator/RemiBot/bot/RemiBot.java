@@ -17,10 +17,7 @@ import reminator.RemiBot.Model.Eleve;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class RemiBot {
 
@@ -35,6 +32,9 @@ public class RemiBot {
 
         Timer timer = new Timer();
 
+        Date date = new Date();
+        long delay = 1000*3600 - (long) date.getMinutes() *60*1000 - date.getSeconds()* 1000L;
+
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -44,8 +44,6 @@ public class RemiBot {
                         continue;
                     }
                     SimpleDateFormat heureFormat = new SimpleDateFormat("HH");
-
-                    Date date = new Date();
 
                     if (Integer.parseInt(heureFormat.format(date)) != (e.getHeure())) {
                         continue;
@@ -107,7 +105,7 @@ public class RemiBot {
                             .queue();
                 }
             }
-        }, 0, 1000);
+        }, delay, 1000*3600);
 
     }
 }
