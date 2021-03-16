@@ -20,6 +20,7 @@ public class DevoirFiniCommand extends Command {
         this.setPrefix(RemiBot.prefix);
         this.setLabel("devoir-fini");
         this.addAlias("d-f");
+        this.addAlias("df");
         this.setHelp(setHelp());
     }
 
