@@ -14,6 +14,7 @@ import reminator.RemiBot.Model.Devoir;
 import reminator.RemiBot.Model.Eleve;
 
 import java.awt.*;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -29,23 +30,35 @@ public class RemiBot {
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.listening("Une berceuse"));
 
         Timer timer = new Timer();
-
         Date date = new Date();
         long delay = 1000*3600 - (long) date.getMinutes() *60*1000 - date.getSeconds()* 1000L;
 
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+
+                Date date = new Date();
+
                 for (Eleve e : BDDevoir.eleves) {
+                    System.out.println(date.toString() + " BONSOIR");
+                    e.getUser().openPrivateChannel()
+                            .flatMap(channel -> channel.sendMessage("test1"))
+                            .queue();
 
                     if (!e.isStatut()) {
                         continue;
                     }
+                    e.getUser().openPrivateChannel()
+                            .flatMap(channel -> channel.sendMessage("test2"))
+                            .queue();
                     SimpleDateFormat heureFormat = new SimpleDateFormat("HH");
 
                     if (Integer.parseInt(heureFormat.format(date)) != (e.getHeure())) {
                         continue;
                     }
+                    e.getUser().openPrivateChannel()
+                            .flatMap(channel -> channel.sendMessage("test3"))
+                            .queue();
 
 
                     User user = e.getUser();
@@ -104,6 +117,5 @@ public class RemiBot {
                 }
             }
         }, delay, 1000*3600);
-
     }
 }

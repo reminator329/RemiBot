@@ -71,6 +71,7 @@ public class DevoirRappelCommand extends Command {
             } else {
                 messageFin = "Le rappel des devoirs n'est pas activé.";
             }
+            bdDevoir.setRappel(user, s, h);
             channel.sendMessage(messageFin).queue();
 
             return;
