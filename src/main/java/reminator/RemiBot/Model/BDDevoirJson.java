@@ -254,7 +254,7 @@ public class BDDevoirJson extends BDDevoir {
         rappelUser.put("statut", b);
         if (heure >= 0) {
             rappelUser.put("heure", heure);
-        } else {
+        } else if (getHeure(user) < 0){
             rappelUser.put("heure", HEURE_DEFAULT);
         }
         jsonUser.put("rappel", rappelUser);

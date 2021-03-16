@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
@@ -16,7 +15,6 @@ import reminator.RemiBot.Model.Eleve;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.*;
 
 public class RemiBot {
