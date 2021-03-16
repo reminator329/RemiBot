@@ -40,25 +40,15 @@ public class RemiBot {
                 Date date = new Date();
 
                 for (Eleve e : BDDevoir.eleves) {
-                    System.out.println(date.toString() + " BONSOIR");
-                    e.getUser().openPrivateChannel()
-                            .flatMap(channel -> channel.sendMessage("test1"))
-                            .queue();
 
                     if (!e.isStatut()) {
                         continue;
                     }
-                    e.getUser().openPrivateChannel()
-                            .flatMap(channel -> channel.sendMessage("test2"))
-                            .queue();
                     SimpleDateFormat heureFormat = new SimpleDateFormat("HH");
 
                     if (Integer.parseInt(heureFormat.format(date)) != (e.getHeure())) {
                         continue;
                     }
-                    e.getUser().openPrivateChannel()
-                            .flatMap(channel -> channel.sendMessage("test3"))
-                            .queue();
 
 
                     User user = e.getUser();
