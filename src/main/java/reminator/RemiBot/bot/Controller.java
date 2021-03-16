@@ -15,6 +15,7 @@ import reminator.RemiBot.Commands.*;
 import reminator.RemiBot.Commands.Devoir.DevoirAddCommand;
 import reminator.RemiBot.Commands.Devoir.DevoirCommand;
 import reminator.RemiBot.Commands.Devoir.DevoirFiniCommand;
+import reminator.RemiBot.Commands.Devoir.DevoirRappelCommand;
 import reminator.RemiBot.Commands.nsfw.NSFWCategoriesCommand;
 import reminator.RemiBot.Commands.nsfw.NSFWCommand;
 import reminator.RemiBot.Commands.nsfw.NSFWUpdateCommand;
@@ -46,6 +47,7 @@ public class Controller extends ListenerAdapter {
     private final DevoirCommand devoirCommand;
     private final DevoirAddCommand devoirAddCommand;
     private final DevoirFiniCommand devoirFiniCommand;
+    private final DevoirRappelCommand devoirRappelCommand;
     private final GhostPingCommand ghostPingCommand;
     private final NSFWCommand nsfwCommand;
     private final NSFWUpdateCommand nsfwUpdateCommand;
@@ -86,6 +88,7 @@ public class Controller extends ListenerAdapter {
         devoirCommand = new DevoirCommand();
         devoirAddCommand = new DevoirAddCommand();
         devoirFiniCommand = new DevoirFiniCommand();
+        devoirRappelCommand = new DevoirRappelCommand();
         ghostPingCommand = new GhostPingCommand();
 
         nsfwCommand = new NSFWCommand();
@@ -109,6 +112,7 @@ public class Controller extends ListenerAdapter {
         commands.add(devoirCommand);
         commands.add(devoirAddCommand);
         commands.add(devoirFiniCommand);
+        commands.add(devoirRappelCommand);
         commands.add(ghostPingCommand);
         commands.add(nsfwCommand);
         commands.add(nsfwUpdateCommand);
@@ -135,6 +139,7 @@ public class Controller extends ListenerAdapter {
         devoirCategorie.addCommand(devoirCommand);
         devoirCategorie.addCommand(devoirAddCommand);
         devoirCategorie.addCommand(devoirFiniCommand);
+        devoirCategorie.addCommand(devoirRappelCommand);
 
         nsfwCategorie.addCommand(nsfwCommand);
         nsfwCategorie.addCommand(nsfwUpdateCommand);

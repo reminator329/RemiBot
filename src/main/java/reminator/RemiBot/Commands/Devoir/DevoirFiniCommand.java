@@ -19,6 +19,7 @@ public class DevoirFiniCommand extends Command {
     public DevoirFiniCommand(){
         this.setPrefix(RemiBot.prefix);
         this.setLabel("devoir-fini");
+        this.addAlias("d-f");
         this.setHelp(setHelp());
     }
 
@@ -26,7 +27,7 @@ public class DevoirFiniCommand extends Command {
     public MessageEmbed setHelp() {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Color.RED);
-        builder.setTitle("Commande devoir");
+        builder.setTitle("Commande devoir-fini");
         builder.appendDescription("Supprime un devoir de votre liste de devoirs");
         builder.addField("Signature", "`r!devoir-fini <numéro du devoir>`", false);
         return builder.build();

@@ -22,6 +22,7 @@ public class DevoirCommand extends Command {
     public DevoirCommand() {
         this.setPrefix(RemiBot.prefix);
         this.setLabel("devoir");
+        this.addAlias("d");
         this.setHelp(setHelp());
     }
 

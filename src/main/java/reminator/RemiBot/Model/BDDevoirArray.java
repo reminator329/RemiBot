@@ -62,4 +62,19 @@ public class BDDevoirArray extends BDDevoir {
         devoirs.remove(devoir);
         return devoir;
     }
+
+    @Override
+    public void setRappel(User user, boolean b, int heure) {
+
+    }
+
+    @Override
+    public int getHeure(User user) {
+        return 0;
+    }
+
+    @Override
+    public boolean getStatut(User user) {
+        return false;
+    }
 }

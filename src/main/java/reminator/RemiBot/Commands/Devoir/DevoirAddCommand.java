@@ -21,6 +21,7 @@ public class DevoirAddCommand extends Command {
     public DevoirAddCommand() {
         this.setPrefix(RemiBot.prefix);
         this.setLabel("devoir-add");
+        this.addAlias("d-a");
         this.setHelp(setHelp());
     }
 
@@ -28,7 +29,7 @@ public class DevoirAddCommand extends Command {
     public MessageEmbed setHelp() {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Color.RED);
-        builder.setTitle("Commande devoir");
+        builder.setTitle("Commande devoir-add");
         builder.appendDescription("Ajoute un devoir à la base de devoirs");
         builder.addField("Signature", "`r!devoir-add <mention> <matière> <description>`", false);
         return builder.build();
@@ -39,7 +40,7 @@ public class DevoirAddCommand extends Command {
         MessageChannel channel = event.getChannel();
         String[] args = event.getMessage().getContentRaw().split("\\s+");
         if (args.length < 4) {
-            channel.sendMessage("Commande mal utilisé, voir `r!help devoir-add`").queue();
+            channel.sendMessage("Commande mal utilisée, voir `r!help devoir-add`").queue();
             return;
         }
         StringBuilder description = new StringBuilder();
@@ -59,7 +60,7 @@ public class DevoirAddCommand extends Command {
             if (matcher.find()) {
                 ids.add(matcher.group(1));
             } else {
-                channel.sendMessage("Commande mal utilisé, voir `r!help devoir-add`").queue();
+                channel.sendMessage("Commande mal utilisée, voir `r!help devoir-add`").queue();
                 return;
             }
 
@@ -78,7 +79,7 @@ public class DevoirAddCommand extends Command {
                     users.add(member.getUser());
                 }
             } else {
-                channel.sendMessage("Commande mal utilisé, voir `r!help devoir-add`").queue();
+                channel.sendMessage("Commande mal utilisée, voir `r!help devoir-add`").queue();
                 return;
             }
         } else if (mention.equals("@everyone")) {
@@ -100,7 +101,7 @@ public class DevoirAddCommand extends Command {
             if (matcher.find()) {
                 ids.add(matcher.group(1));
             } else {
-                channel.sendMessage("Commande mal utilisé, voir `r!help devoir-add`").queue();
+                channel.sendMessage("Commande mal utilisée, voir `r!help devoir-add`").queue();
                 return;
             }
 

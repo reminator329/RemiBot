@@ -7,6 +7,8 @@ import java.util.Objects;
 public class Eleve {
 
     private final User user;
+    private int heure = BDDevoir.HEURE_DEFAULT;
+    private boolean statut = false;
 
     public Eleve(User user) {
         this.user = user;
@@ -27,5 +29,21 @@ public class Eleve {
     @Override
     public int hashCode() {
         return Objects.hash(user);
+    }
+
+    public int getHeure() {
+        return heure;
+    }
+
+    public void setHeure(int heure) {
+        this.heure = heure;
+    }
+
+    public boolean isStatut() {
+        return statut;
+    }
+
+    public void setStatut(boolean statut) {
+        this.statut = statut;
     }
 }

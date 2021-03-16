@@ -66,7 +66,7 @@ public class BDDevoirJson extends BDDevoir {
         Eleve eleve = new Eleve(author);
         String id = eleve.getUser().getId();
         try {
-            JSONArray devoirUser = json.getJSONArray(id);
+            JSONArray devoirUser = json.getJSONObject(id).getJSONArray("devoirs");
 
             devoirUser.forEach(o -> {
                 if (o instanceof JSONObject) {
@@ -90,6 +90,7 @@ public class BDDevoirJson extends BDDevoir {
             e.printStackTrace();
             return;
         }
+
         Devoir devoir = new Devoir(course, description, all);
         JSONObject devoirJson = devoir.toJson();
 
@@ -97,7 +98,7 @@ public class BDDevoirJson extends BDDevoir {
         String line;
         try {
             while ((line = br.readLine()) != null) {
-                    content.append(line);
+                content.append(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -113,14 +114,18 @@ public class BDDevoirJson extends BDDevoir {
             Eleve eleve = new Eleve(user);
             String id = eleve.getUser().getId();
             JSONArray devoirUser;
+            JSONObject userJson;
 
             try {
-                devoirUser = json.getJSONArray(id);
+                userJson = json.getJSONObject(id);
+                devoirUser = userJson.getJSONArray("devoirs");
             } catch (JSONException e) {
+                userJson = new JSONObject();
                 devoirUser = new JSONArray();
             }
             devoirUser.put(devoirJson);
-            json.put(id, devoirUser);
+            userJson.put("devoirs", devoirUser);
+            json.put(id, userJson);
         }
 
         try {
@@ -157,11 +162,13 @@ public class BDDevoirJson extends BDDevoir {
             content.append("{}");
         }
         JSONObject json = new JSONObject(content.toString());
+        JSONObject userJson;
 
         Eleve eleve = new Eleve(author);
         String id = eleve.getUser().getId();
         try {
-            JSONArray devoirUser = json.getJSONArray(id);
+            userJson = json.getJSONObject(id);
+            JSONArray devoirUser = userJson.getJSONArray("devoirs");
 
             if (numeroDevoir <= 0 || numeroDevoir > devoirUser.length()) {
                 return null;
@@ -191,8 +198,8 @@ public class BDDevoirJson extends BDDevoir {
                     break;
                 }
             }
-            json.remove(id);
-            json.put(id, devoirUser);
+            userJson.put("devoirs", devoirUser);
+            json.put(id, userJson);
 
             try {
                 bw = new BufferedWriter(new FileWriter(fileDevoir.getAbsoluteFile()));
@@ -205,5 +212,131 @@ public class BDDevoirJson extends BDDevoir {
         } catch (JSONException e) {
             return null;
         }
+    }
+
+    @Override
+    public void setRappel(User user, boolean b, int heure) {
+
+        try {
+            br = new BufferedReader(new FileReader(fileDevoir.getAbsoluteFile()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        StringBuilder content = new StringBuilder();
+        String line;
+        while (true) {
+            try {
+                if ((line = br.readLine()) == null) break;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+            content.append(line);
+        }
+        if (content.toString().equals("")) {
+            content.append("{}");
+        }
+        JSONObject json = new JSONObject(content.toString());
+
+        Eleve eleve = new Eleve(user);
+        String id = eleve.getUser().getId();
+        JSONObject jsonUser = json.getJSONObject(id);
+        JSONObject rappelUser;
+
+        try {
+            rappelUser = jsonUser.getJSONObject("rappel");
+        } catch (JSONException e) {
+            rappelUser = new JSONObject();
+        }
+
+        rappelUser.put("statut", b);
+        if (heure >= 0) {
+            rappelUser.put("heure", heure);
+        } else {
+            rappelUser.put("heure", HEURE_DEFAULT);
+        }
+        jsonUser.put("rappel", rappelUser);
+        json.put(id, jsonUser);
+
+        try {
+            bw = new BufferedWriter(new FileWriter(fileDevoir.getAbsoluteFile()));
+            bw.write(json.toString());
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getHeure(User user) {
+
+        try {
+            br = new BufferedReader(new FileReader(fileDevoir.getAbsoluteFile()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return -1;
+        }
+
+        StringBuilder content = new StringBuilder();
+        String line;
+        while (true) {
+            try {
+                if ((line = br.readLine()) == null) break;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return -1;
+            }
+            content.append(line);
+        }
+        if (content.toString().equals("")) {
+            content.append("{}");
+        }
+        JSONObject json = new JSONObject(content.toString());
+
+        Eleve eleve = new Eleve(user);
+        String id = eleve.getUser().getId();
+        JSONObject jsonUser = json.getJSONObject(id);
+        JSONObject rappelUser = jsonUser.getJSONObject("rappel");
+
+        try {
+            return (int) rappelUser.get("heure");
+        } catch (JSONException e) {
+            return -1;
+        }
+    }
+
+    @Override
+    public boolean getStatut(User user) {
+
+        try {
+            br = new BufferedReader(new FileReader(fileDevoir.getAbsoluteFile()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        StringBuilder content = new StringBuilder();
+        String line;
+        while (true) {
+            try {
+                if ((line = br.readLine()) == null) break;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+            content.append(line);
+        }
+        if (content.toString().equals("")) {
+            content.append("{}");
+        }
+        JSONObject json = new JSONObject(content.toString());
+
+        Eleve eleve = new Eleve(user);
+        String id = eleve.getUser().getId();
+        JSONObject jsonUser = json.getJSONObject(id);
+        JSONObject rappelUser = jsonUser.getJSONObject("rappel");
+
+        return (boolean) rappelUser.get("statut");
     }
 }
