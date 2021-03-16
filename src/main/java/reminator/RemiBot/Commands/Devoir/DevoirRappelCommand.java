@@ -23,6 +23,7 @@ public class DevoirRappelCommand extends Command {
         this.setPrefix(RemiBot.prefix);
         this.setLabel("devoir-rappel");
         this.addAlias("d-r");
+        this.addAlias("dr");
         this.setHelp(setHelp());
     }
 
