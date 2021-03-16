@@ -171,7 +171,7 @@ public class Controller extends ListenerAdapter {
                 .flatMap(Message::delete)
                 .queue();
     }
-
+/*
     @Override
     public void onGuildMessageUpdate(@NotNull GuildMessageUpdateEvent event) {
         if (event.getAuthor().isBot()) return;
@@ -249,7 +249,7 @@ public class Controller extends ListenerAdapter {
                         .sendMessage(embedBuilder.build()))
                 .queue();
     }
-
+*/
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
