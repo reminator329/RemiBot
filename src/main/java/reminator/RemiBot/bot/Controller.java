@@ -19,6 +19,9 @@ import reminator.RemiBot.Commands.Devoir.DevoirRappelCommand;
 import reminator.RemiBot.Commands.nsfw.NSFWCategoriesCommand;
 import reminator.RemiBot.Commands.nsfw.NSFWCommand;
 import reminator.RemiBot.Commands.nsfw.NSFWUpdateCommand;
+import reminator.RemiBot.Model.BDDevoir;
+import reminator.RemiBot.Model.BDDevoirJson;
+import reminator.RemiBot.Model.Eleve;
 
 import java.awt.*;
 import java.time.Duration;
@@ -253,6 +256,8 @@ public class Controller extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
+        BDDevoir bdDevoir = BDDevoirJson.getInstance();
+        bdDevoir.ajoutTimer(new Eleve(event.getAuthor()));
 
         this.guild = event.getGuild();
         if (this.messages.size() >= this.nbMessageMax) {

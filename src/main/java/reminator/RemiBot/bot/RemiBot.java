@@ -40,15 +40,17 @@ public class RemiBot {
                 Date date = new Date();
 
                 for (Eleve e : BDDevoir.eleves) {
-
+                    System.out.println("test1");
                     if (!e.isStatut()) {
                         continue;
                     }
+                    System.out.println("test2");
                     SimpleDateFormat heureFormat = new SimpleDateFormat("HH");
 
                     if (Integer.parseInt(heureFormat.format(date)) != (e.getHeure())) {
                         continue;
                     }
+                    System.out.println("test3");
 
 
                     User user = e.getUser();
