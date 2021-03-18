@@ -2,8 +2,12 @@ package reminator.RemiBot.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -33,16 +37,20 @@ public class AmongusCommand extends Command{
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event) {
+    public void executerCommande(MessageReceivedEvent event) {
+        if (!event.isFromGuild()) {
+            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            return;
+        }
         MessageChannel channel = event.getChannel();
 
         if (execute) {
             execute = false;
-            channel.sendMessage("Arrêt de la commande").queue();
+            EnvoiMessage.sendMessage(event, "Arrêt de la commande");
             timer.cancel();
             timer.purge();
         } else {
-            channel.sendMessage("Début de la commande").queue();
+            EnvoiMessage.sendMessage(event, "Début de la commande");
             execute = true;
             java.util.List<Member> members = event.getGuild().getMembers();
             java.util.List<Role> roles = event.getGuild().getRoles();
@@ -71,7 +79,7 @@ public class AmongusCommand extends Command{
                             String j = a.getName();
                             if (j.equalsIgnoreCase("Among Us")) {
                                 if (!jeu[i].equalsIgnoreCase(j)) {
-                                    channel.sendMessage(finalEveryone.getAsMention() + "\n" + m.getUser().getAsMention() + " joue a Among Us !!!").queue();
+                                    EnvoiMessage.sendMessage(event, finalEveryone.getAsMention() + "\n" + m.getUser().getAsMention() + " joue a Among Us !!!");
                                 }
                                 playsAmong = true;
                                 jeu[i] = j;

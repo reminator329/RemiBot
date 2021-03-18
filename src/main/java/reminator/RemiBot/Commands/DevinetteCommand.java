@@ -4,15 +4,18 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.music.Song;
 import reminator.RemiBot.music.SongsReader;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,11 +52,11 @@ public class DevinetteCommand extends Command {
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event1) {
-        MessageChannel channel = event1.getChannel();
+    public void executerCommande(MessageReceivedEvent event) {
+        MessageChannel channel = event.getChannel();
 
         final int[] tryAmount = {1};
-        User user = event1.getAuthor();
+        User user = event.getAuthor();
 
         long channelId = channel.getIdLong();
         long authorId = user.getIdLong();
@@ -65,22 +68,22 @@ public class DevinetteCommand extends Command {
                 .setFooter(user.getName(), user.getAvatarUrl())
         .setThumbnail("https://cdn.discordapp.com/attachments/496020487797735435/766374212189028372/unknown.png");
 
-        event1.getJDA().addEventListener(new ListenerAdapter() {
+        event.getJDA().addEventListener(new ListenerAdapter() {
             @Override
-            public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
+            public void onMessageReceived(@NotNull MessageReceivedEvent event) {
                 if (event.getChannel().getIdLong() != channelId) return;
                 if (event.getAuthor().getIdLong() != authorId) return;
 
                 String msg = event.getMessage().getContentRaw();
 
                 if(song.getTitle().equalsIgnoreCase(msg)) {
-                    channel.sendMessage("Oui !! C'était bien **"+song.getTitle()+"** ! Tu as trouvé en "+tryAmount[0]+" essai(s). Félicitations ! :partying_face: :heart:\n"+song.getSpotifyUrl()).queue();
+                    EnvoiMessage.sendMessage(event, "Oui !! C'était bien **"+song.getTitle()+"** ! Tu as trouvé en "+tryAmount[0]+" essai(s). Félicitations ! :partying_face: :heart:\n"+song.getSpotifyUrl());
                     event.getJDA().removeEventListener(this);
                     return;
                 }
 
                 if(msg.equalsIgnoreCase("jsp")) {
-                    channel.sendMessage("Dommaage :sob: ! La chanson était **"+song.getTitle()+"** !!\n"+song.getSpotifyUrl()).queue();
+                    EnvoiMessage.sendMessage(event, "Dommaage :sob: ! La chanson était **"+song.getTitle()+"** !!\n"+song.getSpotifyUrl());
                     event.getJDA().removeEventListener(this);
                     return;
                 }
@@ -92,11 +95,11 @@ public class DevinetteCommand extends Command {
 
                 tryAmount[0]++;
 
-                channel.sendMessage("Nan ! C'est pas ça ! Essaie encore !").queue();
+                EnvoiMessage.sendMessage(event, "Nan ! C'est pas ça ! Essaie encore !");
             }
         });
 
-        channel.sendMessage(embedBuilder.build()).queue();
+        EnvoiMessage.sendMessage(event, embedBuilder.build());
     }
 
     private Song getRandomSong() {

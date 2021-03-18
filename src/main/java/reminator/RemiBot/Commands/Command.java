@@ -1,9 +1,10 @@
 package reminator.RemiBot.Commands;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import reminator.RemiBot.Categories.Categorie;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -12,7 +13,7 @@ public abstract class Command {
 
     private String prefix;
     private String label;
-    private ArrayList<String> aliass = new ArrayList<>();
+    private ArrayList<String> aliass;
     private MessageEmbed help;
 
     public Command() {
@@ -45,7 +46,7 @@ public abstract class Command {
 
     public abstract MessageEmbed setHelp();
 
-    public abstract void executerCommande(GuildMessageReceivedEvent event);
+    public abstract void executerCommande(MessageReceivedEvent event);
 
     protected void addAlias (String alias) {
         aliass.add(alias);

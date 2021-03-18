@@ -4,15 +4,18 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Model.BDDevoir;
 import reminator.RemiBot.Model.BDDevoirJson;
 import reminator.RemiBot.Model.Eleve;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DevoirRappelCommand extends Command {
@@ -38,7 +41,7 @@ public class DevoirRappelCommand extends Command {
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event) {
+    public void executerCommande(MessageReceivedEvent event) {
         MessageChannel channel = event.getChannel();
         String[] args = event.getMessage().getContentRaw().split("\\s+");
         User user = event.getAuthor();
@@ -73,8 +76,7 @@ public class DevoirRappelCommand extends Command {
                 messageFin = "Le rappel des devoirs n'est pas activé.";
             }
             bdDevoir.setRappel(user, s, h);
-            channel.sendMessage(messageFin).queue();
-
+            EnvoiMessage.sendMessage(event, messageFin);
             return;
         }
 
@@ -118,7 +120,7 @@ public class DevoirRappelCommand extends Command {
         }
 
         if (erreur) {
-            channel.sendMessage(messageErreur.toString()).queue();
+            EnvoiMessage.sendMessage(event, messageErreur.toString());
         }
 
         bdDevoir.setRappel(user, statut, heure);
@@ -162,6 +164,6 @@ public class DevoirRappelCommand extends Command {
                 messageFin = "Le rappel des devoirs a été désactivé (statut = false)";
             }
         }
-        channel.sendMessage(messageFin).queue();
+        EnvoiMessage.sendMessage(event, messageFin);
     }
 }

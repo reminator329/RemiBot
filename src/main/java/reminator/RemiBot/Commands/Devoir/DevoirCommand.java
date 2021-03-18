@@ -4,13 +4,16 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Model.BDDevoir;
-import reminator.RemiBot.Model.BDDevoirArray;
 import reminator.RemiBot.Model.BDDevoirJson;
 import reminator.RemiBot.Model.Devoir;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -37,12 +40,12 @@ public class DevoirCommand extends Command {
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event) {
+    public void executerCommande(MessageReceivedEvent event) {
         MessageChannel channel = event.getChannel();
 
         ArrayList<Devoir> devoirs = bdDevoir.getDevoirs(event.getAuthor());
         if (devoirs.isEmpty()) {
-            channel.sendMessage("Vous n'avez pas de devoirs à faire").queue();
+            EnvoiMessage.sendMessage(event, "Vous n'avez pas de devoirs à faire");
             return;
         }
         User user = event.getAuthor();
@@ -76,7 +79,7 @@ public class DevoirCommand extends Command {
         }
 
         embedBuilder.setFooter(user.getName() + " Il vous reste " + (numeroDevoir-1) + " devoir(s) à faire.", user.getAvatarUrl());
-        channel.sendMessage(embedBuilder.build()).queue();
+        EnvoiMessage.sendMessage(event, embedBuilder.build());
     }
 
     private int ajoutDevoirs(StringBuilder message, ArrayList<Devoir> devoirs, int numeroDevoir) {

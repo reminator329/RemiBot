@@ -2,9 +2,12 @@ package reminator.RemiBot.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import reminator.RemiBot.Categories.AutresCategorie;
+import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
 import java.util.Timer;
@@ -32,7 +35,11 @@ public class SpamCommand extends Command {
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event) {
+    public void executerCommande(MessageReceivedEvent event) {
+        if (!event.isFromGuild()) {
+            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            return;
+        }
         MessageChannel channel = event.getChannel();
 
         if (execute) {

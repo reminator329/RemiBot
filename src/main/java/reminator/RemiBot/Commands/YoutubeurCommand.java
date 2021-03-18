@@ -4,9 +4,13 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import javax.annotation.Nonnull;
 import javax.crypto.SecretKeyFactory;
@@ -49,10 +53,14 @@ public class YoutubeurCommand extends Command {
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event1) {
-        MessageChannel channel = event1.getChannel();
+    public void executerCommande(MessageReceivedEvent event) {
+        if (!event.isFromGuild()) {
+            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            return;
+        }
+        MessageChannel channel = event.getChannel();
 
-        final long authorId = event1.getAuthor().getIdLong();
+        final long authorId = event.getAuthor().getIdLong();
         final long channelId = channel.getIdLong();
 
         EmbedBuilder embed = new EmbedBuilder();
@@ -60,7 +68,7 @@ public class YoutubeurCommand extends Command {
                 .setDescription("Qui est ce youtubeur ? :face_with_monocle:");
         channel.sendMessage(embed.build()).queue();
 
-        event1.getJDA().addEventListener(new ListenerAdapter() {
+        event.getJDA().addEventListener(new ListenerAdapter() {
             @Override
             public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
                 if (event.getChannel().getIdLong() != channelId) return;
