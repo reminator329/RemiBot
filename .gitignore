@@ -1,4 +1,13 @@
 build/
 .gradle
+.idea
 src/main/java/reminator/RemiBot/bot/RemiBot.java
 serviceAccountKey.json
+
+
+**/build/
+!src/**/build/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+*/workspace.xml

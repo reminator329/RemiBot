@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Model.BDDevoir;
-import reminator.RemiBot.Model.BDDevoirArray;
 import reminator.RemiBot.Model.BDDevoirJson;
 import reminator.RemiBot.bot.RemiBot;
 
@@ -32,7 +31,7 @@ public class DevoirAddCommand extends Command {
         builder.setColor(Color.RED);
         builder.setTitle("Commande devoir-add");
         builder.appendDescription("Ajoute un devoir à la base de devoirs");
-        builder.addField("Signature", "`r!devoir-add <mention> <matière> <description>`", false);
+        builder.addField("Signature", "`r!devoir-add [mention] <matière> <description>`", false);
         return builder.build();
     }
 
@@ -40,13 +39,9 @@ public class DevoirAddCommand extends Command {
     public void executerCommande(GuildMessageReceivedEvent event) {
         MessageChannel channel = event.getChannel();
         String[] args = event.getMessage().getContentRaw().split("\\s+");
-        if (args.length < 4) {
+        if (args.length < 3) {
             channel.sendMessage("Commande mal utilisée, voir `r!help devoir-add`").queue();
             return;
-        }
-        StringBuilder description = new StringBuilder();
-        for (int i = 3; i < args.length; i++) {
-            description.append(args[i]).append(" ");
         }
         String mention = args[1];
         Guild server = event.getGuild();
@@ -54,36 +49,45 @@ public class DevoirAddCommand extends Command {
         ArrayList<String> ids = new ArrayList<>();
         boolean all = false;
         ArrayList<User> users = new ArrayList<>();
-        System.out.println(mention);
-        if (mention.contains("!")) {
-            Pattern pattern = Pattern.compile("<@!([0-9]+)>");
-            Matcher matcher = pattern.matcher(mention);
-            if (matcher.find()) {
-                ids.add(matcher.group(1));
-            } else {
-                channel.sendMessage("Commande mal utilisée, voir `r!help devoir-add`").queue();
-                return;
-            }
 
-            for (String id : ids) {
-                Member member = server.getMemberById(id);
-                if (member == null) {
-                    return;
-                }
-                users.add(member.getUser());
-            }
+        String type;
+        int indiceMatiere = 2;
+
+
+        if (mention.contains("!")) {
+            type = "!";
         } else if (mention.contains("&")) {
-            Pattern pattern = Pattern.compile("<@&([0-9]+)>");
-            Matcher matcher = pattern.matcher(mention);
-            if (matcher.find()) {
-                for (Member member : server.getMembersWithRoles(server.getRoleById(matcher.group(1)))) {
-                    users.add(member.getUser());
-                }
-            } else {
-                channel.sendMessage("Commande mal utilisée, voir `r!help devoir-add`").queue();
-                return;
-            }
+            type = "&";
         } else if (mention.equals("@everyone")) {
+            type = "@everyone";
+        } else {
+            type = "";
+        }
+
+        Pattern pattern = Pattern.compile("<@" + type + "([0-9]+)>");
+        Matcher matcher = pattern.matcher(mention);
+
+        if (matcher.find()) {
+            switch (type) {
+                case "&" -> {
+                    for (Member member : server.getMembersWithRoles(server.getRoleById(matcher.group(1)))) {
+                        users.add(member.getUser());
+                    }
+                }
+                case "!", "" -> {
+                    ids.add(matcher.group(1));
+
+                    for (String id : ids) {
+                        Member member = server.getMemberById(id);
+                        if (member == null) {
+                            return;
+                        }
+                        users.add(member.getUser());
+                    }
+                }
+            }
+        } else if (type.equalsIgnoreCase("@everyone")) {
+
             for (Member m : server.getMembers()) {
                 ids.add(m.getUser().getId());
             }
@@ -97,24 +101,18 @@ public class DevoirAddCommand extends Command {
                 users.add(member.getUser());
             }
         } else {
-            Pattern pattern = Pattern.compile("<@([0-9]+)>");
-            Matcher matcher = pattern.matcher(mention);
-            if (matcher.find()) {
-                ids.add(matcher.group(1));
-            } else {
-                channel.sendMessage("Commande mal utilisée, voir `r!help devoir-add`").queue();
-                return;
-            }
-
-            for (String id : ids) {
-                Member member = server.getMemberById(id);
-                if (member == null) {
-                    return;
-                }
-                users.add(member.getUser());
-            }
+            users.add(event.getAuthor());
+            mention = "<@!" + event.getAuthor().getIdLong() + '>';
+            indiceMatiere--;
         }
-        bdDevoir.addDevoir(users, args[2], description.toString(), all);
-        channel.sendMessage("devoir ajouté pour " + args[1]).queue();
+
+        String matiere = args[indiceMatiere];
+        StringBuilder description = new StringBuilder();
+        for (int i = indiceMatiere + 1; i < args.length; i++) {
+            description.append(args[i]).append(" ");
+        }
+
+        bdDevoir.addDevoir(users, matiere, description.toString(), all);
+        channel.sendMessage("devoir ajouté pour " + mention).queue();
     }
 }
