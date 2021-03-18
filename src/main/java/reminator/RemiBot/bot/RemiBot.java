@@ -24,11 +24,10 @@ public class RemiBot {
     public static String token;
 
     public static void main(String[] arguments) throws Exception {
-        System.out.println("OZFNZOAJNFOÄZJNFOAZJN");
-        token = "NzY0OTM3NTQ1NzE1OTQxNDA2.X4Nhmg.nKzIb0L_S-BHpwu_wmb5gRaWJKg";
+        token = arguments[0];
         JDA api = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES).enableCache(CacheFlag.ACTIVITY).build();
         api.addEventListener(new Controller());
-        api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.listening("Une berceuse"));
+        api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
 
         Timer timer = new Timer();
         Date date = new Date();
