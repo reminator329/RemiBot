@@ -147,6 +147,7 @@ public class Controller extends ListenerAdapter {
     }
 
     Guild guild;
+    Member member;
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
@@ -158,7 +159,7 @@ public class Controller extends ListenerAdapter {
         String[] args = event.getMessage().getContentRaw().split("\\s+");
         for (Command c : commands) {
             String prefixLabel = c.getPrefix() + c.getLabel();
-            String[] test = args[0].split(c.getPrefix());
+            String[] test = args[0].split(c.getPrefix().toLowerCase() + "|" + c.getPrefix().toUpperCase());
             if (prefixLabel.equalsIgnoreCase(args[0]) || test.length > 1 && c.isAlias(test[1])) {
                 c.executerCommande(event);
             }
@@ -166,16 +167,16 @@ public class Controller extends ListenerAdapter {
 
         if (event.isFromGuild()) {
             this.guild = event.getGuild();
+            member = guild.getMemberById("368733622246834188");
             return;
         }
 
-        Member remi = guild.getMemberById("368733622246834188");
-        if (remi == null) {
+        if (member == null) {
             return;
         }
 
-        remi.getUser().openPrivateChannel()
-                .flatMap(channel -> channel.sendMessage(event.getAuthor().getName() + " m'a écrit " + event.getMessage().getContentDisplay()))
+        member.getUser().openPrivateChannel()
+                .flatMap(channel -> channel.sendMessage(event.getAuthor().getName() + " - " + event.getMessage().getContentDisplay()))
         .queue();
 
 /*
