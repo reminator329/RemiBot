@@ -1,4 +1,5 @@
 plugins {
+    id'java'
     id'application'
     id'com.github.johnrengelman.shadow' version '5.2.0'
 }
@@ -24,3 +25,6 @@ dependencies {
 }
 
 compileJava.options.encoding = 'UTF-8'
+
+sourceCompatibility = 1.15
+targetCompatibility = 1.15
