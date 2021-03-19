@@ -3,3 +3,6 @@ build/
 .idea
 src/main/java/reminator/RemiBot/bot/RemiBot.java
 serviceAccountKey.json
+Makefile
+.project
+devoirs.txt

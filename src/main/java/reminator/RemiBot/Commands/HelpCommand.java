@@ -4,10 +4,14 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Categories.Categorie;
 import reminator.RemiBot.bot.Controller;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -62,7 +66,7 @@ public class HelpCommand extends Command {
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event) {
+    public void executerCommande(MessageReceivedEvent event) {
         MessageChannel channel = event.getChannel();
 
         String[] args = event.getMessage().getContentRaw().split("\\s+");
@@ -77,7 +81,7 @@ public class HelpCommand extends Command {
             } else {
                 message = this.help();
             }
-            channel.sendMessage(message).queue();
+            EnvoiMessage.sendMessage(event, message);
         } else {
             ArrayList<Command> commands = this.controller.getCommands();
 
@@ -90,11 +94,11 @@ public class HelpCommand extends Command {
                     } else {
                         message = c.getHelp();
                     }
-                    channel.sendMessage(message).queue();
+                    EnvoiMessage.sendMessage(event, message);
                 }
             }
             if (message == null) {
-                channel.sendMessage("La commande `" + args[1] + "` n'existe pas").queue();
+                EnvoiMessage.sendMessage(event, "La commande `" + args[1] + "` n'existe pas");
             }
         }
     }

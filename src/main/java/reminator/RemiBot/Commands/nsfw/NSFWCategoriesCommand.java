@@ -4,9 +4,14 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
 import java.util.Collection;
@@ -30,15 +35,15 @@ public class NSFWCategoriesCommand extends Command {
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event) {
+    public void executerCommande(MessageReceivedEvent event) {
         MessageChannel channel = event.getChannel();
-        Member member = event.getMember();
+        User user = event.getAuthor();
 
         NSFWManager nsfw = NSFWManager.get();
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Rémi NSFW")
-                .setFooter(member.getUser().getName(), member.getUser().getAvatarUrl());
+                .setFooter(user.getName(), user.getAvatarUrl());
 
         Collection<Category> allCategories = nsfw.getCategories().values();
         String boyCategories = allCategories.stream().filter(cat -> cat.isBoy() && !cat.getId().equals("boy")).sorted()
@@ -59,6 +64,6 @@ public class NSFWCategoriesCommand extends Command {
 
         embed.setColor(Color.PINK);
         embed.appendDescription(msg);
-        channel.sendMessage(embed.build()).queue();
+        EnvoiMessage.sendMessage(event, embed.build());
     }
 }

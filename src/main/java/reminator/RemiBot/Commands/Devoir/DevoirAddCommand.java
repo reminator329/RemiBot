@@ -2,11 +2,12 @@ package reminator.RemiBot.Commands.Devoir;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Model.BDDevoir;
 import reminator.RemiBot.Model.BDDevoirJson;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -36,15 +37,14 @@ public class DevoirAddCommand extends Command {
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event) {
+    public void executerCommande(MessageReceivedEvent event) {
         MessageChannel channel = event.getChannel();
         String[] args = event.getMessage().getContentRaw().split("\\s+");
         if (args.length < 3) {
-            channel.sendMessage("Commande mal utilisée, voir `r!help devoir-add`").queue();
+            EnvoiMessage.sendMessage(event, "Commande mal utilisée, voir `r!help devoir-add`");
             return;
         }
         String mention = args[1];
-        Guild server = event.getGuild();
 
         ArrayList<String> ids = new ArrayList<>();
         boolean all = false;
@@ -70,29 +70,38 @@ public class DevoirAddCommand extends Command {
         if (matcher.find()) {
             switch (type) {
                 case "&" -> {
-                    for (Member member : server.getMembersWithRoles(server.getRoleById(matcher.group(1)))) {
-                        users.add(member.getUser());
-                    }
-                }
-                case "!", "" -> {
-                    ids.add(matcher.group(1));
-
-                    for (String id : ids) {
-                        Member member = server.getMemberById(id);
-                        if (member == null) {
-                            return;
+                    if (event.isFromGuild()) {
+                        Guild server = event.getGuild();
+                        for (Member member : server.getMembersWithRoles(server.getRoleById(matcher.group(1)))) {
+                            users.add(member.getUser());
                         }
-                        users.add(member.getUser());
+                    } else {
+                        EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+                        return;
                     }
                 }
+                case "!", "" -> ids.add(matcher.group(1));
             }
         } else if (type.equalsIgnoreCase("@everyone")) {
 
-            for (Member m : server.getMembers()) {
-                ids.add(m.getUser().getId());
+            if (event.isFromGuild()) {
+                Guild server = event.getGuild();
+                for (Member m : server.getMembers()) {
+                    ids.add(m.getUser().getId());
+                }
+            } else {
+                EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+                return;
             }
             all = true;
+        } else {
+            users.add(event.getAuthor());
+            mention = "<@!" + event.getAuthor().getIdLong() + '>';
+            indiceMatiere--;
+        }
 
+        if (event.isFromGuild()) {
+            Guild server = event.getGuild();
             for (String id : ids) {
                 Member member = server.getMemberById(id);
                 if (member == null) {
@@ -102,8 +111,6 @@ public class DevoirAddCommand extends Command {
             }
         } else {
             users.add(event.getAuthor());
-            mention = "<@!" + event.getAuthor().getIdLong() + '>';
-            indiceMatiere--;
         }
 
         String matiere = args[indiceMatiere];
@@ -113,6 +120,6 @@ public class DevoirAddCommand extends Command {
         }
 
         bdDevoir.addDevoir(users, matiere, description.toString(), all);
-        channel.sendMessage("devoir ajouté pour " + mention).queue();
+        EnvoiMessage.sendMessage(event, "devoir ajouté pour " + mention);
     }
 }

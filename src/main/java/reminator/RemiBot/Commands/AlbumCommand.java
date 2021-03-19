@@ -3,9 +3,12 @@ package reminator.RemiBot.Commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import reminator.RemiBot.Categories.BilalCategorie;
+import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -36,7 +39,7 @@ public class AlbumCommand extends Command {
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event) {
+    public void executerCommande(MessageReceivedEvent event) {
         MessageChannel channel = event.getChannel();
 
         Date date = new Date();
@@ -48,6 +51,6 @@ public class AlbumCommand extends Command {
         } else {
             message = "Pas de date pour le moment :/";
         }
-        channel.sendMessage(message).queue();
+        EnvoiMessage.sendMessage(event, message);
     }
 }

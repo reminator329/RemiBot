@@ -4,9 +4,13 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.music.HTTPRequest;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
 import java.io.IOException;
@@ -38,7 +42,7 @@ public class JeuxMultiCommand extends Command{
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event) {
+    public void executerCommande(MessageReceivedEvent event) {
         MessageChannel channel = event.getChannel();
         Member member = event.getMember();
 
@@ -129,7 +133,7 @@ public class JeuxMultiCommand extends Command{
         builder.addField(" ", jeuxS.toString(), false);
         assert member != null;
         builder.setFooter(member.getUser().getName(), member.getUser().getAvatarUrl());
-        channel.sendMessage(builder.build()).queue();
+        EnvoiMessage.sendMessage(event, builder.build());
     }
 
     private boolean estJoueur(String s, String[] args) {

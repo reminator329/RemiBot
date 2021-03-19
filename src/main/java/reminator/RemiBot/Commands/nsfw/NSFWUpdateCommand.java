@@ -4,9 +4,14 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
 
@@ -32,9 +37,9 @@ public class NSFWUpdateCommand extends Command {
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event) {
+    public void executerCommande(MessageReceivedEvent event) {
         MessageChannel channel = event.getChannel();
-        Member member = event.getMember();
+        User user = event.getAuthor();
 
         NSFWManager nsfw = NSFWManager.get();
 
@@ -42,7 +47,7 @@ public class NSFWUpdateCommand extends Command {
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Rémi NSFW")
-                .setFooter(member.getUser().getName(), member.getUser().getAvatarUrl());
+                .setFooter(user.getName(), user.getAvatarUrl());
 
         if(now-lastCall < COOLDOWN) {
             long remaining = COOLDOWN - (now - lastCall);
@@ -62,7 +67,7 @@ public class NSFWUpdateCommand extends Command {
             }
             embed.setColor(Color.RED);
             embed.appendDescription("**Erreur :** Veuillez attendre encore "+msg+" avant la prochaine update.");
-            channel.sendMessage(embed.build()).queue();
+            EnvoiMessage.sendMessage(event, embed.build());
             return;
         }
 
@@ -83,6 +88,6 @@ public class NSFWUpdateCommand extends Command {
 
         embed.setColor(Color.GREEN);
         embed.appendDescription(msg);
-        channel.sendMessage(embed.build()).queue();
+        EnvoiMessage.sendMessage(event, embed.build());
     }
 }

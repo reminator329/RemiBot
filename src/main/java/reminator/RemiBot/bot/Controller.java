@@ -1,13 +1,10 @@
 package reminator.RemiBot.bot;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Categories.*;
@@ -153,7 +150,24 @@ public class Controller extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (event.getAuthor().isBot() || event.isFromGuild()) return;
+        if (event.getAuthor().isBot()) return;
+        BDDevoir bdDevoir = BDDevoirJson.getInstance();
+        bdDevoir.ajoutTimer(new Eleve(event.getAuthor()));
+
+
+        String[] args = event.getMessage().getContentRaw().split("\\s+");
+        for (Command c : commands) {
+            String prefixLabel = c.getPrefix() + c.getLabel();
+            String[] test = args[0].split(c.getPrefix());
+            if (prefixLabel.equalsIgnoreCase(args[0]) || test.length > 1 && c.isAlias(test[1])) {
+                c.executerCommande(event);
+            }
+        }
+
+        if (event.isFromGuild()) {
+            this.guild = event.getGuild();
+            return;
+        }
 
         Member remi = guild.getMemberById("368733622246834188");
         if (remi == null) {
@@ -164,6 +178,7 @@ public class Controller extends ListenerAdapter {
                 .flatMap(channel -> channel.sendMessage(event.getAuthor().getName() + " m'a écrit " + event.getMessage().getContentDisplay()))
         .queue();
 
+/*
         event.getAuthor().openPrivateChannel()
                 .flatMap(channel -> channel.sendMessage("3"))
                 .delay(Duration.ofSeconds(1))
@@ -173,6 +188,8 @@ public class Controller extends ListenerAdapter {
                 .delay(Duration.ofSeconds(1))
                 .flatMap(Message::delete)
                 .queue();
+
+ */
     }
 /*
     @Override
@@ -253,18 +270,22 @@ public class Controller extends ListenerAdapter {
                 .queue();
     }
 */
+    /*
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        if (event.getAuthor().isBot()) return;
+        if (event.getAuthor().isBot()) {
+        }
+        /*
         BDDevoir bdDevoir = BDDevoirJson.getInstance();
         bdDevoir.ajoutTimer(new Eleve(event.getAuthor()));
+*/
 
+        /*
         this.guild = event.getGuild();
         if (this.messages.size() >= this.nbMessageMax) {
             this.messages.remove(0);
         }
         this.messages.add(event.getMessage());
-        /*
         int n = 1 + (int)(Math.random() * ((10 - 1) + 1));
         if (n == 5) {
             for (Member m : event.getGuild().getMembers()) {
@@ -275,7 +296,7 @@ public class Controller extends ListenerAdapter {
         }
         */
 
-
+/*
         String[] args = event.getMessage().getContentRaw().split("\\s+");
 
         for (Command c : commands) {
@@ -285,7 +306,9 @@ public class Controller extends ListenerAdapter {
                 c.executerCommande(event);
             }
         }
+
     }
+ */
 
     public ArrayList<Categorie> getCategories() {
         return new ArrayList<>(this.categories);

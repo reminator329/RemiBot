@@ -3,12 +3,16 @@ package reminator.RemiBot.Commands.Devoir;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Model.BDDevoir;
 import reminator.RemiBot.Model.BDDevoirJson;
 import reminator.RemiBot.Model.Devoir;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
 
@@ -35,11 +39,11 @@ public class DevoirFiniCommand extends Command {
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event) {
+    public void executerCommande(MessageReceivedEvent event) {
         MessageChannel channel = event.getChannel();
         String[] args = event.getMessage().getContentRaw().split("\\s+");
         if (args.length < 2) {
-            channel.sendMessage("Commande mal utilisé, voir `r!help devoir-fini`").queue();
+            EnvoiMessage.sendMessage(event, "Commande mal utilisé, voir `r!help devoir-fini`");
             return;
         }
 
@@ -47,15 +51,15 @@ public class DevoirFiniCommand extends Command {
         try {
             numeroDevoir = Integer.parseInt(args[1]);
         } catch (Exception e) {
-            channel.sendMessage("Commande mal utilisé, voir `r!help devoir-fini`").queue();
+            EnvoiMessage.sendMessage(event, "Commande mal utilisé, voir `r!help devoir-fini`");
             return;
         }
 
         Devoir devoir = bdDevoir.finiDevoir(event.getAuthor(), numeroDevoir);
         if (devoir == null) {
-            channel.sendMessage("Erreur lors de la suppression du devoir. Vérifier le numéro du devoir `r!devoir`").queue();
+            EnvoiMessage.sendMessage(event, "Erreur lors de la suppression du devoir. Vérifier le numéro du devoir `r!devoir`");
         } else {
-            channel.sendMessage("Le devoir " + devoir + " a bien été supprimé.").queue();
+            EnvoiMessage.sendMessage(event, "Le devoir " + devoir + " a bien été supprimé.");
         }
     }
 }

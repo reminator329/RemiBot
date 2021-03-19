@@ -2,17 +2,18 @@ package reminator.RemiBot.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.channel.text.update.TextChannelUpdatePermissionsEvent;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PollCommand extends Command {
 
@@ -35,7 +36,11 @@ public class PollCommand extends Command {
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event) {
+    public void executerCommande(MessageReceivedEvent event) {
+        if (!event.isFromGuild()) {
+            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            return;
+        }
         String[] args = event.getMessage().getContentRaw().split("\\s+");
         if (args.length > 1 && args[1].equalsIgnoreCase("stop")) {
             return;
@@ -59,7 +64,7 @@ public class PollCommand extends Command {
 
         EmbedBuilder embedBuilder_choix_question = new EmbedBuilder(embedBuilder_base);
         embedBuilder_choix_question.addField("Pose une question", "", false);
-        channel.sendMessage(embedBuilder_choix_question.build()).queue();
+        EnvoiMessage.sendMessage(event, embedBuilder_choix_question.build());
 
         event.getJDA().addEventListener(new ListenerAdapter() {
             private long idMessage;

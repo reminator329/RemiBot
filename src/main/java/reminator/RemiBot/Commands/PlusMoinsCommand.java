@@ -4,9 +4,13 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
@@ -32,7 +36,7 @@ public class PlusMoinsCommand extends Command {
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event) {
+    public void executerCommande(MessageReceivedEvent event) {
         MessageChannel channel = event.getChannel();
         User user = event.getAuthor();
         long channelId = channel.getIdLong();
@@ -45,11 +49,11 @@ public class PlusMoinsCommand extends Command {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Trouve le nombre entre 0 et 1 000 000 000\nÉcrit 'stop' si tu abandonnes.");
         embedBuilder.setFooter(user.getName(), user.getAvatarUrl());
-        channel.sendMessage(embedBuilder.build()).queue();
+        EnvoiMessage.sendMessage(event, embedBuilder.build());
 
         event.getJDA().addEventListener(new ListenerAdapter() {
             @Override
-            public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
+            public void onMessageReceived(@NotNull MessageReceivedEvent event) {
                 if (event.getChannel().getIdLong() != channelId) return;
                 if (event.getAuthor().getIdLong() != authorId) return;
 
@@ -65,7 +69,7 @@ public class PlusMoinsCommand extends Command {
                 if (msg.equalsIgnoreCase("stop")) {
                     builder.setTitle("" + nombre);
                     builder.appendDescription("C'était le nombre à trouver !");
-                    channel.sendMessage(builder.build()).queue();
+                    EnvoiMessage.sendMessage(event, builder.build());
                     event.getJDA().removeEventListener(this);
                     return;
                 }
@@ -77,7 +81,7 @@ public class PlusMoinsCommand extends Command {
                         builder.setTitle("Gagné !");
                         builder.appendDescription("C'était bien " + nombre);
                         builder.addField("Nombre de coups", "" + tryAmount[0], false);
-                        channel.sendMessage(builder.build()).queue();
+                        EnvoiMessage.sendMessage(event, builder.build());
                         event.getJDA().removeEventListener(this);
                         return;
                     }
@@ -88,7 +92,7 @@ public class PlusMoinsCommand extends Command {
                     } else {
                         builder.appendDescription("C'est moins !");
                     }
-                    channel.sendMessage(builder.build()).queue();
+                    EnvoiMessage.sendMessage(event, builder.build());
 
 
                     tryAmount[0]++;

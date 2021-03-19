@@ -3,8 +3,12 @@ package reminator.RemiBot.Commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.utils.EnvoiMessage;
 import reminator.RemiBot.utils.RandomImagePicker;
 
 import java.awt.*;
@@ -44,11 +48,15 @@ public class BilalCommand extends Command {
     }
 
     @Override
-    public void executerCommande(GuildMessageReceivedEvent event) {
+    public void executerCommande(MessageReceivedEvent event) {
+        if (!event.isFromGuild()) {
+            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            return;
+        }
         MessageChannel channel = event.getChannel();
 
         EmbedBuilder embed = new EmbedBuilder();
-        InputStream file = null;
+        InputStream file;
         try {
             file = new FileInputStream(randomImagePicker.getRandomImage());
             embed.setImage("attachment://bilal.png") // we specify this in sendFile as "cat.png"
