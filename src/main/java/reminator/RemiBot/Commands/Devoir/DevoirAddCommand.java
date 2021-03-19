@@ -95,7 +95,7 @@ public class DevoirAddCommand extends Command {
             }
             all = true;
         } else {
-            users.add(event.getAuthor());
+            ids.add(String.valueOf(event.getAuthor().getIdLong()));
             mention = "<@!" + event.getAuthor().getIdLong() + '>';
             indiceMatiere--;
         }
