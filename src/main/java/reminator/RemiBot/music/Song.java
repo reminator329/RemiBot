@@ -17,7 +17,11 @@ public class Song {
     public Song(String title, String spotifyUrl, List<String> lyrics) {
         this.title = title.replace("Bea", "Bae").replace("Belek", "Beleck");
         this.lyrics = lyrics;
-        this.spotifyUrl = spotifyUrl;
+        if(spotifyUrl.equals("null")) {
+            this.spotifyUrl = "";
+        }else{
+            this.spotifyUrl = spotifyUrl;
+        }
     }
 
     public String getTitle() {

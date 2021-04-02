@@ -4,21 +4,28 @@ package reminator.RemiBot.music;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class AllSongsFileMaker {
     /**
      * https://developer.spotify.com/console/get-search-item/?q=abba&type=track&market=US -> GET TOKEN
      */
-    private static final String oAuthToken = "";
+    private static final String oAuthToken = "BQDCjN8r354rTFdrzMhpa8RDamxlPwIA96H8XfQPyYPG1bCAJa6oBLBc9GHgw0rnh3RO7iZwK2pNOTOi51SZF_d_HrZFuGHsMHBYfdvWUew3sZNCCDrRE5EQqpTgqhsNOhX0wJubPA";
 
-    public static void main(String[] args) throws IOException {
-        File allMusics = new File("song/allSongs.txt");
+    public static void main(String[] args) throws IOException, InterruptedException {
+        File allMusics = new File("src/main/resources/song/allSongs.txt");
         if (!allMusics.exists()) {
+            allMusics.getParentFile().mkdirs();
             allMusics.createNewFile();
         }
         FileOutputStream fileOutputStream = new FileOutputStream(allMusics);
@@ -34,7 +41,7 @@ public class AllSongsFileMaker {
                 continue;
             }
 
-            String spotifyURL;
+            String spotifyURL = "null";
             try {
                 if(song.getTitle().contains("Bilal Hassani")) {
                     throw new RuntimeException();
@@ -51,8 +58,7 @@ public class AllSongsFileMaker {
                         .getJSONObject("external_urls")
                         .getString("spotify");
             }catch (Exception e) {
-                System.out.println("Failed : "+song.getTitle());
-                continue;
+                System.out.println("Failed to get spotify URL for : "+songURL+" ("+song.getTitle()+")");
             }
 
             fileOutputStream.write((song.getTitle()+"\n").getBytes(StandardCharsets.UTF_8));
@@ -67,28 +73,51 @@ public class AllSongsFileMaker {
 
 
 
-    private static Set<String> getAllSongsURL() throws IOException {
-        String pageContent = new HTTPRequest("https://www.paroles.net/bilal-hassani").GET();
+    private static Set<String> getAllSongsURL() throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newBuilder().build();
+        HttpResponse<String> response = client.send(HttpRequest.newBuilder(URI.create("https://www.paroles.net/bilal-hassani")).GET().build(), HttpResponse.BodyHandlers.ofString());
+        String pageContent = response.body();
+//        String pageContent = new HTTPRequest("https://www.paroles.net/bilal-hassani").GET();
         pageContent = pageContent.replaceAll(">(.*)<", ">\n$1\n<")
                 .replaceAll(">(.)", ">\n$1")
                 .replaceAll("(.)<", "$1\n<");
         String[] lines = pageContent.split("\n");
         return Arrays.stream(lines)
                 .filter(str -> str.contains("bilal-hassani/paroles-"))
-                .map(str -> str.split("href=")[1].split(">")[0])
+                .map(str -> "https://www.paroles.net"+str.split("href=\"")[1].split("\"")[0])
                 .collect(Collectors.toSet());
     }
 
-    private static Song getSongFromURL(String url) throws IOException {
-        String pageContent = new HTTPRequest(url).GET();
-        pageContent = pageContent.split("<div class=song-text>")[1].split("</div><br><div class=pw-server-widget")[0];
+    private final static Pattern PATTERN = Pattern.compile("<[^>]+>");
+
+    private static Song getSongFromURL(String url) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_1_1)
+                .followRedirects(HttpClient.Redirect.ALWAYS)
+        .build();
+        String pageContent = new HTTPRequest(url)
+                .withHeader("User-Agent", "curl/7.55.1")
+                .GET();
+//        HttpResponse<String> response = client.send(HttpRequest.newBuilder(URI.create(url))
+//                .header("Host", "www.paroles.net")
+//                .header("Content-Length", "13")
+//                .header("User-Agent", "curl/7.55.1")
+//                .header("Accept", "*/*")
+//                .GET().build(), HttpResponse.BodyHandlers.ofString());
+//        String pageContent = response.body();
+//        String pageContent = new HTTPRequest(url).GET();
+        pageContent = pageContent.split("<div class=\"song-text\">")[1]
+                .split("<div class=\"pw-server-widget\"")[0];
         pageContent = pageContent.replaceAll(">(.*)<", ">\n$1\n<")
                 .replaceAll(">(.)", ">\n$1")
                 .replaceAll("(.)<", "$1\n<");
         String[] lines = pageContent.split("\n");
 
         List<String> stringList = Arrays.stream(lines)
-                .filter(str -> !str.matches(".*([<>=|;{}\\[\\]]|[a-zA-Z]\\().*"))
+                .filter(line -> {
+                    Matcher matcher = PATTERN.matcher(line);
+                    return line.trim().length() > 0 && matcher.results().count() <= 1 && !line.matches("<[^>]+>");
+                })
                 .collect(Collectors.toList());
         String title = stringList.remove(0).replaceFirst("Paroles de la chanson (.*) par Bilal Hassani", "$1");
         if(title.contains("pas encore")) {

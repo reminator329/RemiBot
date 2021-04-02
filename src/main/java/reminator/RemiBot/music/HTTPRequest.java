@@ -36,9 +36,8 @@ public class HTTPRequest {
             args = "?" + parametersGET.entrySet().stream().map(e -> e.getKey() + "=" + e.getValue()).collect(Collectors.joining("&"));
             this.parametersGET.clear();
         }
-        HttpsURLConnection connection = newConnection(this.url+args);
+        HttpURLConnection connection = newConnection(this.url+args);
         connection.setRequestMethod("GET");
-
 
         return IOUtils.readAsString(connection.getInputStream());
     }
@@ -60,8 +59,8 @@ public class HTTPRequest {
 //        return readInputStream(connection.getInputStream());
 //    }
 
-    private HttpsURLConnection newConnection(String url) throws IOException {
-        HttpsURLConnection connection = (HttpsURLConnection) new URL(url).openConnection();
+    private HttpURLConnection newConnection(String url) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setUseCaches(false);
         connection.setInstanceFollowRedirects(true);
         connection.setDoInput(true);
