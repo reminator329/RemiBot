@@ -152,6 +152,7 @@ public class Controller extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
+        System.out.println(event.getMessage().getContentRaw());
         BDDevoir bdDevoir = BDDevoirJson.getInstance();
         bdDevoir.ajoutTimer(new Eleve(event.getAuthor()));
 

@@ -11,6 +11,8 @@ import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +34,7 @@ public class DevoirAddCommand extends Command {
         builder.setColor(Color.RED);
         builder.setTitle("Commande devoir-add");
         builder.appendDescription("Ajoute un devoir à la base de devoirs");
-        builder.addField("Signature", "`r!devoir-add [mention] <matière> <description>`", false);
+        builder.addField("Signature", "`r!devoir-add [mention] <matière> [JJ/MM/AAAA] <description>`", false);
         return builder.build();
     }
 
@@ -114,12 +116,29 @@ public class DevoirAddCommand extends Command {
         }
 
         String matiere = args[indiceMatiere];
+        int indiceDescription = indiceMatiere + 2;
+
+        Date date = null;
+
+        pattern = Pattern.compile("([0-9][0-9])/([0-9][0-9])/([0-9][0-9][0-9][0-9])");
+        matcher = pattern.matcher(args[indiceMatiere+1]);
+
+        if (matcher.find()) {
+            int jour = Integer.parseInt(matcher.group(1));
+            int mois = Integer.parseInt(matcher.group(2));
+            int annee = Integer.parseInt(matcher.group(3));
+
+            date = new Date(annee, mois-1, jour);
+        } else {
+            indiceDescription--;
+        }
+
         StringBuilder description = new StringBuilder();
-        for (int i = indiceMatiere + 1; i < args.length; i++) {
+        for (int i = indiceDescription; i < args.length; i++) {
             description.append(args[i]).append(" ");
         }
 
-        bdDevoir.addDevoir(users, matiere, description.toString(), all);
+        bdDevoir.addDevoir(users, matiere, description.toString(), all, date);
         EnvoiMessage.sendMessage(event, "devoir ajouté pour " + mention);
     }
 }

@@ -16,6 +16,7 @@ import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class DevoirCommand extends Command {
@@ -83,8 +84,13 @@ public class DevoirCommand extends Command {
     }
 
     private int ajoutDevoirs(StringBuilder message, ArrayList<Devoir> devoirs, int numeroDevoir) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d/MM");
         for (Devoir d : devoirs) {
-            message.append("[").append(numeroDevoir).append("] **").append(d.getCourse()).append("** : ").append(d.getDescription()).append("\n");
+            message.append("[").append(numeroDevoir).append("] **").append(d.getCourse());
+            if (d.getDate() != null) {
+                message.append(" (").append(dateFormat.format(d.getDate())).append(") ");
+            }
+            message.append("** : ").append(d.getDescription()).append("\n");
             numeroDevoir++;
         }
         return numeroDevoir;

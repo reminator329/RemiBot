@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 
 public class BDDevoirJson extends BDDevoir {
 
@@ -17,10 +19,6 @@ public class BDDevoirJson extends BDDevoir {
 
     private BufferedWriter bw = null;
     private BufferedReader br = null;
-
-    public static BDDevoir getInstance() {
-        return instance;
-    }
 
     private BDDevoirJson() {
         try {
@@ -34,6 +32,10 @@ public class BDDevoirJson extends BDDevoir {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static BDDevoir getInstance() {
+        return instance;
     }
 
     @Override
@@ -71,18 +73,29 @@ public class BDDevoirJson extends BDDevoir {
             devoirUser.forEach(o -> {
                 if (o instanceof JSONObject) {
                     JSONObject j = (JSONObject) o;
-                    devoirs.add(new Devoir((String) j.get("course"), (String) j.get("description"), (boolean) j.get("all")));
+                    Date date = null;
+                    try {
+                        date = new Date((long) j.get("date"));
+                    } catch (JSONException ignored) {
+                    }
+                    devoirs.add(new Devoir((String) j.get("course"), (String) j.get("description"), (boolean) j.get("all"), date));
                 }
             });
         } catch (JSONException e) {
             return devoirs;
         }
 
+        devoirs.sort(new Comparator<Devoir>() {
+            @Override
+            public int compare(Devoir o1, Devoir o2) {
+                return o1.compareTo(o2);
+            }
+        });
         return devoirs;
     }
 
     @Override
-    public void addDevoir(ArrayList<User> users, String course, String description, boolean all) {
+    public void addDevoir(ArrayList<User> users, String course, String description, boolean all, Date date) {
 
         try {
             br = new BufferedReader(new FileReader(nomFile));
@@ -91,7 +104,7 @@ public class BDDevoirJson extends BDDevoir {
             return;
         }
 
-        Devoir devoir = new Devoir(course, description, all);
+        Devoir devoir = new Devoir(course, description, all, date);
         JSONObject devoirJson = devoir.toJson();
 
         StringBuilder content = new StringBuilder();
@@ -208,7 +221,12 @@ public class BDDevoirJson extends BDDevoir {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return new Devoir((String) devoir.get("course"), (String) devoir.get("description"), (boolean) devoir.get("all"));
+            Date date = null;
+            try {
+                date = new Date((long) devoir.get("date"));
+            } catch (JSONException ignored) {
+            }
+            return new Devoir((String) devoir.get("course"), (String) devoir.get("description"), (boolean) devoir.get("all"), date);
         } catch (JSONException e) {
             return null;
         }
@@ -254,7 +272,7 @@ public class BDDevoirJson extends BDDevoir {
         rappelUser.put("statut", b);
         if (heure >= 0) {
             rappelUser.put("heure", heure);
-        } else if (getHeure(user) < 0){
+        } else if (getHeure(user) < 0) {
             rappelUser.put("heure", HEURE_DEFAULT);
         }
         jsonUser.put("rappel", rappelUser);

@@ -27,7 +27,7 @@ public class BDDevoirArray extends BDDevoir {
         }
     }
 
-    public void addDevoir(ArrayList<User> users, String course, String description, boolean all) {
+    public void addDevoir(ArrayList<User> users, String course, String description, boolean all, Date date) {
         for (User user : users) {
             Eleve eleve = new Eleve(user);
             ArrayList<Devoir> devoirs;

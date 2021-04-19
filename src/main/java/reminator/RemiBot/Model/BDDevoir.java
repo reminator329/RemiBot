@@ -3,6 +3,7 @@ package reminator.RemiBot.Model;
 import net.dv8tion.jda.api.entities.User;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public abstract class BDDevoir {
 
@@ -12,7 +13,7 @@ public abstract class BDDevoir {
 
     public abstract ArrayList<Devoir> getDevoirs(User author);
 
-    public abstract void addDevoir(ArrayList<User> users, String arg, String toString, boolean all);
+    public abstract void addDevoir(ArrayList<User> users, String arg, String toString, boolean all, Date date);
 
     public abstract Devoir finiDevoir(User author, int numeroDevoir);
 
