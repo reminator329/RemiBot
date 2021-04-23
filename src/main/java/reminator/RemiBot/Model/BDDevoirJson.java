@@ -180,7 +180,21 @@ public class BDDevoirJson extends BDDevoir {
         Eleve eleve = new Eleve(author);
         String id = eleve.getUser().getId();
 
-        ArrayList<Devoir> devoirs = getDevoirs(author);
+        ArrayList<Devoir> devoirs1 = getDevoirs(author);
+
+        ArrayList<Devoir> devoirsAll = new ArrayList<>();
+        ArrayList<Devoir> devoirsPerso = new ArrayList<>();
+
+        for (Devoir d : devoirs1) {
+            if (d.isAll()) {
+                devoirsAll.add(d);
+            } else {
+                devoirsPerso.add(d);
+            }
+        }
+
+        ArrayList<Devoir> devoirs = new ArrayList<>(devoirsAll);
+        devoirs.addAll(devoirsPerso);
 
         if (numeroDevoir <= 0 || numeroDevoir > devoirs.size()) {
             return null;
