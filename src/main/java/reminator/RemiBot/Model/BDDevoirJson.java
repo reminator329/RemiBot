@@ -179,37 +179,23 @@ public class BDDevoirJson extends BDDevoir {
 
         Eleve eleve = new Eleve(author);
         String id = eleve.getUser().getId();
+
+        ArrayList<Devoir> devoirs = getDevoirs(author);
+
+        if (numeroDevoir <= 0 || numeroDevoir > devoirs.size()) {
+            return null;
+        }
+
+        Devoir retour = devoirs.remove(numeroDevoir - 1);
+
         try {
             userJson = json.getJSONObject(id);
-            JSONArray devoirUser = userJson.getJSONArray("devoirs");
+            userJson.remove("devoirs");
+            JSONArray devoirUser = new JSONArray();
 
-            if (numeroDevoir <= 0 || numeroDevoir > devoirUser.length()) {
-                return null;
-            }
-            JSONArray devoirsTrie = new JSONArray();
-
-            for (Object o : devoirUser) {
-                if (o instanceof JSONObject) {
-                    JSONObject d = (JSONObject) o;
-                    if (d.getBoolean("all")) {
-                        devoirsTrie.put(devoirsTrie.length(), d);
-                    }
-                }
-            }
-            for (Object o : devoirUser) {
-                if (o instanceof JSONObject) {
-                    JSONObject d = (JSONObject) o;
-                    if (!d.getBoolean("all")) {
-                        devoirsTrie.put(devoirsTrie.length(), d);
-                    }
-                }
-            }
-            JSONObject devoir = (JSONObject) devoirsTrie.get(numeroDevoir - 1);
-            for (int i = 0; i < devoirUser.length(); i++) {
-                if (devoir.equals(devoirUser.get(i))) {
-                    devoirUser.remove(i);
-                    break;
-                }
+            for (Devoir d : devoirs) {
+                JSONObject devoirJson = d.toJson();
+                devoirUser.put(devoirJson);
             }
             userJson.put("devoirs", devoirUser);
             json.put(id, userJson);
@@ -221,12 +207,7 @@ public class BDDevoirJson extends BDDevoir {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Date date = null;
-            try {
-                date = new Date((long) devoir.get("date"));
-            } catch (JSONException ignored) {
-            }
-            return new Devoir((String) devoir.get("course"), (String) devoir.get("description"), (boolean) devoir.get("all"), date);
+            return retour;
         } catch (JSONException e) {
             return null;
         }

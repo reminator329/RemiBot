@@ -1,10 +1,10 @@
 package reminator.RemiBot.bot;
 
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Categories.*;
@@ -20,12 +20,15 @@ import reminator.RemiBot.Model.BDDevoir;
 import reminator.RemiBot.Model.BDDevoirJson;
 import reminator.RemiBot.Model.Eleve;
 
-import java.awt.*;
-import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Controller extends ListenerAdapter {
+
+    JDA api;
 
     private final ArrayList<Message> messages = new ArrayList<>();
     private final int nbMessageMax = 5000;
@@ -61,7 +64,8 @@ public class Controller extends ListenerAdapter {
     private final NsfwCategorie nsfwCategorie = new NsfwCategorie();
 
 
-    public Controller() {
+    public Controller(JDA api) {
+        this.api = api;
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
 
         // Catégories
@@ -147,7 +151,7 @@ public class Controller extends ListenerAdapter {
     }
 
     Guild guild;
-    Member member;
+    User user;
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
@@ -166,19 +170,35 @@ public class Controller extends ListenerAdapter {
             }
         }
 
+        user = api.getUserById(368733622246834188L);
         if (event.isFromGuild()) {
-            this.guild = event.getGuild();
-            member = guild.getMemberById("368733622246834188");
             return;
         }
 
-        if (member == null) {
+        if (user == null) {
             return;
         }
 
-        member.getUser().openPrivateChannel()
-                .flatMap(channel -> channel.sendMessage(event.getAuthor().getName() + " - " + event.getMessage().getContentDisplay()))
+        user.openPrivateChannel()
+                .flatMap(channel -> channel.sendMessage(event.getAuthor().getName() + " - "  + event.getAuthor().getIdLong() + " - " + event.getMessage().getContentDisplay()))
         .queue();
+
+        if (event.getAuthor().getIdLong() == 368733622246834188L) {
+
+            Pattern pattern = Pattern.compile("([0-9]+)");
+            Matcher matcher = pattern.matcher(args[0]);
+
+            if (matcher.find()) {
+                StringBuilder message = new StringBuilder();
+                for (int i = 1; i < args.length; i++) {
+                    message.append(args[i]);
+                }
+
+                Objects.requireNonNull(api.getUserById(Long.parseLong(matcher.group()))).openPrivateChannel()
+                        .flatMap(channel -> channel.sendMessage(message.toString()))
+                        .queue();
+            }
+        }
 
 /*
         event.getAuthor().openPrivateChannel()

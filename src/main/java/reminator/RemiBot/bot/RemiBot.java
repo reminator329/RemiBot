@@ -26,7 +26,7 @@ public class RemiBot {
     public static void main(String[] arguments) throws Exception {
         token = arguments[0];
         JDA api = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES).enableCache(CacheFlag.ACTIVITY).build();
-        api.addEventListener(new Controller());
+        api.addEventListener(new Controller(api));
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
 
         Timer timer = new Timer();
