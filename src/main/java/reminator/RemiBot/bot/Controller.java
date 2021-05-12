@@ -55,6 +55,7 @@ public class Controller extends ListenerAdapter {
     private final NSFWCommand nsfwCommand;
     private final NSFWUpdateCommand nsfwUpdateCommand;
     private final NSFWCategoriesCommand nsfwCategoriesCommand;
+    private final Mateo mateo;
 
     private final ArrayList<Categorie> categories = new ArrayList<>();
     private final BilalCategorie bilalCategorie = new BilalCategorie();
@@ -94,6 +95,7 @@ public class Controller extends ListenerAdapter {
         devoirFiniCommand = new DevoirFiniCommand();
         devoirRappelCommand = new DevoirRappelCommand();
         ghostPingCommand = new GhostPingCommand();
+        mateo = new Mateo();
 
         nsfwCommand = new NSFWCommand();
         nsfwUpdateCommand = new NSFWUpdateCommand();
@@ -121,6 +123,7 @@ public class Controller extends ListenerAdapter {
         commands.add(nsfwCommand);
         commands.add(nsfwUpdateCommand);
         commands.add(nsfwCategoriesCommand);
+        commands.add(mateo);
 
         // Ajout de la commande dans la catégorie
         bilalCategorie.addCommand(ecouteBilalCommand);
@@ -136,6 +139,7 @@ public class Controller extends ListenerAdapter {
         autresCategorie.addCommand(amongusCommand);
         autresCategorie.addCommand(pollCommand);
         autresCategorie.addCommand(ghostPingCommand);
+        autresCategorie.addCommand(mateo);
 
         jeuCategorie.addCommand(plusMoinsCommand);
         jeuCategorie.addCommand(jeuxMultiCommand);
@@ -191,7 +195,7 @@ public class Controller extends ListenerAdapter {
             if (matcher.find()) {
                 StringBuilder message = new StringBuilder();
                 for (int i = 1; i < args.length; i++) {
-                    message.append(args[i]);
+                    message.append(args[i]).append(" ");
                 }
 
                 Objects.requireNonNull(api.getUserById(Long.parseLong(matcher.group()))).openPrivateChannel()
