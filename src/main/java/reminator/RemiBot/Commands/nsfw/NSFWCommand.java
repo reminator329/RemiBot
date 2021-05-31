@@ -43,7 +43,6 @@ public class NSFWCommand extends Command {
                 return;
             }
         }
-        MessageChannel channel = event.getChannel();
 
         User user = event.getAuthor();
 
