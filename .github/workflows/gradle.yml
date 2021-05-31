@@ -2,7 +2,7 @@ name: Java CI-CD with Gradle and Azure
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
