@@ -9,7 +9,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,8 +22,8 @@ public class NSFWManager {
         try {
             System.out.println("[NSFWManager] Initializing...");
 
-            FileInputStream serviceAccount =
-                    new FileInputStream("serviceAccountKey.json");
+            InputStream serviceAccount =
+                    getClass().getResourceAsStream("/serviceAccountKey2.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
