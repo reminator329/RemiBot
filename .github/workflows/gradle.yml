@@ -50,4 +50,4 @@ jobs:
         ssh azure 'chmod 700 /RemiBot/run.sh'
         scp build/libs/RemiBot-1.0-all.jar azure:/RemiBot
     - name: Start the bot
-      run: ssh azure 'sudo nohup /RemiBot/run.sh > /dev/null &'
+      run: ssh azure 'cd /RemiBot ; sudo nohup run.sh > /dev/null &'
