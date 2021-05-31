@@ -39,8 +39,8 @@ public class NSFWCommand extends Command {
             TextChannel channelTest = (TextChannel) event.getChannel();
 
             if (!channelTest.isNSFW()) {
-                EnvoiMessage.sendMessage(event, "Ce n'est pas un channel NSFW !!");
-                return;
+                //EnvoiMessage.sendMessage(event, "Ce n'est pas un channel NSFW !!");
+                //return;
             }
         }
 
