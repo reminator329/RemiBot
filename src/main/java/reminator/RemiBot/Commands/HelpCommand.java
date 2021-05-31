@@ -67,7 +67,6 @@ public class HelpCommand extends Command {
 
     @Override
     public void executerCommande(MessageReceivedEvent event) {
-        MessageChannel channel = event.getChannel();
 
         String[] args = event.getMessage().getContentRaw().split("\\s+");
         Member member = event.getMember();
