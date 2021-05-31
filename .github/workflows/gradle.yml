@@ -18,8 +18,6 @@ jobs:
         distribution: 'adopt'
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name : Add credentials
-      run: echo "${{ secrets.CREDENTIALS }}" > src/main/resources/serviceAccountKey2.json
     - name: Build with Gradle
       run: ./gradlew shadowJar
     - name: Archive production artifacts
@@ -46,6 +44,8 @@ jobs:
         SSH_HOST: ${{ secrets.SSH_HOST }}
     - name: Stop the bot
       run: ssh azure "sudo pkill -f 'java -jar'"
+    - name: Add credentials
+      run: ssh azure 'echo "${{ secrets.CREDENTIALS }}" > /RemiBot/serviceAccountKey.json'
     - name: Upload jar on Azure VM
       run: |
         ssh azure 'echo "/usr/lib/jvm/java-16-openjdk-amd64/bin/java -jar /RemiBot/RemiBot-1.0-all.jar ${{ secrets.BOT_TOKEN }} >> /RemiBot/log.txt 2>> /RemiBot/log.txt" > /RemiBot/run.sh'
