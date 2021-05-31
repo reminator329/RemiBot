@@ -9,38 +9,40 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
+import java.util.List;
 
-public class PlusMoinsCommand extends Command {
+public class PlusMoinsCommand implements Command {
 
-    public PlusMoinsCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("plus-ou-moins");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.JEU;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande plus-ou-moins");
-        builder.appendDescription("Trouve le nombre entre 0 et 1 000 000 000");
-
-        builder.addField("Signature", "`r!plus-ou-moins`", false);
-
-        return builder.build();
+    public String getLabel() {
+        return "plus-ou-moins";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
-        MessageChannel channel = event.getChannel();
-        User user = event.getAuthor();
+    public String[] getAlliass() {
+        return new String[]{"p-o-m", "pm", "p-m", "pom", "+-", "+ou-"};
+    }
+
+    @Override
+    public String getDescription() {
+        return "Trouve le nombre entre 0 et 1 000 000 000";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
         long channelId = channel.getIdLong();
-        long authorId = user.getIdLong();
+        long authorId = author.getIdLong();
 
         final int[] tryAmount = {1};
         int nombre = (int) (Math.random() * 1000000000);
@@ -48,7 +50,7 @@ public class PlusMoinsCommand extends Command {
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Trouve le nombre entre 0 et 1 000 000 000\nÉcrit 'stop' si tu abandonnes.");
-        embedBuilder.setFooter(user.getName(), user.getAvatarUrl());
+        embedBuilder.setFooter(author.getName(), author.getAvatarUrl());
         EnvoiMessage.sendMessage(event, embedBuilder.build());
 
         event.getJDA().addEventListener(new ListenerAdapter() {
@@ -65,7 +67,7 @@ public class PlusMoinsCommand extends Command {
                 }
 
                 EmbedBuilder builder = new EmbedBuilder();
-                builder.setFooter(user.getName(), user.getAvatarUrl());
+                builder.setFooter(author.getName(), author.getAvatarUrl());
                 if (msg.equalsIgnoreCase("stop")) {
                     builder.setTitle("" + nombre);
                     builder.appendDescription("C'était le nombre à trouver !");

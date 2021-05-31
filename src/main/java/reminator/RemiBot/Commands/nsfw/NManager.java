@@ -13,12 +13,12 @@ import java.io.FileInputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class NSFWManager {
+public class NManager {
     private static final Random rand = new Random();
 
-    private final static NSFWManager INSTANCE = new NSFWManager();
+    private final static NManager INSTANCE = new NManager();
 
-    private NSFWManager() {
+    private NManager() {
         try {
             System.out.println("[NSFWManager] Initializing...");
 
@@ -43,7 +43,7 @@ public class NSFWManager {
         }
     }
 
-    public static NSFWManager get() {
+    public static NManager get() {
         return INSTANCE;
     }
 

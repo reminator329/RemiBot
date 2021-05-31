@@ -1,54 +1,63 @@
 package reminator.RemiBot.Commands.nsfw;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.Command;
-import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
+import java.util.List;
 
-public class NSFWCommand extends Command {
+public class NCommand implements Command {
 
-    public NSFWCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("nsfw");
-        this.setHelp(setHelp());
-
+    public NCommand() {
         // Init
-        NSFWManager.get();
+        NManager.get();
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande NSFW");
-        builder.appendDescription("Affichage une image NSFW aléatoire.");
-        builder.addField("Signature", "`r!nsfw (categorie)`", false);
-        return builder.build();
+    public reminator.RemiBot.Categories.enums.Category getCategory() {
+        return reminator.RemiBot.Categories.enums.Category.N;
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
+    public String getLabel() {
+        return "nsfw";
+    }
+
+    @Override
+    public String[] getAlliass() {
+        return new String[0];
+    }
+
+    @Override
+    public String getDescription() {
+        return "Affichage une image NSFW aléatoire.";
+    }
+
+    @Override
+    public String getSignature() {
+        return Command.super.getSignature() + " [categorie]";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
         if (event.isFromGuild()) {
             TextChannel channelTest = (TextChannel) event.getChannel();
 
             if (!channelTest.isNSFW()) {
-                //EnvoiMessage.sendMessage(event, "Ce n'est pas un channel NSFW !!");
-                //return;
+                EnvoiMessage.sendMessage(event, "Ce n'est pas un channel NSFW !!");
+                return;
             }
         }
 
         User user = event.getAuthor();
 
-        NSFWManager nsfw = NSFWManager.get();
-
-        String[] args = event.getMessage().getContentRaw().split("\\s+");
+        NManager nsfw = NManager.get();
 
         String imageURL;
 
@@ -56,12 +65,12 @@ public class NSFWCommand extends Command {
                 .setTitle("Rémi NSFW")
                 .setFooter(user.getName(), user.getAvatarUrl());
 
-        if (args.length > 1) {
-            Category category = nsfw.getCategoryById(args[1].toLowerCase());
+        if (args.size() > 1) {
+            Category category = nsfw.getCategoryById(args.get(1).toLowerCase());
 
             if (category == null) {
                 embed.setColor(Color.RED);
-                embed.appendDescription("La catégorie `" + args[1].toLowerCase() + "` n'existe pas.");
+                embed.appendDescription("La catégorie `" + args.get(1).toLowerCase() + "` n'existe pas.");
                 EnvoiMessage.sendMessage(event, embed.build());
                 return;
             }
@@ -76,7 +85,7 @@ public class NSFWCommand extends Command {
             }
 
             embed.setDescription(category.getTitle() + " :smirk:");
-        }else{
+        } else {
             imageURL = nsfw.getRandomImageURL();
         }
 

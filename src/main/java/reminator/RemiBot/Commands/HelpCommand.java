@@ -1,104 +1,128 @@
 package reminator.RemiBot.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.Categories.Categorie;
-import reminator.RemiBot.bot.Controller;
-import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.Categories.enums.Category;
+import reminator.RemiBot.Commands.enums.Commands;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-import java.awt.*;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
-public class HelpCommand extends Command {
+public class HelpCommand implements Command {
 
-    private final Controller controller;
-
-    public HelpCommand(Controller controller) {
-        this.controller = controller;
-
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("help");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.AUTRE;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-
-        final String titre = "Liste des commandes du RémiBot";
-        final String imageI = "https://image.flaticon.com/icons/png/512/1301/1301429.png";
-
-        builder.setThumbnail(imageI);
-        builder.setColor(Color.RED);
-        builder.setTitle(titre, "https://www.remontees-mecaniques.net/");
-        builder.appendDescription("Utilise `r!help <commande>` pour plus d'informations sur une commande.");
-        return builder.build();
+    public String getLabel() {
+        return "help";
     }
 
-    private MessageEmbed help() {
+    @Override
+    public String[] getAlliass() {
+        return new String[]{"h", "aide", "a", "commandes", "commands", "c"};
+    }
+
+    @Override
+    public String getDescription() {
+        return "Permet de savoir comment utiliser les commandes.";
+    }
+
+    @Override
+    public String getSignature() {
+        return Command.super.getSignature() + " [commande]";
+    }
+
+    private EmbedBuilder help(boolean n) {
 
         EmbedBuilder builder = new EmbedBuilder();
-        ArrayList<Categorie> categories = controller.getCategories();
-
-        final String titre = "Liste des commandes du RémiBot";
-        final String imageI = "https://image.flaticon.com/icons/png/512/1301/1301429.png";
-
-        builder.setThumbnail(imageI);
-        builder.setColor(Color.RED);
-        builder.setTitle(titre, "https://www.remontees-mecaniques.net/");
-        builder.appendDescription("Utilise `r!help <commande>` pour plus d'informations sur une commande.");
-        for (Categorie cat : categories) {
-            String titreField = cat.getNom();
-            StringBuilder descriptionField = new StringBuilder(cat.getDescription() + "\n");
-            for (Command c : cat.getCommands()) {
-                descriptionField.append("`").append(c.getLabel()).append("` ");
-            }
-            builder.addField(titreField, descriptionField.toString(), false);
+        Map<Category, List<Command>> commandss = Commands.getCommandsGroupedByCategory();
+        if (!n) {
+            commandss.remove(Category.N);
         }
-        return builder.build();
+        TreeMap<Category, List<Command>> commandsGroupedByCategory = new TreeMap<>(commandss);
+
+        final String titre = "Liste des commandes de l'EdtBot";
+        final String imageI = "https://image.flaticon.com/icons/png/512/1301/1301429.png";
+
+        builder.setThumbnail(imageI);
+        builder.setColor(getColor());
+        builder.setTitle(titre, "https://www.remontees-mecaniques.net/");
+        builder.appendDescription(getDescription());
+
+        for (Map.Entry<Category, List<Command>> categoryListEntry : commandsGroupedByCategory.entrySet()) {
+            Category category = categoryListEntry.getKey();
+            List<Command> commands = categoryListEntry.getValue();
+
+            String titreField = category.getName();
+            String descriptionField = category.getDescription() + "\n" + commands.stream().map(cmd -> String.format("`%s`", cmd.getLabel())).collect(Collectors.joining(" "));
+            builder.addField(titreField, descriptionField, false);
+
+        }
+        return builder;
+    }
+
+    private EmbedBuilder help(Command command, boolean n) {
+
+        if (command == null || command.getCategory().equals(Category.N) && !n) {
+            return null;
+        }
+
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setColor(command.getColor());
+        builder.setTitle("Commande " + command.getLabel());
+        builder.appendDescription(command.getDescription());
+
+        builder.addField("Signature", "`" + command.getSignature() + "`", false);
+
+        String[] alliass = command.getAlliass();
+        if (alliass.length != 0) {
+            builder.addField("Alias", Arrays.stream(alliass).map(al -> String.format("`%s`", al)).collect(Collectors.joining(" ")), false);
+        }
+
+        MessageEmbed.Field[] extras = command.getExtraFields();
+        if (extras.length != 0) {
+            Arrays.stream(extras).forEach(builder::addField);
+        }
+
+        return builder;
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
 
-        String[] args = event.getMessage().getContentRaw().split("\\s+");
-        Member member = event.getMember();
+        EmbedBuilder message;
+        boolean n = false;
+        if (event.isFromGuild()) {
+            TextChannel channelTest = (TextChannel) event.getChannel();
+            n = channelTest.isNSFW();
+        }
 
-        MessageEmbed message = null;
-        if (args.length == 1) {
-            if (member != null) {
-                EmbedBuilder preMessage = new EmbedBuilder(this.help());
-                preMessage.setFooter(member.getUser().getName(), member.getUser().getAvatarUrl());
-                message = preMessage.build();
-            } else {
-                message = this.help();
-            }
-            EnvoiMessage.sendMessage(event, message);
+        if (args.size() == 0) {
+            message = this.help(n);
         } else {
-            ArrayList<Command> commands = this.controller.getCommands();
-
-            for (Command c : commands) {
-                if (c.getLabel().equalsIgnoreCase(args[1])) {
-                    if (member != null) {
-                        EmbedBuilder preMessage = new EmbedBuilder(c.getHelp());
-                        preMessage.setFooter(member.getUser().getName(), member.getUser().getAvatarUrl());
-                        message = preMessage.build();
-                    } else {
-                        message = c.getHelp();
-                    }
-                    EnvoiMessage.sendMessage(event, message);
-                }
-            }
-            if (message == null) {
-                EnvoiMessage.sendMessage(event, "La commande `" + args[1] + "` n'existe pas");
-            }
+            Command command = Commands.getCommand(args.get(0));
+            message = this.help(command, n);
         }
+
+        if (message == null) {
+            EnvoiMessage.sendMessage(event, "La commande `" + args.get(0) + "` n'existe pas");
+            return;
+        }
+
+        if (author != null)
+            message.setFooter(author.getName(), author.getAvatarUrl());
+        EnvoiMessage.sendMessage(event, message.build());
     }
 }

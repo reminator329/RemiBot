@@ -3,34 +3,27 @@ package reminator.RemiBot.Commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import javax.annotation.Nonnull;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import java.awt.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
+import java.util.List;
 
-public class YoutubeurCommand extends Command {
+public class YoutubeurCommand implements Command {
 
     private final static byte[] SALT = {-121, -63, -7, -17, 123, 122, -100, 20, -111, -28, -114, -116, -120, 73, -91, 50};
     private final static String HASH = "e9bX7ferwaUUug+z6+3BhQ==";
-
-    public YoutubeurCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("youtubeur");
-        this.setHelp(setHelp());
-    }
 
     public static String hash(String input) throws NoSuchAlgorithmException, InvalidKeySpecException {
         KeySpec spec = new PBEKeySpec(input.toCharArray(), SALT, 65536, 128);
@@ -41,24 +34,32 @@ public class YoutubeurCommand extends Command {
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande youtubeur");
-        builder.appendDescription("Devine qui est le youtubeur :face_with_monocle:");
-
-        builder.addField("Signature", "`r!youtubeur`", false);
-
-        return builder.build();
+    public Category getCategory() {
+        return Category.AUTRE;
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
+    public String getLabel() {
+        return "youtubeur";
+    }
+
+    @Override
+    public String[] getAlliass() {
+        return new String[]{"y"};
+    }
+
+    @Override
+    public String getDescription() {
+        return "Devine qui est le youtubeur :face_with_monocle:";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
+
         if (!event.isFromGuild()) {
             EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
-        MessageChannel channel = event.getChannel();
 
         final long authorId = event.getAuthor().getIdLong();
         final long channelId = channel.getIdLong();

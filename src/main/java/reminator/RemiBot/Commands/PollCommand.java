@@ -1,52 +1,68 @@
 package reminator.RemiBot.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
-public class PollCommand extends Command {
+public class PollCommand implements Command {
 
-    public PollCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("poll");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.AUTRE;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande poll");
-        builder.appendDescription("Créaction d'un sondage");
-        builder.addField("Signature", "`r!poll <question>[[ <réponse> <emoji>]*] [channel]`", false);
-        builder.addField("Exemple oui ou non", "r!poll \"Voulez-vous jouer ?\"", false);
-        builder.addField("Exemple choix multiple", "r!poll \"Quel est votre animal préféré ?\" \"chat\" :cat: \"cheval\" :horse: \"souris\" :mouse:", false);
-        return builder.build();
+    public String getLabel() {
+        return "poll";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
+    public String[] getAlliass() {
+        return new String[0];
+    }
+
+    @Override
+    public String getDescription() {
+        return "Créaction d'un sondage";
+    }
+
+    @Override
+    public String getSignature() {
+        return Command.super.getSignature() + " <question>[[ <réponse> <emoji>]*] [channel]";
+    }
+
+    @Override
+    public MessageEmbed.Field[] getExtraFields() {
+        return new MessageEmbed.Field[]{
+                new MessageEmbed.Field("Exemple oui ou non", "r!poll \"Voulez-vous jouer ?\"", false),
+                new MessageEmbed.Field("Exemple choix multiple", "r!poll \"Quel est votre animal préféré ?\" \"chat\" :cat: \"cheval\" :horse: \"souris\" :mouse:", false),
+        };
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
         if (!event.isFromGuild()) {
             EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
-        String[] args = event.getMessage().getContentRaw().split("\\s+");
-        if (args.length > 1 && args[1].equalsIgnoreCase("stop")) {
+        if (args.size() > 1 && args.get(1).equalsIgnoreCase("stop")) {
             return;
         }
 
-        MessageChannel channel = event.getChannel();
         User user = event.getAuthor();
 
         long channelId = channel.getIdLong();

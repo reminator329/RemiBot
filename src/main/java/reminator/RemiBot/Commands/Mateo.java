@@ -3,50 +3,58 @@ package reminator.RemiBot.Commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-import reminator.RemiBot.bot.RemiBot;
-import reminator.RemiBot.utils.EnvoiMessage;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.utils.HTTPRequest;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Mateo extends Command {
+public class Mateo implements Command {
 
-    private static boolean execute = false;
+    private final List<MessageChannel> ecoutes = new ArrayList<>();
     Timer timer;
 
-    public Mateo() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("mateo");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.AUTRE;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        return null;
+    public String getLabel() {
+        return "mateo";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
+    public String[] getAlliass() {
+        return new String[]{"m", "dream-plume", "dp", "d-p", "gatel", "matel", "matel-gatel", "mateo-gatel", "mg", "m-g"};
+    }
+
+    @Override
+    public String getDescription() {
+        return "Commande de Matéo";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
         if (event.getAuthor().getIdLong() != 368733622246834188L && event.getAuthor().getIdLong() != 329712193249476609L) {
             event.getChannel().sendMessage("Commande réservée à Matéo !").queue();
             return;
         }
-        MessageChannel channel = event.getChannel();
         User user = event.getAuthor();
 
-        if (execute) {
+        if (ecoutes.contains(channel)) {
             channel.sendMessage("Arrêt de la commande").queue();
             timer.cancel();
             timer.purge();
-            execute = false;
+            ecoutes.remove(channel);
         } else {
-            execute = true;
+            ecoutes.add(channel);
             channel.sendMessage("Début de la commande").queue();
             final String[] idSave = {""};
 

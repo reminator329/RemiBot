@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.music.Song;
 import reminator.RemiBot.music.SongsReader;
@@ -21,15 +22,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class DevinetteCommand extends Command {
-    private final static Random random = new Random();
+public class DevinetteCommand implements Command {
 
+    private final static Random random = new Random();
     private List<Song> songs = new ArrayList<>();
 
+    @Override
+    public Category getCategory() {
+        return Category.BILAL;
+    }
+
+    @Override
+    public String getLabel() {
+        return "devinette";
+    }
+
+    @Override
+    public String[] getAlliass() {
+        return new String[0];
+    }
+
+    @Override
+    public String getDescription() {
+        return "Trouve de quelle musique de Bilal Hassani provient la phrase affichée :musical_note:";
+    }
+
     public DevinetteCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("devinette");
-        this.setHelp(setHelp());
         SongsReader songsReader = new SongsReader(getClass().getResourceAsStream("/song/allSongs.txt"));
         try {
             songs = songsReader.readSongs();
@@ -40,21 +58,7 @@ public class DevinetteCommand extends Command {
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande devinette");
-        builder.appendDescription("Trouve de quelle musique de Bilal Hassani provient la phrase affichée :musical_note:");
-
-        builder.addField("Signature", "`r!devinette`", false);
-
-        return builder.build();
-    }
-
-    @Override
-    public void executerCommande(MessageReceivedEvent event) {
-        MessageChannel channel = event.getChannel();
-
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
         final int[] tryAmount = {1};
         User user = event.getAuthor();
 

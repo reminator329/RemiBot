@@ -2,69 +2,44 @@ package reminator.RemiBot.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.Model.Gif;
-import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.bot.BotEmbed;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-import java.awt.*;
 import java.util.List;
-import java.util.Objects;
 
-public class PongCommand extends Command {
+public class PongCommand implements Command {
 
-    public PongCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("pong");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.AUTRE;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande pong");
-        builder.appendDescription("Hmm");
-        builder.addField("Signature", "`r!pong`", false);
-        return builder.build();
+    public String getLabel() {
+        return "pong";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
-        MessageChannel channel2 = event.getChannel();
-        User user = event.getAuthor();
+    public String[] getAlliass() {
+        return new String[]{"po"};
+    }
 
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
+    @Override
+    public String getDescription() {
+        return "Répond pong, affiche la musique écoutée actuellement sur spotify et envoie un gif en MP.";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
+
+        EmbedBuilder builder = BotEmbed.SPOTIFY.getBuilder(event.getMember());
         builder.setTitle("Ping !");
-        builder.setFooter(user.getName(), user.getAvatarUrl());
-        builder.setImage(user.getAvatarUrl());
-        if (event.isFromGuild()) {
-            Member member = event.getMember();
-
-            if (member != null) {
-                List<Activity> activities = member.getActivities();
-                for (Activity a : activities) {
-                    if (a.getName().equalsIgnoreCase("Spotify")) {
-                        RichPresence rp = a.asRichPresence();
-                        if (rp != null) {
-                            try {
-                                builder.setImage(Objects.requireNonNull(rp.getLargeImage()).getUrl());
-                            } catch (NullPointerException ignored) {
-                            }
-                            System.out.println(rp.getDetails());
-                            String message = member.getUser().getName() + " écoute " + rp.getDetails() + " de " + rp.getState();
-                            builder.setFooter(message, member.getUser().getAvatarUrl());
-                        }
-                    }
-                }
-            }
-        }
 
         EnvoiMessage.sendMessage(event, builder.build());
-        EnvoiMessage.sendPrivate(event.getAuthor(), Gif.getRandom().getUrl());
+        EnvoiMessage.sendPrivate(author, Gif.getRandom().getUrl());
     }
 }

@@ -1,46 +1,44 @@
 package reminator.RemiBot.Commands;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
-public class AlbumCommand extends Command {
+public class AlbumCommand implements Command {
 
     // year : année - 1900 ; mouth : Calendar.MOUTH ; date/h/m : date - 1H
     private static final Date prochainAlbum = new Date(2020, Calendar.NOVEMBER, 6);
 
-    public AlbumCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("album");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.BILAL;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande album");
-        builder.appendDescription("Donne le temps avant la sortie du prochain album de Bilal !");
-
-        builder.addField("Signature", "`r!album`", false);
-
-        return builder.build();
+    public String getLabel() {
+        return "album";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
-        MessageChannel channel = event.getChannel();
+    public String[] getAlliass() {
+        return new String[0];
+    }
+
+    @Override
+    public String getDescription() {
+        return "Donne le temps avant la sortie du prochain album de Bilal !";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
 
         Date date = new Date();
         String message;

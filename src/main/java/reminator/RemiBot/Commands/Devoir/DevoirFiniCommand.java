@@ -3,10 +3,12 @@ package reminator.RemiBot.Commands.Devoir;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Model.BDDevoir;
 import reminator.RemiBot.Model.BDDevoirJson;
@@ -15,41 +17,47 @@ import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
+import java.util.List;
 
-public class DevoirFiniCommand extends Command {
+public class DevoirFiniCommand implements Command {
 
     private static final BDDevoir bdDevoir = BDDevoirJson.getInstance();
 
-    public DevoirFiniCommand(){
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("devoir-fini");
-        this.addAlias("d-f");
-        this.addAlias("df");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.DEVOIR;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande devoir-fini");
-        builder.appendDescription("Supprime un devoir de votre liste de devoirs");
-        builder.addField("Signature", "`r!devoir-fini <numéro du devoir>`", false);
-        return builder.build();
+    public String getLabel() {
+        return "devoir-fini";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
-        MessageChannel channel = event.getChannel();
-        String[] args = event.getMessage().getContentRaw().split("\\s+");
-        if (args.length < 2) {
+    public String[] getAlliass() {
+        return new String[]{"df", "d-f"};
+    }
+
+    @Override
+    public String getDescription() {
+        return "Supprime un devoir de votre liste de devoirs";
+    }
+
+    @Override
+    public String getSignature() {
+        return Command.super.getSignature() + " <numéro du devoir>";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
+        if (args.size() < 2) {
             EnvoiMessage.sendMessage(event, "Commande mal utilisé, voir `r!help devoir-fini`");
             return;
         }
 
         int numeroDevoir;
         try {
-            numeroDevoir = Integer.parseInt(args[1]);
+            numeroDevoir = Integer.parseInt(args.get(1));
         } catch (Exception e) {
             EnvoiMessage.sendMessage(event, "Commande mal utilisé, voir `r!help devoir-fini`");
             return;

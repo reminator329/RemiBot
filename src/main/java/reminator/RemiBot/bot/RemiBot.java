@@ -21,6 +21,7 @@ import java.util.*;
 public class RemiBot {
 
     public static String prefix = "r!";
+    public static final Color color = Color.RED;
     public static String token;
 
     public static void main(String[] arguments) throws Exception {
@@ -28,6 +29,13 @@ public class RemiBot {
         JDA api = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES).enableCache(CacheFlag.ACTIVITY).build();
         api.addEventListener(new Controller(api));
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
+
+
+
+        /* TODO ajouter un timer pour chaque élève grace à l'api (getUserById
+        BDDevoir bdDevoir = BDDevoirJson.getInstance();
+        bdDevoir.ajoutTimer(new Eleve(event.getAuthor()));
+         */
 
         Timer timer = new Timer();
         Date date = new Date();

@@ -2,27 +2,14 @@ package reminator.RemiBot.bot;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.Categories.*;
 import reminator.RemiBot.Commands.*;
-import reminator.RemiBot.Commands.Devoir.DevoirAddCommand;
-import reminator.RemiBot.Commands.Devoir.DevoirCommand;
-import reminator.RemiBot.Commands.Devoir.DevoirFiniCommand;
-import reminator.RemiBot.Commands.Devoir.DevoirRappelCommand;
-import reminator.RemiBot.Commands.nsfw.NSFWCategoriesCommand;
-import reminator.RemiBot.Commands.nsfw.NSFWCommand;
-import reminator.RemiBot.Commands.nsfw.NSFWUpdateCommand;
-import reminator.RemiBot.Model.BDDevoir;
-import reminator.RemiBot.Model.BDDevoirJson;
-import reminator.RemiBot.Model.Eleve;
+import reminator.RemiBot.Commands.enums.Commands;
 
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,147 +17,31 @@ public class Controller extends ListenerAdapter {
 
     JDA api;
 
-    private final ArrayList<Message> messages = new ArrayList<>();
-    private final int nbMessageMax = 5000;
-
-    private final ArrayList<Command> commands = new ArrayList<>();
-    private final PingCommand pingCommand;
-    private final PongCommand pongCommand;
-    //private final AlbumCommand albumCommand;
-    private final EcouteBilalCommand ecouteBilalCommand;
-    private final SpamCommand spamCommand;
-    private final HelpCommand helpCommand;
-    private final BilalCommand bilalCommand;
-    private final YoutubeurCommand youtubeurCommand;
-    private final DevinetteCommand devinetteCommand;
-    private final AmongusCommand amongusCommand;
-    private final PlusMoinsCommand plusMoinsCommand;
-    private final JeuxMultiCommand jeuxMultiCommand;
-    private final PollCommand pollCommand;
-    private final DevoirCommand devoirCommand;
-    private final DevoirAddCommand devoirAddCommand;
-    private final DevoirFiniCommand devoirFiniCommand;
-    private final DevoirRappelCommand devoirRappelCommand;
-    private final GhostPingCommand ghostPingCommand;
-    private final NSFWCommand nsfwCommand;
-    private final NSFWUpdateCommand nsfwUpdateCommand;
-    private final NSFWCategoriesCommand nsfwCategoriesCommand;
-    private final Mateo mateo;
-
-    private final ArrayList<Categorie> categories = new ArrayList<>();
-    private final BilalCategorie bilalCategorie = new BilalCategorie();
-    private final AutresCategorie autresCategorie = new AutresCategorie();
-    private final JeuCategorie jeuCategorie = new JeuCategorie();
-    private final DevoirCategorie devoirCategorie = new DevoirCategorie();
-    private final NsfwCategorie nsfwCategorie = new NsfwCategorie();
-
-
     public Controller(JDA api) {
         this.api = api;
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
-
-        // Catégories
-        categories.add(bilalCategorie);
-        categories.add(jeuCategorie);
-        categories.add(autresCategorie);
-        categories.add(devoirCategorie);
-        categories.add(nsfwCategorie);
-
-        // Commandes
-        pingCommand = new PingCommand();
-        pongCommand = new PongCommand();
-        //albumCommand = new AlbumCommand();
-        ecouteBilalCommand = new EcouteBilalCommand();
-        spamCommand = new SpamCommand();
-        helpCommand = new HelpCommand(this);
-        bilalCommand = new BilalCommand();
-        youtubeurCommand = new YoutubeurCommand();
-        devinetteCommand = new DevinetteCommand();
-        amongusCommand = new AmongusCommand();
-        plusMoinsCommand = new PlusMoinsCommand();
-        jeuxMultiCommand = new JeuxMultiCommand();
-        pollCommand = new PollCommand();
-        devoirCommand = new DevoirCommand();
-        devoirAddCommand = new DevoirAddCommand();
-        devoirFiniCommand = new DevoirFiniCommand();
-        devoirRappelCommand = new DevoirRappelCommand();
-        ghostPingCommand = new GhostPingCommand();
-        mateo = new Mateo();
-
-        nsfwCommand = new NSFWCommand();
-        nsfwUpdateCommand = new NSFWUpdateCommand();
-        nsfwCategoriesCommand = new NSFWCategoriesCommand();
-
-        // Ajout de la commande dans la liste
-        commands.add(pingCommand);
-        commands.add(pongCommand);
-        //commands.add(albumCommand);
-        commands.add(ecouteBilalCommand);
-        commands.add(spamCommand);
-        commands.add(helpCommand);
-        commands.add(bilalCommand);
-        commands.add(youtubeurCommand);
-        commands.add(devinetteCommand);
-        commands.add(amongusCommand);
-        commands.add(plusMoinsCommand);
-        commands.add(jeuxMultiCommand);
-        commands.add(pollCommand);
-        commands.add(devoirCommand);
-        commands.add(devoirAddCommand);
-        commands.add(devoirFiniCommand);
-        commands.add(devoirRappelCommand);
-        commands.add(ghostPingCommand);
-        commands.add(nsfwCommand);
-        commands.add(nsfwUpdateCommand);
-        commands.add(nsfwCategoriesCommand);
-        commands.add(mateo);
-
-        // Ajout de la commande dans la catégorie
-        bilalCategorie.addCommand(ecouteBilalCommand);
-        //bilalCategorie.addCommand(albumCommand);
-        bilalCategorie.addCommand(bilalCommand);
-        bilalCategorie.addCommand(devinetteCommand);
-
-        autresCategorie.addCommand(pingCommand);
-        autresCategorie.addCommand(pongCommand);
-        autresCategorie.addCommand(spamCommand);
-        autresCategorie.addCommand(helpCommand);
-        autresCategorie.addCommand(youtubeurCommand);
-        autresCategorie.addCommand(amongusCommand);
-        autresCategorie.addCommand(pollCommand);
-        autresCategorie.addCommand(ghostPingCommand);
-        autresCategorie.addCommand(mateo);
-
-        jeuCategorie.addCommand(plusMoinsCommand);
-        jeuCategorie.addCommand(jeuxMultiCommand);
-
-        devoirCategorie.addCommand(devoirCommand);
-        devoirCategorie.addCommand(devoirAddCommand);
-        devoirCategorie.addCommand(devoirFiniCommand);
-        devoirCategorie.addCommand(devoirRappelCommand);
-
-        nsfwCategorie.addCommand(nsfwCommand);
-        nsfwCategorie.addCommand(nsfwUpdateCommand);
-        nsfwCategorie.addCommand(nsfwCategoriesCommand);
     }
-
-    Guild guild;
     User user;
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
-        System.out.println(event.getMessage().getContentRaw());
-        BDDevoir bdDevoir = BDDevoirJson.getInstance();
-        bdDevoir.ajoutTimer(new Eleve(event.getAuthor()));
+        List<String> args = new ArrayList<>(Arrays.asList(event.getMessage().getContentRaw().split("\\s+")));
 
+        String command = args.get(0);
 
-        String[] args = event.getMessage().getContentRaw().split("\\s+");
-        for (Command c : commands) {
-            String prefixLabel = c.getPrefix() + c.getLabel();
-            String[] test = args[0].split(c.getPrefix().toLowerCase() + "|" + c.getPrefix().toUpperCase());
-            if (prefixLabel.equalsIgnoreCase(args[0]) || test.length > 1 && c.isAlias(test[1])) {
-                c.executerCommande(event);
+        for (Commands c : Commands.values()) {
+            Command cmd = c.getCommand();
+            String prefix = cmd.getPrefix();
+            String label = cmd.getLabel();
+            String prefixLabel = prefix + label;
+
+            String[] separation = command.split(prefix);
+
+            if (prefixLabel.equalsIgnoreCase(command) || separation.length > 1 && cmd.isAlias(separation[1])) {
+                args.remove(0);
+                c.getCommand().execute(event, event.getAuthor(), event.getChannel(), args);
+                break;
             }
         }
 
@@ -190,12 +61,12 @@ public class Controller extends ListenerAdapter {
         if (event.getAuthor().getIdLong() == 368733622246834188L) {
 
             Pattern pattern = Pattern.compile("([0-9]+)");
-            Matcher matcher = pattern.matcher(args[0]);
+            Matcher matcher = pattern.matcher(args.get(0));
 
             if (matcher.find()) {
                 StringBuilder message = new StringBuilder();
-                for (int i = 1; i < args.length; i++) {
-                    message.append(args[i]).append(" ");
+                for (int i = 1; i < args.size(); i++) {
+                    message.append(args.get(i)).append(" ");
                 }
 
                 Objects.requireNonNull(api.getUserById(Long.parseLong(matcher.group()))).openPrivateChannel()
@@ -335,12 +206,4 @@ public class Controller extends ListenerAdapter {
 
     }
  */
-
-    public ArrayList<Categorie> getCategories() {
-        return new ArrayList<>(this.categories);
-    }
-
-    public ArrayList<Command> getCommands() {
-        return new ArrayList<>(this.commands);
-    }
 }

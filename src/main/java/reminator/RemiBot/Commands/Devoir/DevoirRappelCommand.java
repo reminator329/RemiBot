@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Model.BDDevoir;
 import reminator.RemiBot.Model.BDDevoirJson;
@@ -16,38 +17,44 @@ import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
+import java.util.List;
 import java.util.regex.Pattern;
 
-public class DevoirRappelCommand extends Command {
+public class DevoirRappelCommand implements Command {
 
     private static final BDDevoir bdDevoir = BDDevoirJson.getInstance();
 
-    public DevoirRappelCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("devoir-rappel");
-        this.addAlias("d-r");
-        this.addAlias("dr");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.DEVOIR;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande devoir-rappel");
-        builder.appendDescription("Permet d'activer ou désactiver le rappel de devoirs tous les jours.");
-        builder.addField("Signature", "`r!devoir-rappel <[statut(true|false)] [heure(HH)]>`", false);
-        return builder.build();
+    public String getLabel() {
+        return "devoir-rappel";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
-        MessageChannel channel = event.getChannel();
-        String[] args = event.getMessage().getContentRaw().split("\\s+");
+    public String[] getAlliass() {
+        return new String[]{"dr", "d-r"};
+    }
+
+    @Override
+    public String getDescription() {
+        return "Permet d'activer ou désactiver le rappel de devoirs tous les jours.";
+    }
+
+    @Override
+    public String getSignature() {
+        return Command.super.getSignature() + " [statut(true|false)] [heure(HH)]";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
         User user = event.getAuthor();
         bdDevoir.ajoutTimer(new Eleve(user));
 
-        if (args.length < 2) {
+        if (args.size() < 2) {
 
             String messageFin;
 

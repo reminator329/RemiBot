@@ -1,57 +1,54 @@
 package reminator.RemiBot.Commands;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-import java.awt.*;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class EcouteBilalCommand extends Command {
+public class EcouteBilalCommand implements Command {
 
-    private static boolean execute = false;
+    private final List<MessageChannel> ecoutes = new ArrayList<>();
     Timer timer;
 
-    public EcouteBilalCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("ecoute-bilal");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.BILAL;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande ecoute-bilal");
-        builder.appendDescription("Permet de notifier les Bilal lorsque quelqu'un écoute une musique de Bilal Hassani.\n\nQuand la commande est exécuté, elle active ou désactive l'envoi des messages.\nLes messages seront envoyés dans le salon où la commande a été exécutée.");
-        builder.addField("Signature", "`r!ecoute-bilal`", false);
-        return builder.build();
+    public String getLabel() {
+        return "ecoute-bilal";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
+    public String[] getAlliass() {
+        return new String[]{"e-b", "eb", "ecoute-b"};
+    }
+
+    @Override
+    public String getDescription() {
+        return "Permet de notifier les Bilal lorsque quelqu'un écoute une musique de Bilal Hassani.\n\nQuand la commande est exécuté, elle active ou désactive l'envoi des messages.\nLes messages seront envoyés dans le salon où la commande a été exécutée.";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
         if (!event.isFromGuild()) {
             EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
-        MessageChannel channel = event.getChannel();
 
-        if (execute) {
+        if (ecoutes.contains(channel)) {
             channel.sendMessage("Arrêt de la commande").queue();
             timer.cancel();
             timer.purge();
-            execute = false;
+            ecoutes.remove(channel);
         } else {
             channel.sendMessage("Début de la commande").queue();
-            execute = true;
+            ecoutes.add(channel);
             List<Member> members = event.getGuild().getMembers();
             List<Role> roles = event.getGuild().getRoles();
             Role bilal = null;

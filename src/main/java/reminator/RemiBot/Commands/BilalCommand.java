@@ -3,10 +3,12 @@ package reminator.RemiBot.Commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.utils.EnvoiMessage;
 import reminator.RemiBot.utils.RandomImagePicker;
@@ -16,8 +18,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.util.List;
 
-public class BilalCommand extends Command {
+public class BilalCommand implements Command {
+
     private RandomImagePicker randomImagePicker;
 
     {
@@ -28,32 +32,32 @@ public class BilalCommand extends Command {
         }
     }
 
-    public BilalCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("bilal");
-        this.addAlias("b");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.BILAL;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande bilal");
-        builder.appendDescription("Affiche une super photo de Bilal tirée au hasard :heart:");
-
-        builder.addField("Signature", "`r!bilal`", false);
-
-        return builder.build();
+    public String getLabel() {
+        return "bilal";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
+    public String[] getAlliass() {
+        return new String[]{"b"};
+    }
+
+    @Override
+    public String getDescription() {
+        return "Affiche une super photo de Bilal tirée au hasard :heart:";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
         if (!event.isFromGuild()) {
             EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
-        MessageChannel channel = event.getChannel();
 
         EmbedBuilder embed = new EmbedBuilder();
         InputStream file;

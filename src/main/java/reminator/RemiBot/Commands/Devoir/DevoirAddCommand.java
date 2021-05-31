@@ -3,6 +3,8 @@ package reminator.RemiBot.Commands.Devoir;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Model.BDDevoir;
 import reminator.RemiBot.Model.BDDevoirJson;
@@ -13,40 +15,46 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DevoirAddCommand extends Command {
+public class DevoirAddCommand implements Command {
 
     private static final BDDevoir bdDevoir = BDDevoirJson.getInstance();
 
-    public DevoirAddCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("devoir-add");
-        this.addAlias("d-a");
-        this.addAlias("da");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.DEVOIR;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande devoir-add");
-        builder.appendDescription("Ajoute un devoir à la base de devoirs");
-        builder.addField("Signature", "`r!devoir-add [mention] <matière> [JJ/MM/AAAA] <description>`", false);
-        return builder.build();
+    public String getLabel() {
+        return "devoir-add";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
-        MessageChannel channel = event.getChannel();
-        String[] args = event.getMessage().getContentRaw().split("\\s+");
-        if (args.length < 3) {
+    public String[] getAlliass() {
+        return new String[]{"d-a", "da"};
+    }
+
+    @Override
+    public String getDescription() {
+        return "Ajoute un devoir à la base de devoirs";
+    }
+
+    @Override
+    public String getSignature() {
+        return Command.super.getSignature() + " [mention] <matière> [<JJ/MM/AAAA>] <description>";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
+        if (args.size() < 3) {
             EnvoiMessage.sendMessage(event, "Commande mal utilisée, voir `r!help devoir-add`");
             return;
         }
-        String mention = args[1];
+        String mention = args.get(1);
 
         ArrayList<String> ids = new ArrayList<>();
         boolean all = false;
@@ -115,13 +123,13 @@ public class DevoirAddCommand extends Command {
             users.add(event.getAuthor());
         }
 
-        String matiere = args[indiceMatiere];
+        String matiere = args.get(indiceMatiere);
         int indiceDescription = indiceMatiere + 2;
 
         Date date = null;
 
         pattern = Pattern.compile("([0-9][0-9])/([0-9][0-9])/([0-9][0-9][0-9][0-9])");
-        matcher = pattern.matcher(args[indiceMatiere+1]);
+        matcher = pattern.matcher(args.get(indiceMatiere + 1));
 
         if (matcher.find()) {
             int jour = Integer.parseInt(matcher.group(1));
@@ -134,8 +142,8 @@ public class DevoirAddCommand extends Command {
         }
 
         StringBuilder description = new StringBuilder();
-        for (int i = indiceDescription; i < args.length; i++) {
-            description.append(args[i]).append(" ");
+        for (int i = indiceDescription; i < args.size(); i++) {
+            description.append(args.get(i)).append(" ");
         }
 
         bdDevoir.addDevoir(users, matiere, description.toString(), all, date);

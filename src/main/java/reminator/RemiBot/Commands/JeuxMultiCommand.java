@@ -4,10 +4,12 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.music.HTTPRequest;
 import reminator.RemiBot.utils.EnvoiMessage;
@@ -16,37 +18,40 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-public class JeuxMultiCommand extends Command{
+public class JeuxMultiCommand implements Command {
 
     String csv;
 
-    public JeuxMultiCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("jeux-multi");
-        this.addAlias("jeux");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.JEU;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande jeux-multi");
-        builder.appendDescription("Affiche les jeux communs des membres de la Secte");
-
-        builder.addField("Signature", "`r!jeux-multi [<joueurs>]`", false);
-        builder.addField("Alias", "`r!jeux`", false);
-
-        return builder.build();
+    public String getLabel() {
+        return "jeux-multi";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
-        MessageChannel channel = event.getChannel();
+    public String[] getAlliass() {
+        return new String[]{"jeux", "jx", "j", "j-m", "jm"};
+    }
+
+    @Override
+    public String getDescription() {
+        return "Affiche les jeux communs des membres de la Secte";
+    }
+
+    @Override
+    public String getSignature() {
+        return Command.super.getSignature() + "[( <joueur>)+]";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
         Member member = event.getMember();
-
-        String[] args = event.getMessage().getContentRaw().split("\\s+");
 
         updateCsv();
 
@@ -56,7 +61,7 @@ public class JeuxMultiCommand extends Command{
         String[] lignes = csv.split("\n");
         ArrayList<String> jeux = new ArrayList<>();
 
-        if (args.length == 1) {
+        if (args.size() == 1) {
             int taille = lignes[0].split(",").length;
             boolean flag = true;
             for (int i = 2; i < lignes.length; i++) {
@@ -87,7 +92,7 @@ public class JeuxMultiCommand extends Command{
                 flag = true;
             }
         } else {
-            int nbJoueurs = args.length - 1;
+            int nbJoueurs = args.size() - 1;
 
             boolean flag = true;
             for (int i = 2; i < lignes.length; i++) {
@@ -119,7 +124,7 @@ public class JeuxMultiCommand extends Command{
                     jeux.add(ligne[0]);
                 }
                 flag = true;
-                nbJoueurs = args.length - 1;
+                nbJoueurs = args.size() - 1;
             }
         }
 
@@ -136,8 +141,8 @@ public class JeuxMultiCommand extends Command{
         EnvoiMessage.sendMessage(event, builder.build());
     }
 
-    private boolean estJoueur(String s, String[] args) {
-        ArrayList<String> joueurs = new ArrayList<>(Arrays.asList(args).subList(1, args.length));
+    private boolean estJoueur(String s, List<String> args) {
+        ArrayList<String> joueurs = new ArrayList<>(args.subList(1, args.size()));
         for (String joueur : joueurs) {
             if (s.toUpperCase().contains(joueur.toUpperCase()) || joueur.toUpperCase().contains(s.toUpperCase())) {
                 return true;

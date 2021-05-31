@@ -1,57 +1,54 @@
 package reminator.RemiBot.Commands;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-import java.awt.*;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class AmongusCommand extends Command{
+public class AmongusCommand implements Command {
 
-    private static boolean execute = false;
+    private final List<MessageChannel> ecoutes = new ArrayList<>();
     Timer timer;
 
-    public AmongusCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("ecoute-among-us");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.AUTRE;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande ecoute-among-us");
-        builder.appendDescription("Permet de notifier tout le monde lorsque quelqu'un joue à Among Us.\n\nQuand la commande est exécuté, elle active ou désactive l'envoi des messages.\nLes messages seront envoyés dans le salon où la commande a été exécutée.");
-        builder.addField("Signature", "`r!ecoute-among-us`", false);
-        return builder.build();
+    public String getLabel() {
+        return "ecoute-among-us";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
+    public String[] getAlliass() {
+        return new String[]{"e-a-u", "eau", "ea", "ecoute-au", "ecoute-a-u", "ecoute-among", "ecoute-us"};
+    }
+
+    @Override
+    public String getDescription() {
+        return "Permet de notifier tout le monde lorsque quelqu'un joue à Among Us.\n\nQuand la commande est exécuté, elle active ou désactive l'envoi des messages.\nLes messages seront envoyés dans le salon où la commande a été exécutée.";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
         if (!event.isFromGuild()) {
             EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
-        MessageChannel channel = event.getChannel();
 
-        if (execute) {
-            execute = false;
+        if (ecoutes.contains(channel)) {
+            ecoutes.remove(channel);
             EnvoiMessage.sendMessage(event, "Arrêt de la commande");
             timer.cancel();
             timer.purge();
         } else {
             EnvoiMessage.sendMessage(event, "Début de la commande");
-            execute = true;
+            ecoutes.add(channel);
             java.util.List<Member> members = event.getGuild().getMembers();
             java.util.List<Role> roles = event.getGuild().getRoles();
 

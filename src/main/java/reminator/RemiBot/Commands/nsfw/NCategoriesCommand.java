@@ -1,49 +1,48 @@
 package reminator.RemiBot.Commands.nsfw;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.Command;
-import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
-public class NSFWCategoriesCommand extends Command {
-    public NSFWCategoriesCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("nsfw-categories");
-        this.setHelp(setHelp());
+public class NCategoriesCommand implements Command {
+
+    @Override
+    public reminator.RemiBot.Categories.enums.Category getCategory() {
+        return reminator.RemiBot.Categories.enums.Category.N;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Liste les catégories NSFW");
-        builder.appendDescription("Affiche la liste des catégories NSFW et le nombre d'images qu'elles contiennent.");
-        builder.addField("Signature", "`r!nsfw-categories`", false);
-        return builder.build();
+    public String getLabel() {
+        return "nsfw-categories";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
-        MessageChannel channel = event.getChannel();
-        User user = event.getAuthor();
+    public String[] getAlliass() {
+        return new String[]{"n-c", "nc", "nsfw-c"};
+    }
 
-        NSFWManager nsfw = NSFWManager.get();
+    @Override
+    public String getDescription() {
+        return "Affiche la liste des catégories NSFW et le nombre d'images qu'elles contiennent.";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
+
+        NManager nsfw = NManager.get();
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Rémi NSFW")
-                .setFooter(user.getName(), user.getAvatarUrl());
+                .setFooter(author.getName(), author.getAvatarUrl());
 
         Collection<Category> allCategories = nsfw.getCategories().values();
         String boyCategories = allCategories.stream().filter(cat -> cat.isBoy() && !cat.getId().equals("boy")).sorted()

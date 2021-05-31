@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Model.BDDevoir;
 import reminator.RemiBot.Model.BDDevoirJson;
@@ -18,32 +19,34 @@ import reminator.RemiBot.utils.EnvoiMessage;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
-public class DevoirCommand extends Command {
+public class DevoirCommand implements Command {
 
     private static final BDDevoir bdDevoir = BDDevoirJson.getInstance();
 
-    public DevoirCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("devoir");
-        this.addAlias("d");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.DEVOIR;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande devoir");
-        builder.appendDescription("Affiche les devoirs à faire");
-        builder.addField("Signature", "`r!devoir`", false);
-        return builder.build();
+    public String getLabel() {
+        return "devoir";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
-        MessageChannel channel = event.getChannel();
+    public String[] getAlliass() {
+        return new String[]{"d"};
+    }
 
+    @Override
+    public String getDescription() {
+        return "Affiche les devoirs à faire";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
         ArrayList<Devoir> devoirs = bdDevoir.getDevoirs(event.getAuthor());
         if (devoirs.isEmpty()) {
             EnvoiMessage.sendMessage(event, "Vous n'avez pas de devoirs à faire");
@@ -95,5 +98,4 @@ public class DevoirCommand extends Command {
         }
         return numeroDevoir;
     }
-
 }

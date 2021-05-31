@@ -1,53 +1,52 @@
 package reminator.RemiBot.Commands.nsfw;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.Commands.Command;
-import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;
+import java.util.List;
 
-public class NSFWUpdateCommand extends Command {
+public class NUpdateCommand implements Command {
 
     private final long COOLDOWN = 5 * 60 * 1000;
     private long lastCall = System.currentTimeMillis();
 
-    public NSFWUpdateCommand() {
-        this.setPrefix(RemiBot.prefix);
-        this.setLabel("nsfw-update");
-        this.setHelp(setHelp());
+    @Override
+    public Category getCategory() {
+        return Category.N;
     }
 
     @Override
-    public MessageEmbed setHelp() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.RED);
-        builder.setTitle("Commande d'update NSFW");
-        builder.appendDescription("Met à jour le contenu NSFW.");
-        builder.addField("Signature", "`r!nsfw-update`", false);
-        return builder.build();
+    public String getLabel() {
+        return "nsfw-update";
     }
 
     @Override
-    public void executerCommande(MessageReceivedEvent event) {
-        MessageChannel channel = event.getChannel();
-        User user = event.getAuthor();
+    public String[] getAlliass() {
+        return new String[]{"n-u", "nsfw-u", "nu"};
+    }
 
-        NSFWManager nsfw = NSFWManager.get();
+    @Override
+    public String getDescription() {
+        return "Met à jour le contenu NSFW.";
+    }
+
+    @Override
+    public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
+
+        NManager nsfw = NManager.get();
 
         long now = System.currentTimeMillis();
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Rémi NSFW")
-                .setFooter(user.getName(), user.getAvatarUrl());
+                .setFooter(author.getName(), author.getAvatarUrl());
 
         if(now-lastCall < COOLDOWN) {
             long remaining = COOLDOWN - (now - lastCall);
