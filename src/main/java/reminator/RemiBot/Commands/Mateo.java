@@ -46,6 +46,7 @@ public class Mateo extends Command {
             timer.purge();
             execute = false;
         } else {
+            execute = true;
             channel.sendMessage("Début de la commande").queue();
             final String[] idSave = {""};
 
