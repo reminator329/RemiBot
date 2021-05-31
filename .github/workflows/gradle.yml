@@ -45,7 +45,9 @@ jobs:
     - name: Stop the bot
       run: ssh azure "sudo pkill -f 'java -jar'"
     - name: Add credentials
-      run: ssh azure 'echo "${{ secrets.CREDENTIALS }}" > /RemiBot/serviceAccountKey.json'
+      run: |
+        ssh azure 'echo "${{ secrets.CREDENTIALS }}" > /RemiBot/serviceAccountKey.json'
+        ssh azure 'chmod 700 /RemiBot/serviceAccountKey.json'
     - name: Upload jar on Azure VM
       run: |
         ssh azure 'echo "/usr/lib/jvm/java-16-openjdk-amd64/bin/java -jar /RemiBot/RemiBot-1.0-all.jar ${{ secrets.BOT_TOKEN }} >> /RemiBot/log.txt 2>> /RemiBot/log.txt" > /RemiBot/run.sh'
