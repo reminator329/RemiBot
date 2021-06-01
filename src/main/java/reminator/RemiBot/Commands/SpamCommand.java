@@ -56,7 +56,7 @@ public class SpamCommand implements Command {
                     else
                         EnvoiMessage.sendPrivate(author, "Je spam");
                 }
-            }, 0, 2000);
+            }, 0, 2500);
         }
     }
 }
