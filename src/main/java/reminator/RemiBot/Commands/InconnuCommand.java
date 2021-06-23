@@ -19,11 +19,12 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 import java.util.List;
+import java.util.Set;
 
-public class YoutubeurCommand implements Command {
+public class InconnuCommand implements Command {
 
     private final static byte[] SALT = {-121, -63, -7, -17, 123, 122, -100, 20, -111, -28, -114, -116, -120, 73, -91, 50};
-    private final static String HASH = "e9bX7ferwaUUug+z6+3BhQ==";
+    private final static Set<String> HASHES = Set.of("OIw8LXQyWDB87lSXl8paNg==", "EGucGvg9ZTLTg9BlYb1I4A==");
 
     public static String hash(String input) throws NoSuchAlgorithmException, InvalidKeySpecException {
         KeySpec spec = new PBEKeySpec(input.toCharArray(), SALT, 65536, 128);
@@ -40,17 +41,17 @@ public class YoutubeurCommand implements Command {
 
     @Override
     public String getLabel() {
-        return "youtubeur";
+        return "inconnu";
     }
 
     @Override
     public String[] getAlliass() {
-        return new String[]{"y"};
+        return new String[]{"i"};
     }
 
     @Override
     public String getDescription() {
-        return "Devine qui est le youtubeur :face_with_monocle:";
+        return "Devine qui est cette personne :face_with_monocle:";
     }
 
     @Override
@@ -65,8 +66,8 @@ public class YoutubeurCommand implements Command {
         final long channelId = channel.getIdLong();
 
         EmbedBuilder embed = new EmbedBuilder();
-        embed.setImage("https://cdn.discordapp.com/attachments/763502426300481568/766243876754948106/unknown.png")
-                .setDescription("Qui est ce youtubeur ? :face_with_monocle:");
+        embed.setImage("https://cdn.discordapp.com/attachments/685895494387499068/835216207799779328/devine-qui-c-est.jpg")
+                .setDescription("Qui est cette personne ? :face_with_monocle:");
         channel.sendMessage(embed.build()).queue();
 
         event.getJDA().addEventListener(new ListenerAdapter() {
@@ -81,8 +82,8 @@ public class YoutubeurCommand implements Command {
                 } catch (Exception ignored) {
                 }
 
-                String feedback = HASH.equals(hashedInput)
-                        ? "Félicitations !!!! Tu as deviné le Youtubeur ! :partying_face:"
+                String feedback = HASHES.contains(hashedInput)
+                        ? "Félicitations !!!! Tu as deviné la personne ! :partying_face:"
                         : "Euuuh non c'est pas ça ! Essaie encore ! :slight_smile:";
 
                 channel.sendMessage(new MessageBuilder().append(feedback).build()).queue();
