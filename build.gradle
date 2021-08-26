@@ -7,11 +7,16 @@ plugins {
 mainClassName = 'reminator.RemiBot.bot.RemiBot'
 
 version '1.0'
-def jdaVersion = '4.2.0_214'
+def jdaVersion = '4.3.0_310'
 
 
 repositories {
     jcenter()
+    mavenCentral() // for transitive dependencies
+    maven {
+        name 'm2-dv8tion'
+        url 'https://m2.dv8tion.net/releases'
+    }
 }
 
 dependencies {

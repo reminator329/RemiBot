@@ -54,6 +54,7 @@ public class DevoirAddCommand implements Command {
             EnvoiMessage.sendMessage(event, "Commande mal utilisée, voir `r!help devoir-add`");
             return;
         }
+        System.out.println(args);
         String mention = args.get(1);
 
         ArrayList<String> ids = new ArrayList<>();
@@ -61,7 +62,7 @@ public class DevoirAddCommand implements Command {
         ArrayList<User> users = new ArrayList<>();
 
         String type;
-        int indiceMatiere = 2;
+        int indiceMatiere = 1;
 
 
         if (mention.contains("!")) {

@@ -1,6 +1,7 @@
 package reminator.RemiBot.bot;
 
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -26,6 +27,24 @@ public class Controller extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
+        /*
+        if (Objects.equals(api.getUserById(368733622246834188L), event.getAuthor())) {
+            String message = event.getMessage().getContentRaw();
+            System.out.println(message);
+            System.out.println(event.getMessage().getContentDisplay());
+
+            Pattern pattern = Pattern.compile("<:.+:([0-9]+)>");
+            Matcher matcher = pattern.matcher(message);
+            //if (!matcher.find()) return;
+            matcher.find();
+
+            String idEmote = matcher.group(1);
+            System.out.println(idEmote);
+            Emote emote = api.getEmoteById(idEmote);
+            event.getChannel().sendMessage(emote.getAsMention()).queue();
+        }
+
+         */
         List<String> args = new ArrayList<>(Arrays.asList(event.getMessage().getContentRaw().split("\\s+")));
 
         String command = args.get(0);

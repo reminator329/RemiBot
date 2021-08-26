@@ -85,12 +85,7 @@ public class BDDevoirJson extends BDDevoir {
             return devoirs;
         }
 
-        devoirs.sort(new Comparator<Devoir>() {
-            @Override
-            public int compare(Devoir o1, Devoir o2) {
-                return o1.compareTo(o2);
-            }
-        });
+        devoirs.sort(Devoir::compareTo);
         return devoirs;
     }
 
