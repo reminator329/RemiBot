@@ -21,7 +21,7 @@ public enum Commands {
     SPAM(new SpamCommand()),
     HELP(new HelpCommand()),
     BILAL(new BilalCommand()),
-    YOUTUBEUR(new YoutubeurCommand()),
+    INCONNU(new InconnuCommand()),
     DEVINETTE(new DevinetteCommand()),
     AMONG_US(new AmongusCommand()),
     PLUS_OU_MOINS(new PlusMoinsCommand()),
