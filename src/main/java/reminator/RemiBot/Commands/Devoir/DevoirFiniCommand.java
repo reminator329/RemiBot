@@ -50,14 +50,14 @@ public class DevoirFiniCommand implements Command {
 
     @Override
     public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
-        if (args.size() < 2) {
+        if (args.size() < 1) {
             EnvoiMessage.sendMessage(event, "Commande mal utilisé, voir `r!help devoir-fini`");
             return;
         }
 
         int numeroDevoir;
         try {
-            numeroDevoir = Integer.parseInt(args.get(1));
+            numeroDevoir = Integer.parseInt(args.get(0));
         } catch (Exception e) {
             EnvoiMessage.sendMessage(event, "Commande mal utilisé, voir `r!help devoir-fini`");
             return;

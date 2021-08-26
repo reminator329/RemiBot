@@ -65,12 +65,12 @@ public class NCommand implements Command {
                 .setTitle("Rémi NSFW")
                 .setFooter(user.getName(), user.getAvatarUrl());
 
-        if (args.size() > 1) {
-            Category category = nsfw.getCategoryById(args.get(1).toLowerCase());
+        if (args.size() > 0) {
+            Category category = nsfw.getCategoryById(args.get(0).toLowerCase());
 
             if (category == null) {
                 embed.setColor(Color.RED);
-                embed.appendDescription("La catégorie `" + args.get(1).toLowerCase() + "` n'existe pas.");
+                embed.appendDescription("La catégorie `" + args.get(0).toLowerCase() + "` n'existe pas.");
                 EnvoiMessage.sendMessage(event, embed.build());
                 return;
             }

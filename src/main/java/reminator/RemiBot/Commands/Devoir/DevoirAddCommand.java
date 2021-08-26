@@ -50,12 +50,12 @@ public class DevoirAddCommand implements Command {
 
     @Override
     public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
-        if (args.size() < 3) {
+        if (args.size() < 2) {
             EnvoiMessage.sendMessage(event, "Commande mal utilisée, voir `r!help devoir-add`");
             return;
         }
         System.out.println(args);
-        String mention = args.get(1);
+        String mention = args.get(0);
 
         ArrayList<String> ids = new ArrayList<>();
         boolean all = false;

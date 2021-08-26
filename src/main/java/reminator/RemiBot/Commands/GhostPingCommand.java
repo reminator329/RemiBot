@@ -47,11 +47,11 @@ public class GhostPingCommand implements Command {
         event.getMessage().delete().queue();
         Guild guild = event.getGuild();
         StringBuilder message = new StringBuilder();
-        if (args.size() < 2) {
+        if (args.size() < 1) {
             message = new StringBuilder("Coucou");
         } else {
-            for (int i = 1; i < args.size(); i++) {
-                message.append(args.get(i)).append(" ");
+            for (String arg : args) {
+                message.append(arg).append(" ");
             }
         }
         for (TextChannel c : guild.getTextChannels()) {
