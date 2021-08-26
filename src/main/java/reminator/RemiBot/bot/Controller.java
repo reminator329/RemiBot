@@ -55,7 +55,7 @@ public class Controller extends ListenerAdapter {
             String label = cmd.getLabel();
             String prefixLabel = prefix + label;
 
-            String[] separation = command.split(prefix);
+            String[] separation = command.split("(?i)" + prefix);
 
             if (prefixLabel.equalsIgnoreCase(command) || separation.length > 1 && cmd.isAlias(separation[1])) {
                 args.remove(0);

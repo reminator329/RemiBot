@@ -58,7 +58,7 @@ public class HelpCommand implements Command {
 
         builder.setThumbnail(imageI);
         builder.setColor(getColor());
-        builder.setTitle(titre, "https://www.remontees-mecaniques.net/");
+        builder.setTitle(titre, "https://linktr.ee/reminator");
         builder.appendDescription(getDescription());
 
         for (Map.Entry<Category, List<Command>> categoryListEntry : commandsGroupedByCategory.entrySet()) {
@@ -81,7 +81,7 @@ public class HelpCommand implements Command {
 
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(command.getColor());
-        builder.setTitle("Commande " + command.getLabel());
+        builder.setTitle("Commande " + command.getName());
         builder.appendDescription(command.getDescription());
 
         builder.addField("Signature", "`" + command.getSignature() + "`", false);
