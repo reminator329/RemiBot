@@ -28,7 +28,7 @@ public class Controller extends ListenerAdapter {
 
     @Override
     public void onSlashCommand(@NotNull SlashCommandEvent event) {
-        if (!event.getName().equals("ping rémi")) return;
+        if (!event.getName().equals("pingremi")) return;
         long time = System.currentTimeMillis();
         OptionMapping optEphemeral = event.getOption("Ephemeral");
         boolean ephemeral;
