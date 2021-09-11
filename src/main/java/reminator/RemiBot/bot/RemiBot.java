@@ -37,7 +37,7 @@ public class RemiBot {
 
         CommandListUpdateAction commands = api.updateCommands()
                 .addCommands(
-                        new CommandData("pingRémi", "Retourne pong")
+                        new CommandData("pingrémi", "Retourne pong")
                                 .addOption(OptionType.BOOLEAN, "ephemeral", "Mettre à true pour que personne de voit la réponse.", false)
                 );
         commands.queue();
