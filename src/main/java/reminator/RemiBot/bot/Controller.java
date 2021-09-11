@@ -4,8 +4,10 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.*;
 import reminator.RemiBot.Commands.enums.Commands;
@@ -17,12 +19,29 @@ import java.util.regex.Pattern;
 public class Controller extends ListenerAdapter {
 
     JDA api;
+    User user;
 
     public Controller(JDA api) {
         this.api = api;
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
     }
-    User user;
+
+    @Override
+    public void onSlashCommand(@NotNull SlashCommandEvent event) {
+        if (!event.getName().equals("pingRémi")) return;
+        long time = System.currentTimeMillis();
+        OptionMapping optEphemeral = event.getOption("Ephemeral");
+        boolean ephemeral;
+        if (optEphemeral == null) {
+            ephemeral = false;
+        } else {
+            ephemeral = optEphemeral.getAsBoolean();
+        }
+        event.reply("Pong!").setEphemeral(ephemeral)
+                .flatMap(v ->
+                        event.getHook().editOriginalFormat("Pong: %d ms", System.currentTimeMillis() - time)
+                ).queue();
+    }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {

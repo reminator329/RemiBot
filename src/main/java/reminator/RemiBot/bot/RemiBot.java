@@ -6,7 +6,10 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import reminator.RemiBot.Model.BDDevoir;
 import reminator.RemiBot.Model.BDDevoirJson;
@@ -30,6 +33,14 @@ public class RemiBot {
         api.awaitReady();
         api.addEventListener(new Controller(api));
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
+
+
+        CommandListUpdateAction commands = api.updateCommands()
+                .addCommands(
+                        new CommandData("pingRémi", "Retourne pong")
+                                .addOption(OptionType.BOOLEAN, "ephemeral", "Mettre à true pour que personne de voit la réponse.", false)
+                );
+        commands.queue();
 
 
 
