@@ -1,4 +1,4 @@
-package reminator.RemiBot.Commands.nsfw;
+package reminator.RemiBot.Commands.n;
 
 import org.jetbrains.annotations.NotNull;
 

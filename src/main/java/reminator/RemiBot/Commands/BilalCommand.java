@@ -54,10 +54,12 @@ public class BilalCommand implements Command {
 
     @Override
     public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
+        /*
         if (!event.isFromGuild()) {
             EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
+         */
 
         EmbedBuilder embed = new EmbedBuilder();
         InputStream file;

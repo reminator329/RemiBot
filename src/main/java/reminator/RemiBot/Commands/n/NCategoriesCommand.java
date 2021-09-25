@@ -1,4 +1,4 @@
-package reminator.RemiBot.Commands.nsfw;
+package reminator.RemiBot.Commands.n;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;

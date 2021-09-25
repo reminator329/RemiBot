@@ -1,4 +1,4 @@
-package reminator.RemiBot.Commands.nsfw;
+package reminator.RemiBot.Commands.n;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;

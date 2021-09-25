@@ -3,9 +3,9 @@ package reminator.RemiBot.Commands.enums;
 import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.Commands.*;
 import reminator.RemiBot.Commands.Devoir.*;
-import reminator.RemiBot.Commands.nsfw.NCategoriesCommand;
-import reminator.RemiBot.Commands.nsfw.NCommand;
-import reminator.RemiBot.Commands.nsfw.NUpdateCommand;
+import reminator.RemiBot.Commands.n.NCategoriesCommand;
+import reminator.RemiBot.Commands.n.NCommand;
+import reminator.RemiBot.Commands.n.NUpdateCommand;
 
 import java.util.Arrays;
 import java.util.List;

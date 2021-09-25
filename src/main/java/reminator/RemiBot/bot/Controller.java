@@ -30,7 +30,7 @@ public class Controller extends ListenerAdapter {
     public void onSlashCommand(@NotNull SlashCommandEvent event) {
         if (!event.getName().equals("pingremi")) return;
         long time = System.currentTimeMillis();
-        OptionMapping optEphemeral = event.getOption("Ephemeral");
+        OptionMapping optEphemeral = event.getOption("ephemeral");
         boolean ephemeral;
         if (optEphemeral == null) {
             ephemeral = false;
@@ -45,6 +45,7 @@ public class Controller extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        System.out.println(event.getMessage().getContentRaw());
         if (event.getAuthor().isBot()) return;
         /*
         if (Objects.equals(api.getUserById(368733622246834188L), event.getAuthor())) {
