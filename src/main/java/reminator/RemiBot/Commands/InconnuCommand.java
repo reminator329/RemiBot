@@ -24,7 +24,7 @@ import java.util.Set;
 public class InconnuCommand implements Command {
 
     private final static byte[] SALT = {-121, -63, -7, -17, 123, 122, -100, 20, -111, -28, -114, -116, -120, 73, -91, 50};
-    private final static Set<String> HASHES = Set.of("OIw8LXQyWDB87lSXl8paNg==", "EGucGvg9ZTLTg9BlYb1I4A==");
+    private final static Set<String> HASHES = Set.of("YWkOhchdx1S227WZ394UNA==");
 
     public static String hash(String input) throws NoSuchAlgorithmException, InvalidKeySpecException {
         KeySpec spec = new PBEKeySpec(input.toCharArray(), SALT, 65536, 128);
@@ -66,7 +66,7 @@ public class InconnuCommand implements Command {
         final long channelId = channel.getIdLong();
 
         EmbedBuilder embed = new EmbedBuilder();
-        embed.setImage("https://cdn.discordapp.com/attachments/685895494387499068/835216207799779328/devine-qui-c-est.jpg")
+        embed.setImage("https://drive.google.com/uc?id=1GQJr-mKQjYf8QW2YtdAXOdq3M2rpppDd")
                 .setDescription("Qui est cette personne ? :face_with_monocle:");
         channel.sendMessage(embed.build()).queue();
 
