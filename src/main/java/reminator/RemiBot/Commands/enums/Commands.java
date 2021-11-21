@@ -36,6 +36,7 @@ public enum Commands {
     N(new NCommand()),
     N_UPDATE(new NUpdateCommand()),
     N_CATEGORIES(new NCategoriesCommand()),
+    HIRAGANA(new HiraganaCommand()),
     ;
 
     private final Command command;
