@@ -7,7 +7,7 @@ plugins {
 mainClassName = 'reminator.RemiBot.bot.RemiBot'
 
 version '1.0'
-def jdaVersion = '4.3.0_310'
+    def jdaVersion = '4.3.0_346'
 
 
 repositories {
