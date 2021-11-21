@@ -32,10 +32,10 @@ public enum Commands {
     DEVOIR_FINI(new DevoirFiniCommand()),
     DEVOIR_RAPPEL(new DevoirRappelCommand()),
     GHOST_PING(new GhostPingCommand()),
-    MATEO(new Mateo()),
+    MATEO(new Mateo()),/*
     N(new NCommand()),
     N_UPDATE(new NUpdateCommand()),
-    N_CATEGORIES(new NCategoriesCommand()),
+    N_CATEGORIES(new NCategoriesCommand()),*/
     HIRAGANA(new HiraganaCommand()),
     ;
 
