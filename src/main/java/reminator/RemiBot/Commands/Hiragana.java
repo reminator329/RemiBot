@@ -3,7 +3,7 @@ package reminator.RemiBot.Commands;
 import java.util.Random;
 
 public enum Hiragana {
-    A("は"), I("い"), U("う"), E("え"), O("お"),
+    A("あ"), I("い"), U("う"), E("え"), O("お"),
     KA("か"), KI("き"), KU("く"), KE("け"), KO("こ"),
     SA("さ"), SHI("し"), SU("す"), SE("せ"), SO("そ"),
     TA("た"), CHI("ち"), TSU("つ"), TE("て"), TO("と"),
