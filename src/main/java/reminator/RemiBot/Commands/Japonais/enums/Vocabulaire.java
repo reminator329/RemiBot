@@ -17,6 +17,7 @@ public enum Vocabulaire {
     QUEL("Quel", "どれ"),
     QUEL_OBJET("Quel (objet)", "どの"),
     PARCE_QUE("Parce que", "から"),
+    POISSON("Poisson", "魚"),
     ;
 
     String fr;
@@ -65,8 +66,12 @@ public enum Vocabulaire {
                 }
                 i += len;
                 if (!test.toString().equalsIgnoreCase(charJP.roomaji())) return false;
-            } else {
-                if (!String.valueOf(s.charAt(i)).equalsIgnoreCase(charJP.japonais())) return false;
+            } else {/*
+                if (charJP instanceof Kanji) {
+                    Kanji.parse(s.charAt(i))
+                } else {*/
+                    if (!String.valueOf(s.charAt(i)).equalsIgnoreCase(charJP.japonais())) return false;
+                //}
                 i++;
             }
         }

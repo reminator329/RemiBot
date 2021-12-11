@@ -76,7 +76,11 @@ public class EcouteBilalCommand implements Command {
                                     if (rp.getState() != null) {
                                         if (rp.getState().contains("Bilal")) {
                                             if (!titre[i].equalsIgnoreCase(rp.getDetails())) {
-                                                channel.sendMessage(finalBilal.getAsMention() + " ! " + m.getUser().getAsMention() + " écoute " + rp.getDetails() + " de " + rp.getState()).queue();
+                                                if (finalBilal != null)
+                                                    channel.sendMessage(finalBilal.getAsMention() + " ! " + m.getUser().getAsMention() + " écoute " + rp.getDetails() + " de " + rp.getState()).queue();
+                                                else
+                                                    channel.sendMessage(m.getUser().getAsMention() + " écoute " + rp.getDetails() + " de " + rp.getState()).queue();
+
                                             }
                                         }
                                         titre[i] = rp.getDetails();
