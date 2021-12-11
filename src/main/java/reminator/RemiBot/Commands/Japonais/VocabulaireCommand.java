@@ -6,28 +6,25 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.Commands.enums.Category;
 import reminator.RemiBot.Commands.Command;
-import reminator.RemiBot.Commands.Japonais.enums.Hiragana;
+import reminator.RemiBot.Commands.Japonais.enums.Katakana;
+import reminator.RemiBot.Commands.Japonais.enums.Vocabulaire;
+import reminator.RemiBot.Commands.enums.Category;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class HiraganaCommand implements Command {
-
+public class VocabulaireCommand implements Command {
     @Override
     public Category getCategory() {
         return Category.JAPONAIS;
     }
 
     @Override
-    public String getPrefix() {
-        return Command.super.getPrefix();
-    }
-
-    @Override
     public String getLabel() {
-        return "hiragana";
+        return "vocabulaire";
     }
 
     @Override
@@ -37,7 +34,7 @@ public class HiraganaCommand implements Command {
 
     @Override
     public String getDescription() {
-        return "Le premier qui trouve 10 hiragana gagne la partie !";
+        return "Le premier qui trouve 10 mots de vocabulaire gagne la partie !";
     }
 
     @Override
@@ -46,11 +43,11 @@ public class HiraganaCommand implements Command {
         long channelId = channel.getIdLong();
         Map<User, Integer> scores = new HashMap<>();
 
-        final EmbedBuilder[] embedBuilder = {new EmbedBuilder().setTitle("Hiragana game ! Le premier qui trouve 10 hiragana gagne la partie !").setDescription("Que le meilleur gagne !")};
+        final EmbedBuilder[] embedBuilder = {new EmbedBuilder().setTitle("Le premier qui trouve 10 mots de vocabulaire gagne la partie !").setDescription("Que le meilleur gagne !")};
         EnvoiMessage.sendMessage(event, embedBuilder[0].build());
-        final Hiragana[] hiragana = {Hiragana.getRandom()};
+        final Vocabulaire[] vocabulaire = {Vocabulaire.getRandom()};
 
-        embedBuilder[0] = new EmbedBuilder().setTitle(hiragana[0].japonais()).setDescription("Comment écrit-on ce hiragana en rômaji ?");
+        embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].fr()).setDescription("Comment dit-on ce mot en japonais ?");
         EnvoiMessage.sendMessage(event, embedBuilder[0].build());
 
 
@@ -63,8 +60,8 @@ public class HiraganaCommand implements Command {
                 String msg = event.getMessage().getContentRaw();
                 User user = event.getAuthor();
 
-                if(hiragana[0].roomaji().equalsIgnoreCase(msg)) {
-                    EnvoiMessage.sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + hiragana[0].japonais() + " se lit bien " + hiragana[0].roomaji());
+                if(vocabulaire[0].equals(msg)) {
+                    EnvoiMessage.sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + vocabulaire[0].fr() + " se dit bien " + vocabulaire[0].japonais());
                     int score;
                     if (scores.containsKey(user)) {
                         score = scores.get(user) + 1;
@@ -85,14 +82,14 @@ public class HiraganaCommand implements Command {
                         EnvoiMessage.sendMessage(event, classement.build());
                         event.getJDA().removeEventListener(this);
                     } else {
-                        hiragana[0] = Hiragana.getRandom();
-                        embedBuilder[0] = new EmbedBuilder().setTitle(hiragana[0].japonais()).setDescription("Comment écrit-on ce hiragana en rômaji ?");
+                        vocabulaire[0] = Vocabulaire.getRandom();
+                        embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].fr()).setDescription("Comment dit-on ce mot en japonais ?");
                         EnvoiMessage.sendMessage(event, embedBuilder[0].build());
                     }
                     return;
                 }
 
-                if(msg.equalsIgnoreCase("r!hiragana")) {
+                if(msg.equalsIgnoreCase("r!vocabulaire")) {
                     event.getJDA().removeEventListener(this);
                     return;
                 }

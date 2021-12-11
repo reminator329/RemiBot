@@ -52,20 +52,21 @@ public class KatakanaCommand implements Command {
         EnvoiMessage.sendMessage(event, embedBuilder[0].build());
         final Katakana[] katakana = {Katakana.getRandom()};
 
-        embedBuilder[0] = new EmbedBuilder().setTitle(katakana[0].toString()).setDescription("Comment écrit-on ce katakana en rômaji ?");
+        embedBuilder[0] = new EmbedBuilder().setTitle(katakana[0].japonais()).setDescription("Comment écrit-on ce katakana en rômaji ?");
         EnvoiMessage.sendMessage(event, embedBuilder[0].build());
 
 
         event.getJDA().addEventListener(new ListenerAdapter() {
             @Override
             public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+                if (event.getAuthor().isBot()) return;
                 if (event.getChannel().getIdLong() != channelId) return;
 
                 String msg = event.getMessage().getContentRaw();
                 User user = event.getAuthor();
 
-                if(katakana[0].getName().equalsIgnoreCase(msg)) {
-                    EnvoiMessage.sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + katakana[0].toString() + " se lit bien " + katakana[0].getName());
+                if(katakana[0].roomaji().equalsIgnoreCase(msg)) {
+                    EnvoiMessage.sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + katakana[0].japonais() + " se lit bien " + katakana[0].roomaji());
                     int score;
                     if (scores.containsKey(user)) {
                         score = scores.get(user) + 1;
@@ -87,7 +88,7 @@ public class KatakanaCommand implements Command {
                         event.getJDA().removeEventListener(this);
                     } else {
                         katakana[0] = Katakana.getRandom();
-                        embedBuilder[0] = new EmbedBuilder().setTitle(katakana[0].toString()).setDescription("Comment écrit-on ce katakana en rômaji ?");
+                        embedBuilder[0] = new EmbedBuilder().setTitle(katakana[0].japonais()).setDescription("Comment écrit-on ce katakana en rômaji ?");
                         EnvoiMessage.sendMessage(event, embedBuilder[0].build());
                     }
                     return;
