@@ -1,11 +1,9 @@
 package reminator.RemiBot.Commands.enums;
 
-import reminator.RemiBot.Categories.enums.Category;
 import reminator.RemiBot.Commands.*;
 import reminator.RemiBot.Commands.Devoir.*;
-import reminator.RemiBot.Commands.n.NCategoriesCommand;
-import reminator.RemiBot.Commands.n.NCommand;
-import reminator.RemiBot.Commands.n.NUpdateCommand;
+import reminator.RemiBot.Commands.Japonais.HiraganaCommand;
+import reminator.RemiBot.Commands.Japonais.KatakanaCommand;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,6 +35,7 @@ public enum Commands {
     N_UPDATE(new NUpdateCommand()),
     N_CATEGORIES(new NCategoriesCommand()),*/
     HIRAGANA(new HiraganaCommand()),
+    KATAKANA(new KatakanaCommand()),
     ;
 
     private final Command command;

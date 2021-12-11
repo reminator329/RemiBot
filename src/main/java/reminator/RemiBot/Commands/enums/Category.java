@@ -1,4 +1,4 @@
-package reminator.RemiBot.Categories.enums;
+package reminator.RemiBot.Commands.enums;
 
 public enum Category {
 
@@ -6,6 +6,7 @@ public enum Category {
     JEU("Jeu", "Les commandes de jeux."),
     BILAL("Bilal", "Les commandes liées à Bilal."),
     AUTRE("Autres", "Les commandes sans catégorie particulière."),
+    JAPONAIS("Japonais", "Les commandes pour réviser le japonais."),
     N("NSFW", "Les commandes NSFW."),
     ;
 

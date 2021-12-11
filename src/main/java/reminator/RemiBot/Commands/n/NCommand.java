@@ -20,8 +20,8 @@ public class NCommand implements Command {
     }
 
     @Override
-    public reminator.RemiBot.Categories.enums.Category getCategory() {
-        return reminator.RemiBot.Categories.enums.Category.N;
+    public reminator.RemiBot.Commands.enums.Category getCategory() {
+        return reminator.RemiBot.Commands.enums.Category.N;
     }
 
     @Override

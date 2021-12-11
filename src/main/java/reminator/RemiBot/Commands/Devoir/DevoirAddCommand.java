@@ -1,19 +1,15 @@
 package reminator.RemiBot.Commands.Devoir;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.Categories.enums.Category;
+import reminator.RemiBot.Commands.enums.Category;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Model.BDDevoir;
 import reminator.RemiBot.Model.BDDevoirJson;
-import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;

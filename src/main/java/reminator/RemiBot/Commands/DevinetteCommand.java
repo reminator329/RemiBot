@@ -2,21 +2,15 @@ package reminator.RemiBot.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.Categories.enums.Category;
-import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.Commands.enums.Category;
 import reminator.RemiBot.music.Song;
 import reminator.RemiBot.music.SongsReader;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-import javax.annotation.Nonnull;
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

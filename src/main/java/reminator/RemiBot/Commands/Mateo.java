@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-import reminator.RemiBot.Categories.enums.Category;
+import reminator.RemiBot.Commands.enums.Category;
 import reminator.RemiBot.utils.HTTPRequest;
 
 import java.awt.*;

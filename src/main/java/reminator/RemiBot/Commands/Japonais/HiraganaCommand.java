@@ -1,14 +1,14 @@
-package reminator.RemiBot.Commands;
+package reminator.RemiBot.Commands.Japonais;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.Categories.enums.Category;
-import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.Commands.enums.Category;
+import reminator.RemiBot.Commands.Command;
+import reminator.RemiBot.Commands.Japonais.enums.Hiragana;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.util.*;
@@ -17,7 +17,7 @@ public class HiraganaCommand implements Command {
 
     @Override
     public Category getCategory() {
-        return Category.JEU;
+        return Category.JAPONAIS;
     }
 
     @Override
@@ -88,7 +88,6 @@ public class HiraganaCommand implements Command {
                         embedBuilder[0] = new EmbedBuilder().setTitle(hiragana[0].toString()).setDescription("Comment écrit-on ce hiragana en rômaji ?");
                         EnvoiMessage.sendMessage(event, embedBuilder[0].build());
                     }
-
                     return;
                 }
 

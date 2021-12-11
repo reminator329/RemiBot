@@ -3,7 +3,7 @@ package reminator.RemiBot.Commands;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.Categories.enums.Category;
+import reminator.RemiBot.Commands.enums.Category;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.util.*;

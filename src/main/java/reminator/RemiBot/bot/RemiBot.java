@@ -26,10 +26,11 @@ public class RemiBot {
     public static String prefix = "r!";
     public static final Color color = Color.RED;
     public static String token;
+    public static JDA api;
 
     public static void main(String[] arguments) throws Exception {
-        token = arguments[0];
-        JDA api = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_EMOJIS).enableCache(CacheFlag.ACTIVITY).build();
+        token = "NzY0MjI3MDE0MjQ0MzAyODc4.X4DL3g.xzaLaOQdTwM56rMwPxxV_t80v_s";
+        api = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_EMOJIS).enableCache(CacheFlag.ACTIVITY).build();
         api.awaitReady();
         api.addEventListener(new Controller(api));
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
