@@ -29,7 +29,7 @@ public class RemiBot {
     public static JDA api;
 
     public static void main(String[] arguments) throws Exception {
-        token = "NzY0MjI3MDE0MjQ0MzAyODc4.X4DL3g.xzaLaOQdTwM56rMwPxxV_t80v_s";
+        token = arguments[0];
         api = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_EMOJIS).enableCache(CacheFlag.ACTIVITY).build();
         api.awaitReady();
         api.addEventListener(new Controller(api));
