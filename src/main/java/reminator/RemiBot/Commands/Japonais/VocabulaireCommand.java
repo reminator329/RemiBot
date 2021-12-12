@@ -93,6 +93,13 @@ public class VocabulaireCommand implements Command {
                     event.getJDA().removeEventListener(this);
                     return;
                 }
+
+                if(msg.equalsIgnoreCase("jsp")) {
+                    EnvoiMessage.sendMessage(event, "Dommaage, " + vocabulaire[0].fr() + " se dit " + vocabulaire[0].japonais());
+                    vocabulaire[0] = Vocabulaire.getRandom();
+                    embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].fr()).setDescription("Comment dit-on ce mot en japonais ?");
+                    EnvoiMessage.sendMessage(event, embedBuilder[0].build());
+                }
             }
         });
     }

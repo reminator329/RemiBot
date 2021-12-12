@@ -39,7 +39,24 @@ public enum Vocabulaire {
     MILUKU("Lait (katakana)", "ミルク"),
     MIZU("Eau", "水"),
     RAMEN("Ramen", "ラアメン"),
-
+    YASUI("Pas cher", "やすい"),
+    HAYAI("Rapide", "はやい"),
+    OSOI("Lent", "Lent"),
+    OISHII("Délicieux", "おいしい"),
+    MAZUI("Mauvais (dégoutant)", "まずい"),
+    KAWAII("Mignon", "かわいい"),
+    TAKAI("Cher / Grand", "たかい"),
+    GENKINA("Joyeux", "げんきな"),
+    SUKINA("Aimé / Ce que j'aime le plus", "すきな"),
+    KIRAINA("Détesté / Ce que j'aime le moins", "きらいな"),
+    KIREINA("Beau / propre", "きれいな"),
+    DEMO("Mais", "でも"),
+    KORE("Cela", "これ"),
+    SOSHITE("Ensuite / puis", "そして"),
+    SOODESUKA("Ok, d'accord", "そうですか"),
+    KINOO("Hier", "きのう"),
+    ASHITA("Demain", "あした"),
+    WAKARIMASU("Je sais / Je comprend", "わかります"),
     ;
 
     String fr;
