@@ -5,6 +5,11 @@ import java.util.List;
 
 public enum Kanji implements CharJP {
     POISSON('魚', "さかな"),
+    ALIMENTS('食', "た"),
+    BOISSONS('飲', "の"),
+    VIANDE('肉', "にく"),
+    TAMAGO('卵', "たまご"),
+    MIZU('水', "みず"),
     ;
 
     char kanji;

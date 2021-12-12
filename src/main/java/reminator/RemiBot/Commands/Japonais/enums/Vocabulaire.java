@@ -18,6 +18,28 @@ public enum Vocabulaire {
     QUEL_OBJET("Quel (objet)", "どの"),
     PARCE_QUE("Parce que", "から"),
     POISSON("Poisson", "魚"),
+    MANGER("Manger", "食べます"),
+    TOKIDOKI("De temps en temps", "ときどき"),
+    PETIT_DEJ("Petit déjeuner", "あさごはん"),
+    NOMIMASU("Boire", "飲みます"),
+    CAFE("Café", "コオヒイ"),
+    BIERE("Bière", "ビイル"),
+    VIN("Vin", "ワイン"),
+    AIMER("Aimer", "すきです"),
+    LEGUMES("Légumes", "やさい"),
+    VIANDE("Viande", "肉"),
+    FRUIS("Fruits", "たべもの"),
+    PAS_DU_TOUT("Pas du tout", "ぜんぜん"),
+    AMARI("Pas souvent", "あまり"),
+    YOKU("Souvent", "よく"),
+    ITSUMO("Toujours", "いつも"),
+    TAMAGO("Oeuf", "卵"),
+    PAN("Pain", "パン"),
+    MISOSHIRU("Soupe miso", "みそしる"),
+    MILUKU("Lait (katakana)", "ミルク"),
+    MIZU("Eau", "水"),
+    RAMEN("Ramen", "ラアメン"),
+
     ;
 
     String fr;
