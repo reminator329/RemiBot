@@ -14,7 +14,7 @@ public enum Katakana implements CharJP {
     MA('マ'), MI('ミ'), MU('ム'), ME('メ'), MO('モ'),
     YA('ヤ'), YU('ユ'), YO('ヨ'),
     RA('ラ'), RI('リ'), RU('ル'), RE('レ'), RO('ロ'),
-    WA('ワ'), WO('ヲ');
+    WA('ワ'), WO('ヲ'), N('ン');
 
     char katakana;
 
