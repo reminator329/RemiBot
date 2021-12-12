@@ -28,7 +28,7 @@ public enum Vocabulaire {
     AIMER("Aimer", "すきです"),
     LEGUMES("Légumes", "やさい"),
     VIANDE("Viande", "肉"),
-    FRUIS("Fruits", "たべもの"),
+    FRUIS("Fruits", "くべもの"),
     PAS_DU_TOUT("Pas du tout", "ぜんぜん"),
     AMARI("Pas souvent", "あまり"),
     YOKU("Souvent", "よく"),
