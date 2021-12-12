@@ -37,7 +37,7 @@ public enum Katakana implements CharJP {
 
     public static Katakana parse(char c) {
         for (Katakana h : Katakana.values()) {
-            if (h.toString().equalsIgnoreCase(String.valueOf(c))) {
+            if (h.japonais().equalsIgnoreCase(String.valueOf(c))) {
                 return h;
             }
         }

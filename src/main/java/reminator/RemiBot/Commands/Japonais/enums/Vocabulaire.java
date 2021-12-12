@@ -41,7 +41,7 @@ public enum Vocabulaire {
     RAMEN("Ramen", "ラアメン"),
     YASUI("Pas cher", "やすい"),
     HAYAI("Rapide", "はやい"),
-    OSOI("Lent", "Lent"),
+    OSOI("Lent", "おそい"),
     OISHII("Délicieux", "おいしい"),
     MAZUI("Mauvais (dégoutant)", "まずい"),
     KAWAII("Mignon", "かわいい"),
