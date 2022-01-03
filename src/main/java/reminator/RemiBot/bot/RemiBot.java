@@ -15,9 +15,9 @@ import reminator.RemiBot.Model.BDDevoir;
 import reminator.RemiBot.Model.BDDevoirJson;
 import reminator.RemiBot.Model.Devoir;
 import reminator.RemiBot.Model.Eleve;
+import reminator.RemiBot.motdujour.MotDuJourService;
 
 import java.awt.*;
-import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -30,6 +30,8 @@ public class RemiBot {
     public static String AUTHORIZATION_REMI;
 
     public static void main(String[] arguments) throws Exception {
+        System.setProperty("user.timezone", "Europe/Paris");
+
         token = arguments[0];
         AUTHORIZATION_REMI = arguments[1];
         api = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_EMOJIS).enableCache(CacheFlag.ACTIVITY).build();
@@ -45,7 +47,8 @@ public class RemiBot {
                 );
         commands.queue();
 
-
+        MotDuJourService service = new MotDuJourService(api);
+        service.start();
 
         /* TODO ajouter un timer pour chaque élève grace à l'api (getUserById
         BDDevoir bdDevoir = BDDevoirJson.getInstance();
