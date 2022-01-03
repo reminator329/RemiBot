@@ -27,9 +27,11 @@ public class RemiBot {
     public static final Color color = Color.RED;
     public static String token;
     public static JDA api;
+    public static String AUTHORIZATION_REMI;
 
     public static void main(String[] arguments) throws Exception {
         token = arguments[0];
+        AUTHORIZATION_REMI = arguments[1];
         api = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_EMOJIS).enableCache(CacheFlag.ACTIVITY).build();
         api.awaitReady();
         api.addEventListener(new Controller(api));

@@ -38,6 +38,7 @@ public enum Commands {
     HIRAGANA(new HiraganaCommand()),
     KATAKANA(new KatakanaCommand()),
     VOCABULAIRE(new VocabulaireCommand()),
+    REMI_WORK(new RemiWork()),
     ;
 
     private final Command command;
