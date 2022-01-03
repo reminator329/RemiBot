@@ -45,6 +45,11 @@ public class RemiWork implements Command {
     @Override
     public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
 
+        if (event.getAuthor().getIdLong() != 368733622246834188L) {
+            event.getChannel().sendMessage("Commande réservée à Rémi !").queue();
+            return;
+        }
+
         if (ecoutes.contains(channel)) {
             channel.sendMessage("Arrêt du spam").queue();
             ecoutes.remove(channel);
