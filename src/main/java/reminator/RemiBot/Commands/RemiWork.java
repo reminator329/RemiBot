@@ -72,15 +72,6 @@ public class RemiWork implements Command {
                     String requestUrl="https://discord.com/api/v9/channels/" + idChannel + "/messages";
                     String retour = sendPostRequest(requestUrl, payload);
                     System.out.println(retour);
-
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    content = "!dep all";
-                    payload = "{\"content\": \"" + content + "\", \"nonce\": \"" + nonce + "\", \"tts\": \"false\"}";
-                    sendPostRequest(requestUrl, payload);
                 }
             }, 0, 4 * 60 * 1000 + 1);
 
