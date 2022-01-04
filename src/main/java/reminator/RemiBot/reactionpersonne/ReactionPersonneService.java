@@ -28,8 +28,8 @@ public class ReactionPersonneService extends ListenerAdapter {
         // Elorya
         if (user.getId().equals("427256562596315167")) {
             Emote emote = api.getEmoteCache().getElementById(Emotes.NON.getId());
-            message.addReaction(emote).queue();
-            message.addReaction("U+1F44E").queue();
+//            message.addReaction(emote).queue();
+//            message.addReaction("U+1F44E").queue();
         }
 
         // Elorya
