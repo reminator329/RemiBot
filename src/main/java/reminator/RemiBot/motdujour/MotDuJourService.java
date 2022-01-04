@@ -39,7 +39,6 @@ public class MotDuJourService {
             ));
         }
 
-        retrospective();
     }
 
     public void start() {
