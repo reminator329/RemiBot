@@ -16,6 +16,7 @@ import reminator.RemiBot.Model.BDDevoirJson;
 import reminator.RemiBot.Model.Devoir;
 import reminator.RemiBot.Model.Eleve;
 import reminator.RemiBot.motdujour.MotDuJourService;
+import reminator.RemiBot.reactionpersonne.ReactionPersonneService;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -37,6 +38,7 @@ public class RemiBot {
         api = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_EMOJIS).enableCache(CacheFlag.ACTIVITY).build();
         api.awaitReady();
         api.addEventListener(new Controller(api));
+        api.addEventListener(new ReactionPersonneService(api));
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
 
 
