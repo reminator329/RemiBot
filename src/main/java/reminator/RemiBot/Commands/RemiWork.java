@@ -13,17 +13,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class RemiWork implements Command {
 
     private final List<MessageChannel> ecoutes = new ArrayList<>();
     private Timer timerWork;
     private Timer timerSpam;
-    private LoremIpsum lorem;
+    private LoremIpsum lorem = new LoremIpsum();
 
     @Override
     public Category getCategory() {
@@ -72,8 +69,16 @@ public class RemiWork implements Command {
                     String payload = "{\"content\": \"" + content + "\", \"nonce\": \"" + nonce + "\", \"tts\": \"false\"}";
                     String idChannel = channel.getId();
                     String requestUrl="https://discord.com/api/v9/channels/" + idChannel + "/messages";
-                    String retour = sendPostRequest(requestUrl, payload);
-                    System.out.println(retour);
+                    sendPostRequest(requestUrl, payload);
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    content = "!top";
+                    payload = "{\"content\": \"" + content + "\", \"nonce\": \"" + nonce + "\", \"tts\": \"false\"}";
+                    sendPostRequest(requestUrl, payload);
                 }
             }, 0, 4 * 60 * 1000 + 1);
 
@@ -81,13 +86,12 @@ public class RemiWork implements Command {
             timerSpam.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    String content = lorem.getWords(1, 2);
+                    String content = lorem.getWords(1, new Random().nextInt(50));
                     String nonce = "";
                     String payload = "{\"content\": \"" + content + "\", \"nonce\": \"" + nonce + "\", \"tts\": \"false\"}";
                     String idChannel = channel.getId();
                     String requestUrl="https://discord.com/api/v9/channels/" + idChannel + "/messages";
-                    String retour = sendPostRequest(requestUrl, payload);
-                    System.out.println(retour);
+                    sendPostRequest(requestUrl, payload);
 
                     try {
                         Thread.sleep(1000);
