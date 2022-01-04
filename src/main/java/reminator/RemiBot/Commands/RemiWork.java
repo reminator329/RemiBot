@@ -58,6 +58,8 @@ public class RemiWork implements Command {
             ecoutes.remove(channel);
             timerWork.cancel();
             timerWork.purge();
+            timerSpam.cancel();
+            timerSpam.purge();
         } else {
             channel.sendMessage("Début du spam").queue();
             ecoutes.add(channel);
