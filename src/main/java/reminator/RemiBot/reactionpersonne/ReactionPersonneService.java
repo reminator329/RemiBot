@@ -8,14 +8,17 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Random;
+
 public class ReactionPersonneService extends ListenerAdapter {
+
+    private Random random = new Random();
 
     private JDA api;
 
     public ReactionPersonneService(JDA api) {
         this.api = api;
     }
-
 
 
     @Override
@@ -33,7 +36,9 @@ public class ReactionPersonneService extends ListenerAdapter {
 
         if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.FEAVY.getId())) {
             Emote emote = api.getEmoteCache().getElementById(Emotes.OUI.getId());
-            message.addReaction(emote).queue();
+            if(random.nextInt(10) < 3) {
+                message.addReaction(emote).queue();
+            }
         }
     }
 }
