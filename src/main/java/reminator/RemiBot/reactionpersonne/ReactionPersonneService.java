@@ -25,15 +25,13 @@ public class ReactionPersonneService extends ListenerAdapter {
 
         User user = event.getAuthor();
 
-        // Elorya
-        if (user.getId().equals("427256562596315167")) {
+        if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.ELORYA.getId())) {
             Emote emote = api.getEmoteCache().getElementById(Emotes.NON.getId());
 //            message.addReaction(emote).queue();
 //            message.addReaction("U+1F44E").queue();
         }
 
-        // Elorya
-        if (user.getId().equals("264490592610942976")) {
+        if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.FEAVY.getId())) {
             Emote emote = api.getEmoteCache().getElementById(Emotes.OUI.getId());
             message.addReaction(emote).queue();
         }

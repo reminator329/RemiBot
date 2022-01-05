@@ -5,6 +5,8 @@ import reminator.RemiBot.Commands.Devoir.*;
 import reminator.RemiBot.Commands.Japonais.HiraganaCommand;
 import reminator.RemiBot.Commands.Japonais.KatakanaCommand;
 import reminator.RemiBot.Commands.Japonais.VocabulaireCommand;
+import reminator.RemiBot.Commands.perso.RemiSpam;
+import reminator.RemiBot.Commands.perso.RemiWork;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +41,7 @@ public enum Commands {
     KATAKANA(new KatakanaCommand()),
     VOCABULAIRE(new VocabulaireCommand()),
     REMI_WORK(new RemiWork()),
+    REMI_SPAM(new RemiSpam()),
     ;
 
     private final Command command;
