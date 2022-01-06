@@ -58,7 +58,7 @@ public class ReactionPersonneService extends ListenerAdapter {
 
         if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.REDECO.getId())) {
             if(random.nextInt(10) < 3) {
-                Emotes[] emotes = new Emotes[]{Emotes.BASTIEN, Emotes.UPSSITECHED};
+                Emotes[] emotes = new Emotes[]{Emotes.BASTIEN, Emotes.UPSSITECHED, Emotes.HORNY};
                 int r = random.nextInt(emotes.length);
                 Emote emote = api.getEmoteCache().getElementById(emotes[r].getId());
                 assert emote != null;

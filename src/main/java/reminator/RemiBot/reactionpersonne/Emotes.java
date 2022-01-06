@@ -25,6 +25,7 @@ public enum Emotes {
     MATEO("784815177626288138"),
     CHOMAGE("781877811434225664"),
     chaudetIsWatchingU("799587825803722802"),
+    HORNY("784807289092833320"),
     ;
 
     private final String id;
