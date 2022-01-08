@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class ReactionPersonneService extends ListenerAdapter {
@@ -26,108 +25,64 @@ public class ReactionPersonneService extends ListenerAdapter {
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         //api.getEmoteCache().forEach(System.out::println);
 
-        Message message = event.getMessage();
-
         User user = event.getAuthor();
 
-        if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.ELORYA.getId())) {
-            Emote emote = api.getEmoteCache().getElementById(Emotes.NON.getId());
-//            message.addReaction(emote).queue();
-//            message.addReaction("U+1F44E").queue();
-        }
+        if (random.nextInt(100) == 14 || user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.ALPHATASH.getId())) {
 
-        if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.REMINATOR.getId())) {
-            if(random.nextInt(10) < 3) {
-                Emotes[] emotes = new Emotes[]{Emotes.REMI, Emotes.POULPE_CONTENT, Emotes.SIDRA, Emotes.NATU, Emotes.DEOXYS, Emotes.chaudetIsWatchingU, Emotes.UPSSITECHED};
-                int r = random.nextInt(emotes.length);
-                Emote emote = api.getEmoteCache().getElementById(emotes[r].getId());
-                assert emote != null;
-                message.addReaction(emote).queue();
-            }
-        }
+            Message message = event.getMessage();
 
-        if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.ALPHATASH.getId())) {
-            if(random.nextInt(10) < 3) {
-                Emotes[] emotes = new Emotes[]{Emotes.PENIS_CHAN, Emotes.PENIS, Emotes.CUM, Emotes.FAP, Emotes.PUSSY, Emotes.BJ, Emotes.UPSSITECHED, Emotes.THIBAULT};
-                int r = random.nextInt(emotes.length);
-                Emote emote = api.getEmoteCache().getElementById(emotes[r].getId());
-                assert emote != null;
-                message.addReaction(emote).queue();
-            }
-        }
+            Emotes[] emotes = null;
 
-        if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.REDECO.getId())) {
-            if(random.nextInt(10) < 3) {
-                Emotes[] emotes = new Emotes[]{Emotes.BASTIEN, Emotes.UPSSITECHED, Emotes.HORNY};
-                int r = random.nextInt(emotes.length);
-                Emote emote = api.getEmoteCache().getElementById(emotes[r].getId());
-                assert emote != null;
-                message.addReaction(emote).queue();
+            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.ELORYA.getId())) {
+                emotes = new Emotes[]{Emotes.POULPE_CONTENT, Emotes.POULPE_PAS_CONTENT};
             }
-        }
 
-        if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.YAEL.getId())) {
-            Emote emote = api.getEmoteCache().getElementById(Emotes.POULPE_PAS_CONTENT.getId());
-            if(random.nextInt(10) < 3) {
-                message.addReaction(emote).queue();
-            }
-        }
+            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.REMINATOR.getId())) {
+                emotes = new Emotes[]{Emotes.REMI, Emotes.POULPE_CONTENT, Emotes.SIDRA, Emotes.NATU, Emotes.DEOXYS, Emotes.chaudetIsWatchingU, Emotes.UPSSITECHED};
 
-        if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.DORIAN.getId())) {
-            if(random.nextInt(10) < 3) {
-                Emotes[] emotes = new Emotes[]{Emotes.DORIAN, Emotes.UPSSITECHED};
-                int r = random.nextInt(emotes.length);
-                Emote emote = api.getEmoteCache().getElementById(emotes[r].getId());
-                assert emote != null;
-                message.addReaction(emote).queue();
             }
-        }
 
-        if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.ERAZZED.getId())) {
-            if(random.nextInt(10) < 3) {
-                Emotes[] emotes = new Emotes[]{Emotes.KILLIAN, Emotes.UPSSITECHED};
-                int r = random.nextInt(emotes.length);
-                Emote emote = api.getEmoteCache().getElementById(emotes[r].getId());
-                assert emote != null;
-                message.addReaction(emote).queue();
+            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.ALPHATASH.getId())) {
+                emotes = new Emotes[]{Emotes.PENIS_CHAN, Emotes.PENIS, Emotes.CUM, Emotes.FAP, Emotes.PUSSY, Emotes.BJ, Emotes.UPSSITECHED, Emotes.THIBAULT};
             }
-        }
 
-        if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.HARPIERAPACE.getId())) {
-            if(random.nextInt(10) < 3) {
-                Emotes[] emotes = new Emotes[]{Emotes.TANGUY, Emotes.UPSSITECHED};
-                int r = random.nextInt(emotes.length);
-                Emote emote = api.getEmoteCache().getElementById(emotes[r].getId());
-                assert emote != null;
-                message.addReaction(emote).queue();
+            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.REDECO.getId())) {
+                emotes = new Emotes[]{Emotes.BASTIEN, Emotes.UPSSITECHED, Emotes.HORNY};
             }
-        }
 
-        if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.DREAMPLUME.getId())) {
-            if(random.nextInt(10) < 3) {
-                Emotes[] emotes = new Emotes[]{Emotes.MATEO, Emotes.UPSSITECHED};
-                int r = random.nextInt(emotes.length);
-                Emote emote = api.getEmoteCache().getElementById(emotes[r].getId());
-                assert emote != null;
-                message.addReaction(emote).queue();
+            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.YAEL.getId())) {
+                emotes = new Emotes[]{Emotes.POULPE_CONTENT, Emotes.POULPE_PAS_CONTENT};
             }
-        }
 
-        if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.SWAPHOLY.getId())) {
-            if(random.nextInt(10) < 3) {
-                Emotes[] emotes = new Emotes[]{Emotes.THOMAS, Emotes.UPSSITECHED};
-                int r = random.nextInt(emotes.length);
-                Emote emote = api.getEmoteCache().getElementById(emotes[r].getId());
-                assert emote != null;
-                message.addReaction(emote).queue();
+            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.DORIAN.getId())) {
+                emotes = new Emotes[]{Emotes.DORIAN, Emotes.UPSSITECHED};
             }
-        }
 
-        if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.FEAVY.getId())) {
-            Emote emote = api.getEmoteCache().getElementById(Emotes.OUI.getId());
-            if(random.nextInt(10) < 3) {
-                message.addReaction(emote).queue();
+            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.ERAZZED.getId())) {
+                emotes = new Emotes[]{Emotes.KILLIAN, Emotes.UPSSITECHED};
             }
+
+            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.HARPIERAPACE.getId())) {
+                emotes = new Emotes[]{Emotes.TANGUY, Emotes.UPSSITECHED};
+            }
+
+            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.DREAMPLUME.getId())) {
+                emotes = new Emotes[]{Emotes.MATEO, Emotes.UPSSITECHED};
+            }
+
+            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.SWAPHOLY.getId())) {
+                emotes = new Emotes[]{Emotes.THOMAS, Emotes.UPSSITECHED};
+            }
+
+            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.FEAVY.getId())) {
+                emotes = new Emotes[]{Emotes.OUI};
+            }
+            if (emotes == null) return;
+
+            int r = random.nextInt(emotes.length);
+            Emote emote = api.getEmoteCache().getElementById(emotes[r].getId());
+            assert emote != null;
+            message.addReaction(emote).queue();
         }
     }
 }
