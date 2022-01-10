@@ -21,8 +21,11 @@ public enum Hiragana implements CharJP {
     pa('ぱ'), pi('ぴ'), pu('ぷ'), pe('ぺ'), po('ぽ'),
 
     ma('ま'), mi('み'), mu('む'), me('め'), mo('も'),
+
     ya('や'), yu('ゆ'), yo('よ'),
+
     ra('ら'), ri('り'), ru('る'), re('れ'), ro('ろ'),
+
     wa('わ'), wo('を'), n('ん');
 
     char hiragana;
