@@ -1,4 +1,4 @@
-package reminator.RemiBot.motdujour;
+package reminator.RemiBot.Services.motdujour;
 
 import java.util.regex.Pattern;
 

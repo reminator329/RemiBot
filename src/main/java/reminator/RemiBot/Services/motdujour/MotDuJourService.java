@@ -1,4 +1,4 @@
-package reminator.RemiBot.motdujour;
+package reminator.RemiBot.Services.motdujour;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;

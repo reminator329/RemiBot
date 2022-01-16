@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Commands.enums.Category;
-import reminator.RemiBot.bot.RemiBot;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -46,7 +45,7 @@ public class RemiWork implements Command {
     @Override
     public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
 
-        if (!event.getAuthor().getId().equals(reminator.RemiBot.reactionpersonne.User.REMINATOR.getId())) {
+        if (!event.getAuthor().getId().equals(reminator.RemiBot.Services.reactionpersonne.User.REMINATOR.getId())) {
             event.getChannel().sendMessage("Commande réservée à Rémi !").queue();
             return;
         }
@@ -119,7 +118,7 @@ public class RemiWork implements Command {
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("authority", "discord.com");
-            connection.setRequestProperty("authorization", reminator.RemiBot.reactionpersonne.User.REMINATOR.getAuthorization());
+            connection.setRequestProperty("authorization", reminator.RemiBot.Services.reactionpersonne.User.REMINATOR.getAuthorization());
             connection.setRequestProperty("content-length", String.valueOf(payload.length()));
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
             writer.write(payload);

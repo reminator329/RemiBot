@@ -1,4 +1,4 @@
-package reminator.RemiBot.reactionpersonne;
+package reminator.RemiBot.Services.reactionpersonne;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Emote;
@@ -32,48 +32,48 @@ public class ReactionPersonneService extends ListenerAdapter {
             User user = event.getAuthor();
             Emotes[] emotes = null;
 
-            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.ELORYA.getId())) {
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.ELORYA.getId())) {
                 emotes = new Emotes[]{Emotes.POULPE_CONTENT, Emotes.POULPE_PAS_CONTENT};
             }
 
-            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.REMINATOR.getId())) {
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.REMINATOR.getId())) {
                 emotes = new Emotes[]{Emotes.REMI, Emotes.POULPE_CONTENT, Emotes.SIDRA, Emotes.NATU, Emotes.DEOXYS, Emotes.chaudetIsWatchingU, Emotes.UPSSITECHED};
 
             }
 
-            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.ALPHATASH.getId())) {
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.ALPHATASH.getId())) {
                 emotes = new Emotes[]{Emotes.PENIS_CHAN, Emotes.PENIS, Emotes.CUM, Emotes.FAP, Emotes.PUSSY, Emotes.BJ, Emotes.UPSSITECHED, Emotes.THIBAULT};
             }
 
-            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.REDECO.getId())) {
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.REDECO.getId())) {
                 emotes = new Emotes[]{Emotes.BASTIEN, Emotes.UPSSITECHED, Emotes.HORNY};
             }
 
-            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.YAEL.getId())) {
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.YAEL.getId())) {
                 emotes = new Emotes[]{Emotes.POULPE_CONTENT, Emotes.POULPE_PAS_CONTENT};
             }
 
-            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.DORIAN.getId())) {
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.DORIAN.getId())) {
                 emotes = new Emotes[]{Emotes.DORIAN, Emotes.UPSSITECHED};
             }
 
-            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.ERAZZED.getId())) {
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.ERAZZED.getId())) {
                 emotes = new Emotes[]{Emotes.KILLIAN, Emotes.UPSSITECHED};
             }
 
-            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.HARPIERAPACE.getId())) {
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.HARPIERAPACE.getId())) {
                 emotes = new Emotes[]{Emotes.TANGUY, Emotes.UPSSITECHED};
             }
 
-            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.DREAMPLUME.getId())) {
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.DREAMPLUME.getId())) {
                 emotes = new Emotes[]{Emotes.MATEO, Emotes.UPSSITECHED};
             }
 
-            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.SWAPHOLY.getId())) {
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.SWAPHOLY.getId())) {
                 emotes = new Emotes[]{Emotes.THOMAS, Emotes.UPSSITECHED};
             }
 
-            if (user.getId().equals(reminator.RemiBot.reactionpersonne.User.FEAVY.getId())) {
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.FEAVY.getId())) {
                 emotes = new Emotes[]{Emotes.OUI};
             }
             if (emotes == null) return;
