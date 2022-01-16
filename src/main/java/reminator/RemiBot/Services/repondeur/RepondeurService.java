@@ -27,6 +27,10 @@ public class RepondeurService extends ListenerAdapter {
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
 
+        if(event.getGuild().getId().equals("427560908643106816")) {
+            return;
+        }
+
         List<String> args = new ArrayList<>(Arrays.asList(event.getMessage().getContentRaw().split("\\s+")));
 
         for (String arg : args) {
