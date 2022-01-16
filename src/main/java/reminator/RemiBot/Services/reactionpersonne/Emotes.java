@@ -1,4 +1,4 @@
-package reminator.RemiBot.reactionpersonne;
+package reminator.RemiBot.Services.reactionpersonne;
 
 public enum Emotes {
     OUI("773124334339620864"),

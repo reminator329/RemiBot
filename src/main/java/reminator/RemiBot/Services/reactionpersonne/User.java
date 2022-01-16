@@ -1,4 +1,4 @@
-package reminator.RemiBot.reactionpersonne;
+package reminator.RemiBot.Services.reactionpersonne;
 
 public enum User {
     ELORYA("427256562596315167"),
