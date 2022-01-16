@@ -7,7 +7,7 @@ plugins {
 mainClassName = 'reminator.RemiBot.bot.RemiBot'
 
 version '1.0'
-    def jdaVersion = '4.3.0_346'
+    def jdaVersion = '5.0.0-alpha.4'
 
 
 repositories {
@@ -21,8 +21,8 @@ repositories {
 
 dependencies {
     implementation("net.dv8tion:JDA:$jdaVersion")
-    implementation("org.json:json:20200518")
-    implementation("com.google.firebase:firebase-admin:7.1.0")
+    implementation('org.json:json:20211205')
+    implementation('com.google.firebase:firebase-admin:8.1.0')
 
 
     // https://mvnrepository.com/artifact/commons-io/commons-io
