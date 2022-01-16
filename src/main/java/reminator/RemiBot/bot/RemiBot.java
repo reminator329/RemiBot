@@ -134,7 +134,7 @@ public class RemiBot {
 
                     embedBuilder.setFooter(user.getName() + " Il vous reste " + (numeroDevoir-1) + " devoir(s) à faire.", user.getAvatarUrl());
                     e.getUser().openPrivateChannel()
-                            .flatMap(channel -> channel.sendMessage(embedBuilder.build()))
+                            .flatMap(channel -> channel.sendMessageEmbeds(embedBuilder.build()))
                             .queue();
                 }
             }

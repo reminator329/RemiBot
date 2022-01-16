@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.enums.Category;
@@ -68,11 +67,12 @@ public class InconnuCommand implements Command {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setImage("https://drive.google.com/uc?id=1GQJr-mKQjYf8QW2YtdAXOdq3M2rpppDd")
                 .setDescription("Qui est cette personne ? :face_with_monocle:");
-        channel.sendMessage(embed.build()).queue();
+        EnvoiMessage.sendMessage(event, embed.build());
 
         event.getJDA().addEventListener(new ListenerAdapter() {
+
             @Override
-            public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
+            public void onMessageReceived(@NotNull MessageReceivedEvent event) {
                 if (event.getChannel().getIdLong() != channelId) return;
                 if (event.getAuthor().getIdLong() != authorId) return;
 

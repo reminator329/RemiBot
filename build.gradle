@@ -7,11 +7,10 @@ plugins {
 mainClassName = 'reminator.RemiBot.bot.RemiBot'
 
 version '1.0'
-    def jdaVersion = '5.0.0-alpha.4'
+    def jdaVersion = '1.2.2_139'
 
 
 repositories {
-    jcenter()
     mavenCentral() // for transitive dependencies
     maven {
         name 'm2-dv8tion'
@@ -20,7 +19,9 @@ repositories {
 }
 
 dependencies {
-    implementation("net.dv8tion:JDA:$jdaVersion")
+    // https://mvnrepository.com/artifact/net.dv8tion/JDA
+    implementation 'net.dv8tion:JDA:5.0.0-alpha.4'
+
     implementation('org.json:json:20211205')
     implementation('com.google.firebase:firebase-admin:8.1.0')
 

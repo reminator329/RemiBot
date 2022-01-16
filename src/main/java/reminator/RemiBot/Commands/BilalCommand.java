@@ -61,7 +61,7 @@ public class BilalCommand implements Command {
             file = new FileInputStream(randomImagePicker.getRandomImage());
             embed.setImage("attachment://bilal.png") // we specify this in sendFile as "cat.png"
                     .setDescription("BILAAAL :heart:");
-            channel.sendFile(file, "bilal.png").embed(embed.build()).queue();
+            channel.sendFile(file, "bilal.png").setEmbeds(embed.build()).queue();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

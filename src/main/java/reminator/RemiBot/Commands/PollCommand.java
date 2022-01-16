@@ -6,14 +6,12 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.enums.Category;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-import javax.annotation.Nonnull;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,9 +92,10 @@ public class PollCommand implements Command {
             }
 
             @Override
-            public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event) {
+            public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event) {
+                if (!event.isFromGuild()) return;
                 if (event.getChannel().getIdLong() != channelId) return;
-                if (event.getMember().getUser().getIdLong() != authorId) return;
+                if (event.getMember() != null && event.getMember().getUser().getIdLong() != authorId) return;
                 if (event.getMessageIdLong() != this.idMessage) return;
 
                 initEmbedBuilder();
@@ -119,7 +118,8 @@ public class PollCommand implements Command {
             }
 
             @Override
-            public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
+            public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+                if (!event.isFromGuild()) return;
                 if (event.getChannel().getIdLong() != channelId) return;
                 if (event.getAuthor().getIdLong() != authorId) return;
                 if (reponses.size() != emojis.size()) return;
@@ -162,7 +162,7 @@ public class PollCommand implements Command {
                     question[0] = msg;
                     embedBuilder.addField(question[0], "", false);
                     embedBuilder.addField("Choisis une réponse (`r!stop` pour arrêter)", "", false);
-                    channel.sendMessage(embedBuilder.build()).queue();
+                    EnvoiMessage.sendMessage(event, embedBuilder.build());
                     return;
                 }
 
@@ -184,7 +184,7 @@ public class PollCommand implements Command {
                 sondage.addField("", "", false);
                 sondage.addField("Clique sur les réactions en dessous pour voter !", "", false);
 
-                channel2.sendMessage(sondage.build()).queue(reactPoll -> {
+                channel2.sendMessageEmbeds(sondage.build()).queue(reactPoll -> {
                     for (int i = 0; i < 20 && i < emojis.size(); i++) {
                         String emoji = emojis.get(i);
                         if (emoji.startsWith("<:")) {
@@ -218,7 +218,7 @@ public class PollCommand implements Command {
                 embedBuilder.addField(question[0], reponses_field.toString(), false);
                 embedBuilder.addField(fieldSuite);
 
-                channel.sendMessage(embedBuilder.build()).queue();
+                EnvoiMessage.sendMessage(event, embedBuilder.build());
             }
         });
     }

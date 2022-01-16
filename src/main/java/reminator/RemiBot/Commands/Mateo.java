@@ -96,7 +96,7 @@ public class Mateo implements Command {
                             builder.setTitle("Julie Oudet");
                             builder.addField("Nouveau / dernier tweet", tweet.getString("full_text"), false);
                             builder.setFooter(user.getName(), user.getAvatarUrl());
-                            channel.sendMessage(builder.build()).queue();
+                            channel.sendMessageEmbeds(builder.build()).queue();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
