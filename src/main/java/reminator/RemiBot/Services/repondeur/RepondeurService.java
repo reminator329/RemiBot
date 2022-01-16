@@ -45,7 +45,7 @@ public class RepondeurService extends ListenerAdapter {
                 EnvoiMessage.sendMessage(event, message.toLowerCase());
             }
             if (matcherdy.find() && matcherdy.group(1).length() > 2) {
-                String message = matcherdi.group(1).substring(2);
+                String message = matcherdy.group(1).substring(2);
                 EnvoiMessage.sendMessage(event, message.toLowerCase());
             }
             if (matchercri.find() && matchercri.group(1).length() > 3) {
