@@ -1,30 +1,25 @@
 package reminator.RemiBot.utils;
 
-import com.google.api.client.googleapis.batch.BatchRequest;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class EnvoiMessage {
 
     private EnvoiMessage() {}
 
     public static void sendMessage(MessageReceivedEvent event, MessageEmbed messageEmbed) {
-        System.out.println(event.isFromGuild());
         if (event.isFromGuild()) {
-            event.getChannel().sendMessage(messageEmbed).queue();
+            sendGuild(event.getChannel(), messageEmbed);
         } else {
-            event.getAuthor().openPrivateChannel()
-                    .flatMap(channel -> channel.sendMessage(messageEmbed))
-                    .queue();
+            sendPrivate(event.getAuthor(), messageEmbed);
         }
     }
 
     public static void sendMessage(MessageReceivedEvent event, String message) {
         if (event.isFromGuild()) {
-            event.getChannel().sendMessage(message).queue();
+            sendGuild(event.getChannel(), message);
         } else {
             sendPrivate(event.getAuthor(), message);
         }
@@ -38,7 +33,7 @@ public class EnvoiMessage {
 
     public static void sendPrivate(User user, MessageEmbed messageEmbed) {
         user.openPrivateChannel()
-                .flatMap(channel -> channel.sendMessage(messageEmbed))
+                .flatMap(channel -> channel.sendMessageEmbeds(messageEmbed))
                 .queue();
     }
 
@@ -47,6 +42,6 @@ public class EnvoiMessage {
     }
 
     public static void sendGuild(MessageChannel messageChannel, MessageEmbed messageEmbed) {
-        messageChannel.sendMessage(messageEmbed).queue();
+        messageChannel.sendMessageEmbeds(messageEmbed).queue();
     }
 }
