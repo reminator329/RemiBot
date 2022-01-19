@@ -6,10 +6,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,16 +38,28 @@ public class RepondeurService extends ListenerAdapter {
             Matcher matchercri = patterncri.matcher(arg);
 
             if (matcherdi.find() && matcherdi.group(1).length() > 2) {
-                String message = matcherdi.group(1).substring(2);
-                EnvoiMessage.sendMessage(event, message.toLowerCase());
+                Random random = new Random();
+                int r = random.nextInt(100);
+                if (r <= 10) {
+                    String message = matcherdi.group(1).substring(2);
+                    EnvoiMessage.sendMessage(event, message.toLowerCase());
+                }
             }
             if (matcherdy.find() && matcherdy.group(1).length() > 2) {
-                String message = matcherdy.group(1).substring(2);
-                EnvoiMessage.sendMessage(event, message.toLowerCase());
+                Random random = new Random();
+                int r = random.nextInt(100);
+                if (r <= 10) {
+                    String message = matcherdy.group(1).substring(2);
+                    EnvoiMessage.sendMessage(event, message.toLowerCase());
+                }
             }
             if (matchercri.find() && matchercri.group(1).length() > 3) {
-                String message = matchercri.group(1).substring(3);
-                EnvoiMessage.sendMessage(event, message.toUpperCase());
+                Random random = new Random();
+                int r = random.nextInt(100);
+                if (r <= 10) {
+                    String message = matchercri.group(1).substring(3);
+                    EnvoiMessage.sendMessage(event, message.toUpperCase());
+                }
             }
         }
     }
