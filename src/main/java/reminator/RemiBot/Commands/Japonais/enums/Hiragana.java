@@ -1,5 +1,8 @@
 package reminator.RemiBot.Commands.Japonais.enums;
 
+import reminator.RemiBot.bot.RemiBot;
+
+import java.util.Objects;
 import java.util.Random;
 
 public enum Hiragana implements CharJP {
@@ -40,6 +43,7 @@ public enum Hiragana implements CharJP {
     }
 
     public String roomaji() {
+        // do_ car do est un mot clé java
         if (this.name().equals("do_")) return "do";
         return this.name();
     }

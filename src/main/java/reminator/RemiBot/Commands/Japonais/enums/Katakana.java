@@ -18,7 +18,7 @@ public enum Katakana implements CharJP {
 
     HA('ハ'), HI('ヒ'), FU('フ'), HE('ヘ'), HO('ホ'),
     BA('バ'), BI('ビ'), BU('ブ'), BE('ベ'), BO('ボ'),
-    PQ('パ'), PI('ピ'), PU('プ'), PE('ペ'), PO('ポ'),
+    PA('パ'), PI('ピ'), PU('プ'), PE('ペ'), PO('ポ'),
 
     MA('マ'), MI('ミ'), MU('ム'), ME('メ'), MO('モ'),
 
