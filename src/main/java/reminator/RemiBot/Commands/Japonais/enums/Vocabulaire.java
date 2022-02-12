@@ -9,6 +9,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum Vocabulaire {
+
+    // EXAM 1
+    /*
     QUAND("Quand", "いつ"),
     OU_LIEU("Où", "どこ"),
     POURQUOI("Pourquoi", "なぜ"),
@@ -28,7 +31,7 @@ public enum Vocabulaire {
     AIMER("Aimer", "すきです"),
     LEGUMES("Légumes", "やさい"),
     VIANDE("Viande", "肉"),
-    FRUIS("Fruits", "くべもの"),
+    FRUIS("Fruits", "くだもの"),
     PAS_DU_TOUT("Pas du tout", "ぜんぜん"),
     AMARI("Pas souvent", "あまり"),
     YOKU("Souvent", "よく"),
@@ -57,6 +60,12 @@ public enum Vocabulaire {
     KINOO("Hier", "きのう"),
     ASHITA("Demain", "あした"),
     WAKARIMASU("Je sais / Je comprend", "わかります"),
+    */
+    GYUUNYUU("Lait (hiragana)", "ぎゅうにゅう"),
+
+    //
+
+
     ;
 
     String fr;
@@ -64,21 +73,45 @@ public enum Vocabulaire {
 
     Vocabulaire(String fr, String jp) {
         this.fr = fr;
-        for (char c : jp.toCharArray()) {
-            System.out.println(jp.toCharArray());
-            CharJP charJP = Hiragana.parse(c);
-            if (charJP != null) {
-                japonais.add(charJP);
+
+        for (int i = 0; i < jp.length(); i++) {
+            char c1 = jp.charAt(i);
+            Character c2 = (i + 1) >= jp.length() ? null : jp.charAt(i + 1);
+            CharJP charJp;
+            System.out.println("oui");
+            System.out.println(String.valueOf(c1));
+
+            if (c2 != null) {
+                System.out.println("" + c1 + "" + c2);
+                charJp = CombinaisonHiragana.parse(c1, c2);
+                if (charJp != null) {
+                    System.out.println("Parfait");
+                    japonais.add(charJp);
+                    i++;
+                    continue;
+                }
+
+                charJp = CombinaisonKatakana.parse(c1, c2);
+                if (charJp != null) {
+                    japonais.add(charJp);
+                    i++;
+                    continue;
+                }
+            }
+
+            charJp = Hiragana.parse(c1);
+            if (charJp != null) {
+                japonais.add(charJp);
                 continue;
             }
-            charJP = Katakana.parse(c);
-            if (charJP != null) {
-                japonais.add(charJP);
+            charJp = Katakana.parse(c1);
+            if (charJp != null) {
+                japonais.add(charJp);
                 continue;
             }
-            charJP = Kanji.parse(c);
-            if (charJP != null) {
-                japonais.add(charJP);
+            charJp = Kanji.parse(c1);
+            if (charJp != null) {
+                japonais.add(charJp);
             }
         }
     }
@@ -88,15 +121,19 @@ public enum Vocabulaire {
         Pattern pattern = Pattern.compile("([a-zA-Z])");
         Matcher matcher = pattern.matcher(String.valueOf(s.charAt(0)));
         if(matcher.find()) {
-            System.out.println("OUIIIIIIIIIIIIIIIIIII");
             roomaji = true;
         }
         int i = 0;
         for (CharJP charJP : this.japonais) {
+
             if (roomaji) {
+                /*
+                 * Cas où la personne écrit en roomaji
+                 */
+
                 String r = charJP.roomaji();
-                System.out.println(r);
                 int len = r.length();
+                System.out.println(r);
                 if (s.length() < i + len - 1) return false;
 
                 StringBuilder test = new StringBuilder();
@@ -105,12 +142,32 @@ public enum Vocabulaire {
                 }
                 i += len;
                 if (!test.toString().equalsIgnoreCase(charJP.roomaji())) return false;
-            } else {/*
+
+            } else {
+                /*
+                 * Cas où la personne
+                 */
+
+                /* TODO cas où la personne écrit sans kanji (ou mixte)
                 if (charJP instanceof Kanji) {
                     Kanji.parse(s.charAt(i))
-                } else {*/
+                } else {
+                }
+                */
+
+                if (charJP instanceof Combinaison) {
+                    char c1 = s.charAt(i);
+                    Character c2 = (i + 1) >= s.length() ? null : s.charAt(i + 1);
+
+                    if (c2 == null) return false;
+                    if (!("" + c1 + c2).equalsIgnoreCase(charJP.japonais())) return false;
+                    i++;
+
+                } else {
                     if (!String.valueOf(s.charAt(i)).equalsIgnoreCase(charJP.japonais())) return false;
-                //}
+                }
+
+
                 i++;
             }
         }
