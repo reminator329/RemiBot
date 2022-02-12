@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public enum Vocabulaire {
 
     // EXAM 1
-    /*
+
     QUAND("Quand", "いつ"),
     OU_LIEU("Où", "どこ"),
     POURQUOI("Pourquoi", "なぜ"),
@@ -60,7 +60,6 @@ public enum Vocabulaire {
     KINOO("Hier", "きのう"),
     ASHITA("Demain", "あした"),
     WAKARIMASU("Je sais / Je comprend", "わかります"),
-    */
     GYUUNYUU("Lait (hiragana)", "ぎゅうにゅう"),
 
     //
