@@ -45,7 +45,6 @@ public class Controller extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        System.out.println(event.getMessage().getContentRaw());
         if (event.getAuthor().isBot()) return;
         /*
         if (Objects.equals(api.getUserById(368733622246834188L), event.getAuthor())) {

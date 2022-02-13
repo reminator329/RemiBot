@@ -2,86 +2,84 @@ package reminator.RemiBot.Commands.Japonais.enums;
 
 import reminator.RemiBot.Commands.Japonais.VocabulaireCommand;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum Vocabulaire {
 
-    // EXAM 1
+    // SEMESTRE 7 SRI
 
-    QUAND("Quand", "いつ"),
-    OU_LIEU("Où", "どこ"),
-    POURQUOI("Pourquoi", "なぜ"),
-    QUI("Qui", "だれ"),
-    QUOI("Quoi", "なに"),
-    QUEL("Quel", "どれ"),
-    QUEL_OBJET("Quel (objet)", "どの"),
-    PARCE_QUE("Parce que", "から"),
-    POISSON("Poisson", "魚"),
-    MANGER("Manger", "食べます"),
-    TOKIDOKI("De temps en temps", "ときどき"),
-    PETIT_DEJ("Petit déjeuner", "あさごはん"),
-    NOMIMASU("Boire", "飲みます"),
-    CAFE("Café", "コオヒイ"),
-    BIERE("Bière", "ビイル"),
-    VIN("Vin", "ワイン"),
-    AIMER("Aimer", "すきです"),
-    LEGUMES("Légumes", "やさい"),
-    VIANDE("Viande", "肉"),
-    FRUIS("Fruits", "くだもの"),
-    PAS_DU_TOUT("Pas du tout", "ぜんぜん"),
-    AMARI("Pas souvent", "あまり"),
-    YOKU("Souvent", "よく"),
-    ITSUMO("Toujours", "いつも"),
-    TAMAGO("Oeuf", "卵"),
-    PAN("Pain", "パン"),
-    MISOSHIRU("Soupe miso", "みそしる"),
-    MILUKU("Lait (katakana)", "ミルク"),
-    MIZU("Eau", "水"),
-    RAMEN("Ramen", "ラアメン"),
-    YASUI("Pas cher", "やすい"),
-    HAYAI("Rapide", "はやい"),
-    OSOI("Lent", "おそい"),
-    OISHII("Délicieux", "おいしい"),
-    MAZUI("Mauvais (dégoutant)", "まずい"),
-    KAWAII("Mignon", "かわいい"),
-    TAKAI("Cher / Grand", "たかい"),
-    GENKINA("Joyeux", "げんきな"),
-    SUKINA("Aimé / Ce que j'aime le plus", "すきな"),
-    KIRAINA("Détesté / Ce que j'aime le moins", "きらいな"),
-    KIREINA("Beau / propre", "きれいな"),
-    DEMO("Mais", "でも"),
-    KORE("Cela", "これ"),
-    SOSHITE("Ensuite / puis", "そして"),
-    SOODESUKA("Ok, d'accord", "そうですか"),
-    KINOO("Hier", "きのう"),
-    ASHITA("Demain", "あした"),
-    WAKARIMASU("Je sais / Je comprend", "わかります"),
-    GYUUNYUU("Lait (hiragana)", "ぎゅうにゅう"),
+    ITSU("Quand", "いつ", Set.of(new Categorie[]{Categorie.S7})),
+    DOKO("Où", "どこ", Set.of(new Categorie[]{Categorie.S7})),
+    NAZE("Pourquoi", "なぜ", Set.of(new Categorie[]{Categorie.S7})),
+    DARE("Qui", "だれ", Set.of(new Categorie[]{Categorie.S7})),
+    NANI("Quoi", "なに", Set.of(new Categorie[]{Categorie.S7})),
+    DORE("Quel", "どれ", Set.of(new Categorie[]{Categorie.S7})),
+    DONO("Quel (objet)", "どの", Set.of(new Categorie[]{Categorie.S7})),
+    KARA("Parce que", "から", Set.of(new Categorie[]{Categorie.S7})),
+    SAKANA("Poisson", "魚", Set.of(new Categorie[]{Categorie.S7})),
+    TABEMASU("Manger", "食べます", Set.of(new Categorie[]{Categorie.S7})),
+    TOKIDOKI("De temps en temps", "ときどき", Set.of(new Categorie[]{Categorie.S7})),
+    ASAGOHAN("Petit déjeuner", "あさごはん", Set.of(new Categorie[]{Categorie.S7})),
+    NOMIMASU("Boire", "飲みます", Set.of(new Categorie[]{Categorie.S7})),
+    KOOHII("Café", "コオヒイ", Set.of(new Categorie[]{Categorie.S7})),
+    BIIRU("Bière", "ビイル", Set.of(new Categorie[]{Categorie.S7})),
+    WAIN("Vin", "ワイン", Set.of(new Categorie[]{Categorie.S7})),
+    SUKIDESU("Aimer", "すきです", Set.of(new Categorie[]{Categorie.S7})),
+    YASAI("Légumes", "やさい", Set.of(new Categorie[]{Categorie.S7})),
+    NIKU("Viande", "肉", Set.of(new Categorie[]{Categorie.S7})),
+    KUDAMONO("Fruits", "くだもの", Set.of(new Categorie[]{Categorie.S7})),
+    ZENZEN("Pas du tout", "ぜんぜん", Set.of(new Categorie[]{Categorie.S7})),
+    AMARI("Pas souvent", "あまり", Set.of(new Categorie[]{Categorie.S7})),
+    YOKU("Souvent", "よく", Set.of(new Categorie[]{Categorie.S7})),
+    ITSUMO("Toujours", "いつも", Set.of(new Categorie[]{Categorie.S7})),
+    TAMAGO("Oeuf", "卵", Set.of(new Categorie[]{Categorie.S7})),
+    PAN("Pain", "パン", Set.of(new Categorie[]{Categorie.S7})),
+    MISOSHIRU("Soupe miso", "みそしる", Set.of(new Categorie[]{Categorie.S7})),
+    MILUKU("Lait (katakana)", "ミルク", Set.of(new Categorie[]{Categorie.S7})),
+    GYUUNYUU("Lait (hiragana)", "ぎゅうにゅう", Set.of(new Categorie[]{Categorie.S7})),
+    MIZU("Eau", "水", Set.of(new Categorie[]{Categorie.S7})),
+    RAMEN("Ramen", "ラアメン", Set.of(new Categorie[]{Categorie.S7})),
+    YASUI("Pas cher", "やすい", Set.of(new Categorie[]{Categorie.S7})),
+    HAYAI("Rapide", "はやい", Set.of(new Categorie[]{Categorie.S7})),
+    OSOI("Lent", "おそい", Set.of(new Categorie[]{Categorie.S7})),
+    OISHII("Délicieux", "おいしい", Set.of(new Categorie[]{Categorie.S7})),
+    MAZUI("Mauvais (dégoutant)", "まずい", Set.of(new Categorie[]{Categorie.S7})),
+    KAWAII("Mignon", "かわいい", Set.of(new Categorie[]{Categorie.S7})),
+    TAKAI("Cher / Grand", "たかい", Set.of(new Categorie[]{Categorie.S7})),
+    GENKINA("Joyeux", "げんきな", Set.of(new Categorie[]{Categorie.S7})),
+    SUKINA("Aimé / Ce que j'aime le plus", "すきな", Set.of(new Categorie[]{Categorie.S7})),
+    KIRAINA("Détesté / Ce que j'aime le moins", "きらいな", Set.of(new Categorie[]{Categorie.S7})),
+    KIREINA("Beau / propre", "きれいな", Set.of(new Categorie[]{Categorie.S7})),
+    DEMO("Mais", "でも", Set.of(new Categorie[]{Categorie.S7})),
+    KORE("Cela", "これ", Set.of(new Categorie[]{Categorie.S7})),
+    SOSHITE("Ensuite / puis", "そして", Set.of(new Categorie[]{Categorie.S7})),
+    SOODESUKA("Ok, d'accord", "そうですか", Set.of(new Categorie[]{Categorie.S7})),
+    KINOO("Hier", "きのう", Set.of(new Categorie[]{Categorie.S7})),
+    ASHITA("Demain", "あした", Set.of(new Categorie[]{Categorie.S7})),
+    WAKARIMASU("Je sais / Je comprend", "わかります", Set.of(new Categorie[]{Categorie.S7})),
 
-    //
+    // SEMESTRE 8 SRI
+    UE("Sur / au-dessus de", "うえ", Set.of(new Categorie[]{Categorie.S8, Categorie.POSITION})),
 
 
     ;
 
     String fr;
     List<CharJP> japonais = new ArrayList<>();
+    Set<Categorie> categories;
 
-    Vocabulaire(String fr, String jp) {
+    Vocabulaire(String fr, String jp, Set<Categorie> categories) {
         this.fr = fr;
+        this.categories = categories;
 
         for (int i = 0; i < jp.length(); i++) {
             char c1 = jp.charAt(i);
             Character c2 = (i + 1) >= jp.length() ? null : jp.charAt(i + 1);
             CharJP charJp;
-            System.out.println("oui");
-            System.out.println(String.valueOf(c1));
 
             if (c2 != null) {
-                System.out.println("" + c1 + "" + c2);
                 charJp = CombinaisonHiragana.parse(c1, c2);
                 if (charJp != null) {
                     System.out.println("Parfait");
@@ -187,7 +185,29 @@ public enum Vocabulaire {
         return this.fr;
     }
 
-    public static Vocabulaire getRandom() {
-        return Vocabulaire.values()[new Random().nextInt(Vocabulaire.values().length)];
+    public static Vocabulaire getRandom(Set<String> cats) {
+        if (cats == null) {
+            return Vocabulaire.values()[new Random().nextInt(Vocabulaire.values().length)];
+        }
+
+        Set<Categorie> categories = new HashSet<>();
+        List<Vocabulaire> vocabulaires = new ArrayList<>();
+
+        for (String cat : cats) {
+            Categorie categorie = Categorie.parse(cat);
+            if (categorie != null) {
+                categories.add(categorie);
+            }
+        }
+
+        for (Vocabulaire vocabulaire : Vocabulaire.values()) {
+            Set<Categorie> communs = new HashSet<>(categories);
+            communs.retainAll(vocabulaire.categories);
+            if (communs.size() != 0) {
+                vocabulaires.add(vocabulaire);
+            }
+        }
+
+        return vocabulaires.get(new Random().nextInt(vocabulaires.size()));
     }
 }
