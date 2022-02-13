@@ -2,19 +2,20 @@ package reminator.RemiBot.Commands.Japonais;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.Command;
+import reminator.RemiBot.Commands.Japonais.enums.Categorie;
 import reminator.RemiBot.Commands.Japonais.enums.Katakana;
 import reminator.RemiBot.Commands.Japonais.enums.Vocabulaire;
 import reminator.RemiBot.Commands.enums.Category;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class VocabulaireCommand implements Command {
     @Override
@@ -38,14 +39,29 @@ public class VocabulaireCommand implements Command {
     }
 
     @Override
+    public String getSignature() {
+        return Command.super.getSignature() + "[< categorie>*]";
+    }
+
+    @Override
+    public MessageEmbed.Field[] getExtraFields() {
+        return new MessageEmbed.Field[]{
+                new MessageEmbed.Field("Exemple avec plusieurs catégories", "r!vocabulaire s7 position", false),
+        };
+    }
+
+    @Override
     public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
 
         long channelId = channel.getIdLong();
         Map<User, Integer> scores = new HashMap<>();
+        System.out.println(args);
+        Set<String> cats = args.size() == 0 ? null : new HashSet<>(args);
+
 
         final EmbedBuilder[] embedBuilder = {new EmbedBuilder().setTitle("Le premier qui trouve 10 mots de vocabulaire gagne la partie !").setDescription("Que le meilleur gagne !")};
         EnvoiMessage.sendMessage(event, embedBuilder[0].build());
-        final Vocabulaire[] vocabulaire = {Vocabulaire.getRandom()};
+        final Vocabulaire[] vocabulaire = {Vocabulaire.getRandom(cats)};
 
         embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].fr()).setDescription("Comment dit-on ce mot en japonais ?");
         EnvoiMessage.sendMessage(event, embedBuilder[0].build());
@@ -82,7 +98,7 @@ public class VocabulaireCommand implements Command {
                         EnvoiMessage.sendMessage(event, classement.build());
                         event.getJDA().removeEventListener(this);
                     } else {
-                        vocabulaire[0] = Vocabulaire.getRandom();
+                        vocabulaire[0] = Vocabulaire.getRandom(cats);
                         embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].fr()).setDescription("Comment dit-on ce mot en japonais ?");
                         EnvoiMessage.sendMessage(event, embedBuilder[0].build());
                     }
@@ -96,7 +112,7 @@ public class VocabulaireCommand implements Command {
 
                 if(msg.equalsIgnoreCase("jsp")) {
                     EnvoiMessage.sendMessage(event, "Dommaage, " + vocabulaire[0].fr() + " se dit " + vocabulaire[0].japonais());
-                    vocabulaire[0] = Vocabulaire.getRandom();
+                    vocabulaire[0] = Vocabulaire.getRandom(cats);
                     embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].fr()).setDescription("Comment dit-on ce mot en japonais ?");
                     EnvoiMessage.sendMessage(event, embedBuilder[0].build());
                 }
