@@ -46,6 +46,7 @@ public class Controller extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
+        if (event.getMessage().getContentRaw().length() == 0) return;
         /*
         if (Objects.equals(api.getUserById(368733622246834188L), event.getAuthor())) {
             String message = event.getMessage().getContentRaw();
@@ -65,8 +66,8 @@ public class Controller extends ListenerAdapter {
 
          */
         List<String> args = new ArrayList<>(Arrays.asList(event.getMessage().getContentRaw().split("\\s+")));
-
         String command = args.get(0);
+
 
         for (Commands c : Commands.values()) {
             Command cmd = c.getCommand();

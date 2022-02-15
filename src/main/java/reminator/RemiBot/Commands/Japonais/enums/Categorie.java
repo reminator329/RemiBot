@@ -3,7 +3,8 @@ package reminator.RemiBot.Commands.Japonais.enums;
 public enum Categorie {
     S7("s7"),
     S8("s8"),
-    POSITION("position")
+    POSITION("position"),
+    MAISON("maison"),
     ;
 
     String name;
