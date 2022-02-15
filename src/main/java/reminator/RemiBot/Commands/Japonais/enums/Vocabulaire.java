@@ -1,7 +1,5 @@
 package reminator.RemiBot.Commands.Japonais.enums;
 
-import reminator.RemiBot.Commands.Japonais.VocabulaireCommand;
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,12 +60,14 @@ public enum Vocabulaire {
 
     // SEMESTRE 8 SRI
     UE("Sur / au-dessus de", "うえ", Set.of(new Categorie[]{Categorie.S8, Categorie.POSITION})),
+    BEDDO("Lit", "ベッド", Set.of(new Categorie[]{Categorie.S8, Categorie.MAISON})),
 
 
     ;
 
     String fr;
     List<CharJP> japonais = new ArrayList<>();
+    String roomaji;
     Set<Categorie> categories;
 
     Vocabulaire(String fr, String jp, Set<Categorie> categories) {
@@ -80,9 +80,9 @@ public enum Vocabulaire {
             CharJP charJp;
 
             if (c2 != null) {
+
                 charJp = CombinaisonHiragana.parse(c1, c2);
                 if (charJp != null) {
-                    System.out.println("Parfait");
                     japonais.add(charJp);
                     i++;
                     continue;
@@ -96,6 +96,17 @@ public enum Vocabulaire {
                 }
             }
 
+
+            charJp = PetitHiragana.parse(c1);
+            if (charJp != null) {
+                japonais.add(charJp);
+                continue;
+            }
+            charJp = PetitKatakana.parse(c1);
+            if (charJp != null) {
+                japonais.add(charJp);
+                continue;
+            }
             charJp = Hiragana.parse(c1);
             if (charJp != null) {
                 japonais.add(charJp);
@@ -111,78 +122,8 @@ public enum Vocabulaire {
                 japonais.add(charJp);
             }
         }
-    }
 
-    public boolean equals(String s) {
-        boolean roomaji = false;
-        Pattern pattern = Pattern.compile("([a-zA-Z])");
-        Matcher matcher = pattern.matcher(String.valueOf(s.charAt(0)));
-        if(matcher.find()) {
-            roomaji = true;
-        }
-        int i = 0;
-        for (CharJP charJP : this.japonais) {
-
-            if (roomaji) {
-                /*
-                 * Cas où la personne écrit en roomaji
-                 */
-
-                String r = charJP.roomaji();
-                int len = r.length();
-                System.out.println(r);
-                if (s.length() < i + len - 1) return false;
-
-                StringBuilder test = new StringBuilder();
-                for (int j = 0; j < len; j++) {
-                    test.append(s.charAt(i + j));
-                }
-                i += len;
-                if (!test.toString().equalsIgnoreCase(charJP.roomaji())) return false;
-
-            } else {
-                /*
-                 * Cas où la personne
-                 */
-
-                /* TODO cas où la personne écrit sans kanji (ou mixte)
-                if (charJP instanceof Kanji) {
-                    Kanji.parse(s.charAt(i))
-                } else {
-                }
-                */
-
-                if (charJP instanceof Combinaison) {
-                    char c1 = s.charAt(i);
-                    Character c2 = (i + 1) >= s.length() ? null : s.charAt(i + 1);
-
-                    if (c2 == null) return false;
-                    if (!("" + c1 + c2).equalsIgnoreCase(charJP.japonais())) return false;
-                    i++;
-
-                } else {
-                    if (!String.valueOf(s.charAt(i)).equalsIgnoreCase(charJP.japonais())) return false;
-                }
-
-
-                i++;
-            }
-        }
-        return true;
-    }
-
-    public String japonais() {
-        StringBuilder res = new StringBuilder();
-        for (CharJP charJP : japonais) {
-            System.out.println(japonais.size());
-            res.append(charJP.japonais());
-        }
-        System.out.println(res);
-        return res.toString();
-    }
-
-    public String fr() {
-        return this.fr;
+        setRoomaji();
     }
 
     public static Vocabulaire getRandom(Set<String> cats) {
@@ -209,5 +150,81 @@ public enum Vocabulaire {
         }
 
         return vocabulaires.get(new Random().nextInt(vocabulaires.size()));
+    }
+
+    private void setRoomaji() {
+        StringBuilder s = new StringBuilder();
+        for (int j = 0; j < this.japonais.size(); j++) {
+            CharJP charJP = this.japonais.get(j);
+            CharJP charJP2 = (j + 1) >= this.japonais.size() ? null : this.japonais.get(j + 1);
+
+            String r = "";
+
+            // Cas où on a une pause
+            if (PetitHiragana.p_tsu.equals(charJP) || PetitKatakana.p_TSU.equals(charJP)) {
+                if (charJP2 != null) {
+                    r = String.valueOf(charJP2.roomaji().charAt(0));
+                }
+                charJP.roomaji();
+            } else {
+                r = charJP.roomaji();
+            }
+            s.append(r);
+        }
+        this.roomaji = s.toString();
+    }
+
+    public boolean equals(String s) {
+        System.out.println(s);
+        Pattern pattern = Pattern.compile("([a-zA-Z])");
+        Matcher matcher = pattern.matcher(String.valueOf(s.charAt(0)));
+        if (matcher.find()) {
+            /*
+             * Cas où la personne écrit en roomaji
+             */
+            return this.roomaji.equalsIgnoreCase(s);
+        }
+
+        int i = 0;
+        for (int j = 0; j < this.japonais.size(); j++) {
+            CharJP charJP = this.japonais.get(j);
+            CharJP charJP2 = (j + 1) >= this.japonais.size() ? null : this.japonais.get(j + 1);
+
+
+                /* TODO cas où la personne écrit sans kanji (ou mixte)
+                if (charJP instanceof Kanji) {
+                    Kanji.parse(s.charAt(i))
+                } else {
+                }
+                */
+
+            if (charJP instanceof Combinaison) {
+                char c1 = s.charAt(i);
+                Character c2 = (i + 1) >= s.length() ? null : s.charAt(i + 1);
+
+                if (c2 == null) return false;
+                if (!("" + c1 + c2).equalsIgnoreCase(charJP.japonais())) return false;
+                i++;
+
+            } else {
+                if (!String.valueOf(s.charAt(i)).equalsIgnoreCase(charJP.japonais())) return false;
+            }
+
+
+            i++;
+        }
+        return true;
+    }
+
+    public String japonais() {
+        StringBuilder res = new StringBuilder();
+        for (CharJP charJP : japonais) {
+            res.append(charJP.japonais());
+        }
+        return res.toString();
+    }
+
+    public String fr() {
+        return this.fr;
     }
 }

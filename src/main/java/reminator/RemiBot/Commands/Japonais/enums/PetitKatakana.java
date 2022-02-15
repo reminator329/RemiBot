@@ -3,7 +3,8 @@ package reminator.RemiBot.Commands.Japonais.enums;
 public enum PetitKatakana implements CharJP {
     p_A('ァ'), p_I('ィ'), p_U('ゥ'), p_E('ェ'), p_O('ォ'),
 
-    p_YA('ャ'), p_YU('ュ'), p_YO('ョ')
+    p_YA('ャ'), p_YU('ュ'), p_YO('ョ'),
+    p_TSU('ッ')
     ;
 
     char hiragana;

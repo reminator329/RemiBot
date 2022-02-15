@@ -1,7 +1,8 @@
 package reminator.RemiBot.Commands.Japonais.enums;
 
 public enum PetitHiragana implements CharJP {
-    p_ya('ゃ'), p_yu('ゅ'), p_yo('ょ')
+    p_ya('ゃ'), p_yu('ゅ'), p_yo('ょ'),
+    p_tsu('っ')
     ;
 
     char hiragana;

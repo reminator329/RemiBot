@@ -72,6 +72,7 @@ public class VocabulaireCommand implements Command {
             public void onMessageReceived(@NotNull MessageReceivedEvent event) {
                 if (event.getAuthor().isBot()) return;
                 if (event.getChannel().getIdLong() != channelId) return;
+                if (event.getMessage().getContentRaw().length() == 0) return;
 
                 String msg = event.getMessage().getContentRaw();
                 User user = event.getAuthor();
