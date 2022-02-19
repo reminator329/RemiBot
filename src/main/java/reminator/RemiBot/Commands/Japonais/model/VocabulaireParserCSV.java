@@ -75,13 +75,17 @@ public class VocabulaireParserCSV {
 
     public BDVocabulaire generateBDVocabulaire(Set<Categorie> categories) {
         BDVocabulaire bd = new BDVocabulaire();
-        categories.forEach(c -> {
-            System.out.println(c);
-
-            System.out.println(vocabulaireByCategory.get(c));
-            vocabulaireByCategory.get(c).forEach(bd::addVocabulaire);
-
-        });
+        if (categories.size() == 0) {
+            for (Collection<Vocabulaire> vocabulaires : vocabulaireByCategory.values()) {
+                vocabulaires.forEach(bd::addVocabulaire);
+            }
+        } else {
+            for (Categorie categorie : categories) {
+                if (vocabulaireByCategory.containsKey(categorie)) {
+                    vocabulaireByCategory.get(categorie).forEach(bd::addVocabulaire);
+                }
+            }
+        }
         return bd;
     }
 
