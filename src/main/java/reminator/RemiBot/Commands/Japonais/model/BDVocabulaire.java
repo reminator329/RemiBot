@@ -16,6 +16,10 @@ public class BDVocabulaire {
         vocabulaires.add(vocabulaire);
     }
 
+    public boolean isEmpty() {
+        return this.vocabulaires.isEmpty();
+    }
+
     public Vocabulaire getRandomVocabulary() {
         int index = RAND.nextInt(this.vocabulaires.size());
 

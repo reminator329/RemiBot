@@ -61,6 +61,10 @@ public class VocabulaireCommand implements Command {
 
         Set<Categorie> cats = args.stream().map(Categorie::new).collect(Collectors.toSet());
         BDVocabulaire bdVocabulaire = VocabulaireParserCSV.getInstance().update().generateBDVocabulaire(cats);
+        if (bdVocabulaire.isEmpty()) {
+            EnvoiMessage.sendMessage(event, ":warning: Aucun vocabulaire ne correspond aux catégories choisies.");
+            return;
+        }
         final Vocabulaire[] vocabulaire = {bdVocabulaire.getRandomVocabulary()};
 
 
