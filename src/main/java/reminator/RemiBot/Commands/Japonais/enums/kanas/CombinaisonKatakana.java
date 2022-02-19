@@ -1,4 +1,4 @@
-package reminator.RemiBot.Commands.Japonais.enums;
+package reminator.RemiBot.Commands.Japonais.enums.kanas;
 
 import java.util.Random;
 

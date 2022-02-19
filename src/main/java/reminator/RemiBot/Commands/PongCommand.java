@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.enums.Category;
-import reminator.RemiBot.Model.Gif;
+import reminator.RemiBot.Commands.enums.Gif;
 import reminator.RemiBot.bot.BotEmbed;
 import reminator.RemiBot.utils.EnvoiMessage;
 

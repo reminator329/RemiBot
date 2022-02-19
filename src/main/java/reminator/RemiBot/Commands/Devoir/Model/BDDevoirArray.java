@@ -1,8 +1,7 @@
-package reminator.RemiBot.Model;
+package reminator.RemiBot.Commands.Devoir.Model;
 
 import net.dv8tion.jda.api.entities.User;
 
-import java.io.*;
 import java.util.*;
 
 public class BDDevoirArray extends BDDevoir {

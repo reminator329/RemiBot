@@ -1,4 +1,4 @@
-package reminator.RemiBot.Model;
+package reminator.RemiBot.Commands.Devoir.Model;
 
 import net.dv8tion.jda.api.entities.User;
 import org.json.JSONArray;
@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 
 public class BDDevoirJson extends BDDevoir {

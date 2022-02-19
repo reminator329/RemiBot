@@ -3,7 +3,6 @@ package reminator.RemiBot.Commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
@@ -44,13 +43,10 @@ public class HelpCommand implements Command {
         return Command.super.getSignature() + " [commande]";
     }
 
-    private EmbedBuilder help(boolean n) {
+    private EmbedBuilder help() {
 
         EmbedBuilder builder = new EmbedBuilder();
         Map<Category, List<Command>> commandss = Commands.getCommandsGroupedByCategory();
-        if (!n) {
-            commandss.remove(Category.N);
-        }
         TreeMap<Category, List<Command>> commandsGroupedByCategory = new TreeMap<>(commandss);
 
         final String titre = "Liste des commandes de l'EdtBot";
@@ -73,9 +69,9 @@ public class HelpCommand implements Command {
         return builder;
     }
 
-    private EmbedBuilder help(Command command, boolean n) {
+    private EmbedBuilder help(Command command) {
 
-        if (command == null || command.getCategory().equals(Category.N) && !n) {
+        if (command == null) {
             return null;
         }
 
@@ -103,17 +99,12 @@ public class HelpCommand implements Command {
     public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
 
         EmbedBuilder message;
-        boolean n = false;
-        if (event.isFromGuild()) {
-            TextChannel channelTest = (TextChannel) event.getChannel();
-            n = channelTest.isNSFW();
-        }
 
         if (args.size() == 0) {
-            message = this.help(n);
+            message = this.help();
         } else {
             Command command = Commands.getCommand(args.get(0));
-            message = this.help(command, n);
+            message = this.help(command);
         }
 
         if (message == null) {

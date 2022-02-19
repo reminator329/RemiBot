@@ -1,4 +1,4 @@
-package reminator.RemiBot.Model;
+package reminator.RemiBot.Commands.Devoir.Model;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;

@@ -1,8 +1,5 @@
-package reminator.RemiBot.Commands.Japonais.enums;
+package reminator.RemiBot.Commands.Japonais.enums.kanas;
 
-import reminator.RemiBot.bot.RemiBot;
-
-import java.util.Objects;
 import java.util.Random;
 
 public enum CombinaisonHiragana implements Combinaison {

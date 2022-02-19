@@ -1,5 +1,7 @@
 package reminator.RemiBot.Commands.Japonais.enums;
 
+import reminator.RemiBot.Commands.Japonais.enums.kanas.*;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -186,12 +188,8 @@ public enum Vocabulaire {
         }
 
         int i = 0;
-        for (int j = 0; j < this.japonais.size(); j++) {
-            CharJP charJP = this.japonais.get(j);
-            CharJP charJP2 = (j + 1) >= this.japonais.size() ? null : this.japonais.get(j + 1);
-
-
-                /* TODO cas où la personne écrit sans kanji (ou mixte)
+        for (CharJP charJP : this.japonais) {
+            /* TODO cas où la personne écrit sans kanji (ou mixte)
                 if (charJP instanceof Kanji) {
                     Kanji.parse(s.charAt(i))
                 } else {
