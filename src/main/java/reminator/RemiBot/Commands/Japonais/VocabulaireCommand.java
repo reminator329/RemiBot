@@ -8,9 +8,10 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.Command;
-import reminator.RemiBot.Commands.Japonais.enums.Categorie;
-import reminator.RemiBot.Commands.Japonais.enums.Katakana;
-import reminator.RemiBot.Commands.Japonais.enums.Vocabulaire;
+import reminator.RemiBot.Commands.Japonais.model.BDVocabulaire;
+import reminator.RemiBot.Commands.Japonais.model.Categorie;
+import reminator.RemiBot.Commands.Japonais.model.Vocabulaire;
+import reminator.RemiBot.Commands.Japonais.model.VocabulaireParserCSV;
 import reminator.RemiBot.Commands.enums.Category;
 import reminator.RemiBot.utils.EnvoiMessage;
 
@@ -18,6 +19,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class VocabulaireCommand implements Command {
+
     @Override
     public Category getCategory() {
         return Category.JAPONAIS;
@@ -56,14 +58,16 @@ public class VocabulaireCommand implements Command {
         long channelId = channel.getIdLong();
         Map<User, Integer> scores = new HashMap<>();
         System.out.println(args);
-        Set<String> cats = args.size() == 0 ? null : new HashSet<>(args);
+
+        Set<Categorie> cats = args.stream().map(Categorie::new).collect(Collectors.toSet());
+        BDVocabulaire bdVocabulaire = VocabulaireParserCSV.getInstance().update().generateBDVocabulaire(cats);
+        final Vocabulaire[] vocabulaire = {bdVocabulaire.getRandomVocabulary()};
 
 
         final EmbedBuilder[] embedBuilder = {new EmbedBuilder().setTitle("Le premier qui trouve 10 mots de vocabulaire gagne la partie !").setDescription("Que le meilleur gagne !")};
         EnvoiMessage.sendMessage(event, embedBuilder[0].build());
-        final Vocabulaire[] vocabulaire = {Vocabulaire.getRandom(cats)};
 
-        embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].fr()).setDescription("Comment dit-on ce mot en japonais ?");
+        embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].getFr()).setDescription("Comment dit-on ce mot en japonais ?");
         EnvoiMessage.sendMessage(event, embedBuilder[0].build());
 
 
@@ -77,8 +81,8 @@ public class VocabulaireCommand implements Command {
                 String msg = event.getMessage().getContentRaw();
                 User user = event.getAuthor();
 
-                if(vocabulaire[0].equals(msg)) {
-                    EnvoiMessage.sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + vocabulaire[0].fr() + " se dit bien " + vocabulaire[0].japonais());
+                if(vocabulaire[0].isCorrect(msg)) {
+                    EnvoiMessage.sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + vocabulaire[0].getFr() + " se dit bien " + vocabulaire[0].getJaponais());
                     int score;
                     if (scores.containsKey(user)) {
                         score = scores.get(user) + 1;
@@ -99,8 +103,8 @@ public class VocabulaireCommand implements Command {
                         EnvoiMessage.sendMessage(event, classement.build());
                         event.getJDA().removeEventListener(this);
                     } else {
-                        vocabulaire[0] = Vocabulaire.getRandom(cats);
-                        embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].fr()).setDescription("Comment dit-on ce mot en japonais ?");
+                        vocabulaire[0] = bdVocabulaire.getRandomVocabulary();
+                        embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].getFr()).setDescription("Comment dit-on ce mot en japonais ?");
                         EnvoiMessage.sendMessage(event, embedBuilder[0].build());
                     }
                     return;
@@ -112,9 +116,9 @@ public class VocabulaireCommand implements Command {
                 }
 
                 if(msg.equalsIgnoreCase("jsp")) {
-                    EnvoiMessage.sendMessage(event, "Dommaage, " + vocabulaire[0].fr() + " se dit " + vocabulaire[0].japonais());
-                    vocabulaire[0] = Vocabulaire.getRandom(cats);
-                    embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].fr()).setDescription("Comment dit-on ce mot en japonais ?");
+                    EnvoiMessage.sendMessage(event, "Dommage, " + vocabulaire[0].getFr() + " se dit " + vocabulaire[0].getJaponais());
+                    vocabulaire[0] = bdVocabulaire.getRandomVocabulary();
+                    embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].getFr()).setDescription("Comment dit-on ce mot en japonais ?");
                     EnvoiMessage.sendMessage(event, embedBuilder[0].build());
                 }
             }

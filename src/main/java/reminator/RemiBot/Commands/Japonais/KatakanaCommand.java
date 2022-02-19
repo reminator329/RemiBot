@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.enums.Category;
 import reminator.RemiBot.Commands.Command;
-import reminator.RemiBot.Commands.Japonais.enums.Katakana;
+import reminator.RemiBot.Commands.Japonais.enums.kanas.Katakana;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.util.HashMap;

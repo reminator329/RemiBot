@@ -1,15 +1,15 @@
-package reminator.RemiBot.Commands.Japonais.enums;
+package reminator.RemiBot.Commands.Japonais.enums.kanas;
 
-public enum PetitKatakana implements CharJP {
-    p_A('ァ'), p_I('ィ'), p_U('ゥ'), p_E('ェ'), p_O('ォ'),
+import reminator.RemiBot.Commands.Japonais.enums.CharJP;
 
-    p_YA('ャ'), p_YU('ュ'), p_YO('ョ'),
-    p_TSU('ッ')
+public enum PetitHiragana implements CharJP {
+    p_ya('ゃ'), p_yu('ゅ'), p_yo('ょ'),
+    p_tsu('っ')
     ;
 
     char hiragana;
 
-    PetitKatakana(char hiragana) {
+    PetitHiragana(char hiragana) {
         this.hiragana = hiragana;
     }
 
@@ -23,8 +23,8 @@ public enum PetitKatakana implements CharJP {
         return "" + this.hiragana;
     }
 
-    public static PetitKatakana parse(char c) {
-        for (PetitKatakana h : PetitKatakana.values()) {
+    public static PetitHiragana parse(char c) {
+        for (PetitHiragana h : PetitHiragana.values()) {
             if (h.japonais().equalsIgnoreCase(String.valueOf(c))) {
                 return h;
             }

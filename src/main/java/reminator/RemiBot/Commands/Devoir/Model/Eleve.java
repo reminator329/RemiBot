@@ -1,4 +1,4 @@
-package reminator.RemiBot.Model;
+package reminator.RemiBot.Commands.Devoir.Model;
 
 import net.dv8tion.jda.api.entities.User;
 

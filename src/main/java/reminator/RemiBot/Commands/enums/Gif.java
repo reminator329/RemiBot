@@ -1,4 +1,4 @@
-package reminator.RemiBot.Model;
+package reminator.RemiBot.Commands.enums;
 
 import java.util.Random;
 

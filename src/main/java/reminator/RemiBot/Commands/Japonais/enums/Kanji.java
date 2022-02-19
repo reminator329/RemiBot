@@ -1,5 +1,8 @@
 package reminator.RemiBot.Commands.Japonais.enums;
 
+import reminator.RemiBot.Commands.Japonais.enums.kanas.Hiragana;
+import reminator.RemiBot.Commands.Japonais.enums.kanas.Katakana;
+
 import java.util.ArrayList;
 import java.util.List;
 

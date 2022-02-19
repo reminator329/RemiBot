@@ -7,9 +7,9 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.enums.Category;
 import reminator.RemiBot.Commands.Command;
-import reminator.RemiBot.Model.BDDevoir;
-import reminator.RemiBot.Model.BDDevoirJson;
-import reminator.RemiBot.Model.Devoir;
+import reminator.RemiBot.Commands.Devoir.Model.BDDevoir;
+import reminator.RemiBot.Commands.Devoir.Model.BDDevoirJson;
+import reminator.RemiBot.Commands.Devoir.Model.Devoir;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.awt.*;

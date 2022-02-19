@@ -1,8 +1,7 @@
-package reminator.RemiBot.Commands.Japonais.enums;
+package reminator.RemiBot.Commands.Japonais.enums.kanas;
 
-import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.Commands.Japonais.enums.CharJP;
 
-import java.util.Objects;
 import java.util.Random;
 
 public enum Hiragana implements CharJP {

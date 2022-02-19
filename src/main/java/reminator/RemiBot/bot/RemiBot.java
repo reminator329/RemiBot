@@ -11,10 +11,11 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-import reminator.RemiBot.Model.BDDevoir;
-import reminator.RemiBot.Model.BDDevoirJson;
-import reminator.RemiBot.Model.Devoir;
-import reminator.RemiBot.Model.Eleve;
+import reminator.RemiBot.Commands.Devoir.Model.BDDevoir;
+import reminator.RemiBot.Commands.Devoir.Model.BDDevoirJson;
+import reminator.RemiBot.Commands.Devoir.Model.Devoir;
+import reminator.RemiBot.Commands.Devoir.Model.Eleve;
+import reminator.RemiBot.Commands.Japonais.model.VocabulaireParserCSV;
 import reminator.RemiBot.Services.motdujour.MotDuJourService;
 import reminator.RemiBot.Services.reactionpersonne.ReactionPersonneService;
 import reminator.RemiBot.Services.repondeur.RepondeurService;
@@ -33,8 +34,9 @@ public class RemiBot {
     public static void main(String[] arguments) throws Exception {
         System.setProperty("user.timezone", "Europe/Paris");
 
-        token = arguments[0];
-        reminator.RemiBot.Services.reactionpersonne.User.REMINATOR.setAuthorization(arguments[1]);
+        int index = 0;
+        token = arguments[index];
+        index++;
 
         api = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_EMOJIS).enableCache(CacheFlag.ACTIVITY).build();
         api.awaitReady();
@@ -42,6 +44,10 @@ public class RemiBot {
         api.addEventListener(new ReactionPersonneService(api));
         api.addEventListener(new RepondeurService(api));
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
+
+        reminator.RemiBot.Services.reactionpersonne.User.REMINATOR.setAuthorization(arguments[index]);
+        index++;
+        VocabulaireParserCSV.getInstance().setURL(arguments[index]);
 
 
         CommandListUpdateAction commands = api.updateCommands()
