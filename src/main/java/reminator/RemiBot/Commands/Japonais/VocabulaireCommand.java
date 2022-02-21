@@ -85,6 +85,11 @@ public class VocabulaireCommand implements Command {
                 String msg = event.getMessage().getContentRaw();
                 User user = event.getAuthor();
 
+                if(msg.startsWith("r!vocabulaire")) {
+                    event.getJDA().removeEventListener(this);
+                    return;
+                }
+
                 if(vocabulaire[0].isCorrect(msg)) {
                     EnvoiMessage.sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + vocabulaire[0].getFr() + " se dit bien " + vocabulaire[0].getJaponais());
                     int score;
@@ -111,11 +116,6 @@ public class VocabulaireCommand implements Command {
                         embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].getFr()).setDescription("Comment dit-on ce mot en japonais ?");
                         EnvoiMessage.sendMessage(event, embedBuilder[0].build());
                     }
-                    return;
-                }
-
-                if(msg.equalsIgnoreCase("r!vocabulaire")) {
-                    event.getJDA().removeEventListener(this);
                     return;
                 }
 
