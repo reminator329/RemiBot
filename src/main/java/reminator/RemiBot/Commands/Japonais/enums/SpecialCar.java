@@ -1,6 +1,8 @@
 package reminator.RemiBot.Commands.Japonais.enums;
 
-public enum SpecialCar {
+import reminator.RemiBot.Commands.Japonais.enums.kanas.PetitHiragana;
+
+public enum SpecialCar implements CharJP {
     ALLONGEMENT_KATAKANA('ー');
 
     char car;
@@ -11,5 +13,24 @@ public enum SpecialCar {
 
     public char getCar() {
         return car;
+    }
+
+    public static SpecialCar parse(char c) {
+        for (SpecialCar h : SpecialCar.values()) {
+            if (h.japonais().equalsIgnoreCase(String.valueOf(c))) {
+                return h;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String roomaji() {
+        return this.name();
+    }
+
+    @Override
+    public String japonais() {
+        return "" + this.car;
     }
 }
