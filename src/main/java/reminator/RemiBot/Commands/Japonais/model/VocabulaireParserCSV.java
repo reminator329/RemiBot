@@ -2,6 +2,7 @@ package reminator.RemiBot.Commands.Japonais.model;
 
 import reminator.RemiBot.Commands.Japonais.enums.CharJP;
 import reminator.RemiBot.Commands.Japonais.enums.Kanji;
+import reminator.RemiBot.Commands.Japonais.enums.SpecialCar;
 import reminator.RemiBot.Commands.Japonais.enums.kanas.*;
 import reminator.RemiBot.utils.HTTPRequest;
 
@@ -115,6 +116,11 @@ public class VocabulaireParserCSV {
                 }
             }
 
+            charJp = SpecialCar.parse(c1);
+            if (charJp != null) {
+                japonais.add(charJp);
+                continue;
+            }
 
             charJp = PetitHiragana.parse(c1);
             if (charJp != null) {
