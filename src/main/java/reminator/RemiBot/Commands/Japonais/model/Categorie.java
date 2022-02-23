@@ -1,8 +1,10 @@
 package reminator.RemiBot.Commands.Japonais.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
-public class Categorie {
+public class Categorie implements Comparable<Categorie> {
 
     private final String nom;
 
@@ -30,5 +32,10 @@ public class Categorie {
     @Override
     public int hashCode() {
         return Objects.hash(nom);
+    }
+
+    @Override
+    public int compareTo(@NotNull Categorie o) {
+        return this.nom.compareTo(o.nom);
     }
 }

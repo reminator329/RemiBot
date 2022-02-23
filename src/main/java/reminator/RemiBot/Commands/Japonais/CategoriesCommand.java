@@ -13,9 +13,7 @@ import reminator.RemiBot.Commands.enums.Category;
 import reminator.RemiBot.bot.BotEmbed;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class CategoriesCommand implements Command {
     @Override
@@ -44,7 +42,9 @@ public class CategoriesCommand implements Command {
         EmbedBuilder builder = BotEmbed.BASE_USER.getBuilder(Objects.requireNonNull(event.getMember()).getUser());
         builder.setTitle("Catégories disponibles");
 
-        Set<Categorie> categories = VocabulaireParserCSV.getInstance().update().getCategories();
+        Set<Categorie> categoriesSet = VocabulaireParserCSV.getInstance().update().getCategories();
+        List<Categorie> categories = new ArrayList<>(categoriesSet);
+        Collections.sort(categories);
 
         for (Categorie categorie : categories) {
             builder.addField(categorie.getNom(), "", false);
