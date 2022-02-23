@@ -2,6 +2,7 @@ package reminator.RemiBot.Commands.enums;
 
 import reminator.RemiBot.Commands.*;
 import reminator.RemiBot.Commands.Devoir.*;
+import reminator.RemiBot.Commands.Japonais.CategoriesCommand;
 import reminator.RemiBot.Commands.Japonais.HiraganaCommand;
 import reminator.RemiBot.Commands.Japonais.KatakanaCommand;
 import reminator.RemiBot.Commands.Japonais.VocabulaireCommand;
@@ -39,6 +40,7 @@ public enum Commands {
     VOCABULAIRE(new VocabulaireCommand()),
     REMI_WORK(new RemiWork()),
     REMI_SPAM(new RemiSpam()),
+    VOCABULAIRE_CATEGORIES(new CategoriesCommand())
     ;
 
     private final Command command;

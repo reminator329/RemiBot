@@ -34,6 +34,7 @@ public class VocabulaireParserCSV {
     }
 
     public VocabulaireParserCSV update() {
+        vocabulaireByCategory.clear();
         if (this.url == null) return this;
         try {
             this.csv = new HTTPRequest(this.url).GET();
@@ -76,7 +77,7 @@ public class VocabulaireParserCSV {
 
     public BDVocabulaire generateBDVocabulaire(Set<Categorie> categories) {
         BDVocabulaire bd = new BDVocabulaire();
-        if (categories.size() == 0) {
+        if (categories == null || categories.size() == 0) {
             for (Collection<Vocabulaire> vocabulaires : vocabulaireByCategory.values()) {
                 vocabulaires.forEach(bd::addVocabulaire);
             }
@@ -156,5 +157,9 @@ public class VocabulaireParserCSV {
 
     public String getUrl() {
         return url;
+    }
+
+    public Set<Categorie> getCategories() {
+        return vocabulaireByCategory.keySet();
     }
 }
