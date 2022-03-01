@@ -91,7 +91,7 @@ public class VocabulaireCommand implements Command {
                 }
 
                 if(vocabulaire[0].isCorrect(msg)) {
-                    EnvoiMessage.sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + vocabulaire[0].getFr() + " se dit bien " + vocabulaire[0].getJaponais());
+                    EnvoiMessage.sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + vocabulaire[0].getFr() + " se dit bien " + vocabulaire[0].getJaponais() + " (" + vocabulaire[0].getRoomaji() + ")");
                     int score;
                     if (scores.containsKey(user)) {
                         score = scores.get(user) + 1;
@@ -120,7 +120,7 @@ public class VocabulaireCommand implements Command {
                 }
 
                 if(msg.equalsIgnoreCase("jsp")) {
-                    EnvoiMessage.sendMessage(event, "Dommage, " + vocabulaire[0].getFr() + " se dit " + vocabulaire[0].getJaponais());
+                    EnvoiMessage.sendMessage(event, "Dommage, " + vocabulaire[0].getFr() + " se dit " + vocabulaire[0].getJaponais() + " (" + vocabulaire[0].getRoomaji() + ")");
                     vocabulaire[0] = bdVocabulaire.getRandomVocabulary();
                     embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].getFr()).setDescription("Comment dit-on ce mot en japonais ?");
                     EnvoiMessage.sendMessage(event, embedBuilder[0].build());
