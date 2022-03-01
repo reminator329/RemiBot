@@ -13,6 +13,10 @@ public enum Kanji implements CharJP {
     VIANDE('肉', "にく"),
     TAMAGO('卵', "たまご"),
     MIZU('水', "みず"),
+    OO('大', "おお"),
+    CHIISAI('小', "ちい"),
+    ATARA('新', "あたら"),
+    FURU('古', "ふる"),
     ;
 
     char kanji;
