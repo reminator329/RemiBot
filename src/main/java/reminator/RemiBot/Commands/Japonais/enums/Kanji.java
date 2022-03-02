@@ -30,7 +30,17 @@ public enum Kanji implements CharJP {
     JUU('十', "じゅう"),
 
     JI('時', "じ"),
-    FUN('分', "ふん")
+    FUN('分', "ふん"),
+
+    GETSU('月', "げつ"),
+    KA('火', "か"),
+    SUI('水', "すい"),
+    MOKU('木', "もく"),
+    KIN('金', "きん"),
+    DO('土', "ど"),
+    NICHI('日', "にち"),
+    HI('日', "ひ"),
+    YOO('曜', "よう")
     ;
 
     char kanji;
