@@ -27,7 +27,10 @@ public enum Kanji implements CharJP {
     NANA('七', "なな"),
     HACHI('八', "はち"),
     KYUU('九', "きゅう"),
-    JUU('十', "じゅう")
+    JUU('十', "じゅう"),
+
+    JI('時', "じ"),
+    FUN('分', "ふん")
     ;
 
     char kanji;
