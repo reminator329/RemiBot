@@ -17,6 +17,17 @@ public enum Kanji implements CharJP {
     CHIISAI('小', "ちい"),
     ATARA('新', "あたら"),
     FURU('古', "ふる"),
+
+    ICHI('一', "いち"),
+    NI('二', "に"),
+    SAN('三', "さん"),
+    YON('四', "よん"),
+    GO('五', "ご"),
+    ROKU('六', "ろく"),
+    NANA('七', "なな"),
+    HACHI('八', "はち"),
+    KYUU('九', "きゅう"),
+    JUU('十', "じゅう")
     ;
 
     char kanji;
