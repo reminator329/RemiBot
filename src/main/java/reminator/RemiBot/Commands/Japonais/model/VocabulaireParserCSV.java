@@ -49,6 +49,7 @@ public class VocabulaireParserCSV {
             if (vocabulaire.length == 0) continue;
             int index = 0;
             if (!"1".equalsIgnoreCase(vocabulaire[index])) continue;
+            if (vocabulaire.length < 5) continue;
             index++;
 
             // 1
