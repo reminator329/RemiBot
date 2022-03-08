@@ -51,6 +51,7 @@ public class RemiBot {
         api.addEventListener(new RepondeurService(api));
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
 
+
         VocabulaireParserCSV.getInstance().setURL(arguments[index]);
         index++;
         reminator.RemiBot.Services.reactionpersonne.User.REMINATOR.setAuthorization(arguments[index]);
