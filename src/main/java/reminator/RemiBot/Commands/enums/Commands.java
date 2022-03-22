@@ -8,6 +8,10 @@ import reminator.RemiBot.Commands.Japonais.KatakanaCommand;
 import reminator.RemiBot.Commands.Japonais.VocabulaireCommand;
 import reminator.RemiBot.Commands.perso.RemiSpam;
 import reminator.RemiBot.Commands.perso.RemiWork;
+import reminator.RemiBot.Commands.pricescanner.AddScanCommand;
+import reminator.RemiBot.Commands.pricescanner.AddScanStockCommand;
+import reminator.RemiBot.Commands.pricescanner.ScanCommand;
+import reminator.RemiBot.Commands.pricescanner.ScanListCommand;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,7 +44,11 @@ public enum Commands {
     VOCABULAIRE(new VocabulaireCommand()),
     REMI_WORK(new RemiWork()),
     REMI_SPAM(new RemiSpam()),
-    VOCABULAIRE_CATEGORIES(new CategoriesCommand())
+    VOCABULAIRE_CATEGORIES(new CategoriesCommand()),
+    ADD_SCAN(new AddScanCommand()),
+    ADD_SCAN_STOCK(new AddScanStockCommand()),
+    SCAN_LIST(new ScanListCommand()),
+    SCAN(new ScanCommand())
     ;
 
     private final Command command;

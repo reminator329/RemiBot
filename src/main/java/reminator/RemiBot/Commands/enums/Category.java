@@ -8,6 +8,7 @@ public enum Category {
     AUTRE("Autres", "Les commandes sans catégorie particulière."),
     JAPONAIS("Japonais", "Les commandes pour réviser le japonais."),
     PERSO("Personnel", "Les commandes qui s'exécutent sur une personne directement."),
+    SCANNER("Scanneur", "Les commandes liées au scanneur de prix."),
     ;
 
     String name, description;
