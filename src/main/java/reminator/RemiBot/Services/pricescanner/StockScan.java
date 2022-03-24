@@ -27,6 +27,11 @@ public class StockScan implements Scan {
     }
 
     @Override
+    public String getUrl() {
+        return url;
+    }
+
+    @Override
     public boolean scan(TextChannel channel) throws IOException {
         boolean currentInStock = inStock();
         if (inStock != currentInStock) {

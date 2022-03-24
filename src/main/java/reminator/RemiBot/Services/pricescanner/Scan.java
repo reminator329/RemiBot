@@ -13,4 +13,6 @@ public interface Scan extends Serializable {
      * @throws IOException
      */
     boolean scan(TextChannel channel) throws IOException;
+
+    String getUrl();
 }

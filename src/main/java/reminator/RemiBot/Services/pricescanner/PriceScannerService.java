@@ -71,9 +71,9 @@ public class PriceScannerService {
                 try {
                     needSave = scan.scan(channel);
                     Thread.sleep(100);
-                } catch (IOException | InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
-                    channel.sendMessage("Erreur de check prix !").queue();
+                    channel.sendMessage("Erreur de check prix ! "+scan.getUrl()).queue();
                 }
             }
             if(needSave) {

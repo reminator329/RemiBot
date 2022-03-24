@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PriceScan implements Scan {
-    public static final Pattern NUMBER_PATTERN = Pattern.compile("[0-9,.]");
+    public static final Pattern NUMBER_PATTERN = Pattern.compile("[0-9]+( [0-9]+)?([,.][0-9]+)?");
 
     public String mention;
     public String product;
@@ -29,17 +29,25 @@ public class PriceScan implements Scan {
     public float retrievePrice() throws IOException {
         String rep = new HTTPRequest(url).GET();
         this.product = rep.split("<title>")[1].split("<")[0];
-        String s = rep.split(filter)[1].split(">")[1].split("<")[0];
+        String s = rep.split(filter+"[^0-9]*")[1];
 
         Matcher m = NUMBER_PATTERN.matcher(s);
 
-        StringBuilder price = new StringBuilder();
-
-        while (m.find()) {
-            price.append(m.group(0).replace(',', '.'));
+        while(m.find()) {
+            try {
+                float price = Float.parseFloat(m.group(0).replaceAll(",", ".").replaceAll(" ", ""));
+                if(price > 100) {
+                    return price;
+                }
+            }catch (Exception ignored) { }
         }
 
-        return Float.parseFloat(price.toString());
+        return -1;
+    }
+
+    @Override
+    public String getUrl() {
+        return url;
     }
 
     @Override
