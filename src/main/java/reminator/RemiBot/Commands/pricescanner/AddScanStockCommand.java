@@ -39,7 +39,7 @@ public class AddScanStockCommand implements Command {
 
     @Override
     public String getSignature() {
-        return Command.super.getSignature() + " <url> <produit> <chaîne à ne faut pas trouver>";
+        return Command.super.getSignature() + " <url> <produit> <has|hasn't> <chaîne à trouver ou non>";
     }
 
     /**
@@ -57,7 +57,11 @@ public class AddScanStockCommand implements Command {
         try {
             String str = String.join(" ", args);
             List<String> parts = new StringReader(str).readStrings();
-            StockScan scan = new StockScan(author.getAsMention(), parts.get(0), parts.get(1), parts.get(2));
+            if(parts.get(1).toLowerCase().matches("^(has|hasn't)$")) {
+                channel.sendMessageEmbeds(new EmbedBuilder().setDescription("Erreur : has ou hasn't.").setColor(Color.RED).build()).queue();
+                return;
+            }
+            StockScan scan = new StockScan(author.getAsMention(), parts.get(0), parts.get(1), parts.get(2).equalsIgnoreCase("has"), parts.get(3));
             priceScanner().addScan(scan);
             priceScanner().save();
             channel.sendMessageEmbeds(new EmbedBuilder().setDescription("Le scan a bien été ajouté :ok_hand: (En stock : "+scan.inStock+")").setColor(Color.GREEN).build()).queue();

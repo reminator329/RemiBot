@@ -11,19 +11,22 @@ public class StockScan implements Scan {
     public String mention;
     public String url;
     public String product;
-    public String toFind;
+    public String string;
+    public boolean shouldFind;
     public boolean inStock;
 
-    public StockScan(String mention, String url, String product, String toFind) throws IOException {
+    public StockScan(String mention, String url, String product, boolean shouldFind, String string) throws IOException {
         this.mention = mention;
         this.url = url;
         this.product = product;
-        this.toFind = toFind;
+        this.string = string;
+        this.shouldFind = shouldFind;
         inStock = inStock();
     }
 
     public boolean inStock() throws IOException {
-        return !(new HTTPRequest(url).GET().contains(toFind));
+        boolean found = new HTTPRequest(url).GET().contains(string);
+        return (found && shouldFind || !found && !shouldFind);
     }
 
     @Override

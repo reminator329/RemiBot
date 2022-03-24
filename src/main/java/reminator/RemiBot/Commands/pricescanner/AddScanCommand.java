@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Commands.enums.Category;
 import reminator.RemiBot.Services.pricescanner.PriceScan;
+import reminator.RemiBot.utils.StringReader;
 
 import java.awt.*;
 import java.io.IOException;
@@ -38,7 +39,7 @@ public class AddScanCommand implements Command {
 
     @Override
     public String getSignature() {
-        return Command.super.getSignature() + " <url> <cut>";
+        return Command.super.getSignature() + " <url> <produit> <cut>";
     }
 
     /**
@@ -54,7 +55,11 @@ public class AddScanCommand implements Command {
     @Override
     public void execute(@NotNull MessageReceivedEvent event, User author, MessageChannel channel, List<String> args) {
         try {
-            PriceScan scan = new PriceScan(author.getAsMention(), args.remove(0), String.join(" ", args));
+            System.out.println(args);
+            StringReader reader = new StringReader(String.join(" ", args));
+            List<String> strings = reader.readStrings();
+            System.out.println(strings);
+            PriceScan scan = new PriceScan(author.getAsMention(), strings.get(0), strings.get(1), strings.get(2));
             priceScanner().addScan(scan);
             priceScanner().save();
             channel.sendMessageEmbeds(new EmbedBuilder().setDescription("Le scan a bien été ajouté :ok_hand: (Prix détecté : "+scan.lastPrice+")").setColor(Color.GREEN).build()).queue();

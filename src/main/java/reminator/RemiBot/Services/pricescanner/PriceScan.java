@@ -18,17 +18,17 @@ public class PriceScan implements Scan {
     public String filter;
     public float lastPrice;
 
-    public PriceScan(String mention, String url, String filter) throws IOException {
+    public PriceScan(String mention, String url, String product, String filter) throws IOException {
         this.mention = mention;
         this.filter = filter;
         this.url = url;
+        this.product = product;
 
         lastPrice = retrievePrice();
     }
 
     public float retrievePrice() throws IOException {
         String rep = new HTTPRequest(url).GET();
-        this.product = rep.split("<title>")[1].split("<")[0];
         String s = rep.split(filter+"[^0-9]*")[1];
 
         Matcher m = NUMBER_PATTERN.matcher(s);

@@ -56,6 +56,7 @@ public class StringReader {
             }
             if(character == '"') {
                 if(isBackslash) {
+                    str.append(character);
                     continue;
                 }else{
                     break;
