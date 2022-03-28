@@ -30,70 +30,70 @@ public class ReactionPersonneService extends ListenerAdapter {
         User user = event.getAuthor();
 
         Message message = event.getMessage();
-        
+
         int jour = new Date().getDate();
         int mois = new Date().getMonth();
 
         if (jour == 1 && mois == 3) {
             message.addReaction("\uD83D\uDC1F").queue();
-        } else {
-
-
-            if (random.nextInt(100) == 14) {
-
-                Emotes[] emotes = null;
-
-                if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.ELORYA.getId())) {
-                    emotes = new Emotes[]{Emotes.POULPE_CONTENT, Emotes.POULPE_PAS_CONTENT};
-                }
-
-                if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.REMINATOR.getId())) {
-                    emotes = new Emotes[]{Emotes.REMI, Emotes.POULPE_CONTENT, Emotes.SIDRA, Emotes.NATU, Emotes.DEOXYS, Emotes.chaudetIsWatchingU, Emotes.UPSSITECHED};
-
-                }
-
-                if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.ALPHATASH.getId())) {
-                    emotes = new Emotes[]{Emotes.PENIS_CHAN, Emotes.PENIS, Emotes.CUM, Emotes.FAP, Emotes.PUSSY, Emotes.BJ, Emotes.UPSSITECHED, Emotes.THIBAULT};
-                }
-
-                if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.REDECO.getId())) {
-                    emotes = new Emotes[]{Emotes.BASTIEN, Emotes.UPSSITECHED, Emotes.HORNY};
-                }
-
-                if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.YAEL.getId())) {
-                    emotes = new Emotes[]{Emotes.POULPE_CONTENT, Emotes.POULPE_PAS_CONTENT};
-                }
-
-                if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.DORIAN.getId())) {
-                    emotes = new Emotes[]{Emotes.DORIAN, Emotes.UPSSITECHED};
-                }
-
-                if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.ERAZZED.getId())) {
-                    emotes = new Emotes[]{Emotes.KILLIAN, Emotes.UPSSITECHED};
-                }
-
-                if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.HARPIERAPACE.getId())) {
-                    emotes = new Emotes[]{Emotes.TANGUY, Emotes.UPSSITECHED};
-                }
-
-                if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.DREAMPLUME.getId())) {
-                    emotes = new Emotes[]{Emotes.MATEO, Emotes.UPSSITECHED};
-                }
-
-                if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.SWAPHOLY.getId())) {
-                    emotes = new Emotes[]{Emotes.THOMAS, Emotes.UPSSITECHED};
-                }
-
-                if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.FEAVY.getId())) {
-                    emotes = new Emotes[]{Emotes.OUI};
-                }
-                if (emotes == null) return;
-
-                int r = random.nextInt(emotes.length);
-                Emote emote = api.getEmoteCache().getElementById(emotes[r].getId());
-                assert emote != null;
-                message.addReaction(emote).queue();
-            }
         }
+
+
+        if (random.nextInt(100) == 14) {
+
+            Emotes[] emotes = null;
+
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.ELORYA.getId())) {
+                emotes = new Emotes[]{Emotes.POULPE_CONTENT, Emotes.POULPE_PAS_CONTENT};
+            }
+
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.REMINATOR.getId())) {
+                emotes = new Emotes[]{Emotes.REMI, Emotes.POULPE_CONTENT, Emotes.SIDRA, Emotes.NATU, Emotes.DEOXYS, Emotes.chaudetIsWatchingU, Emotes.UPSSITECHED};
+
+            }
+
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.ALPHATASH.getId())) {
+                emotes = new Emotes[]{Emotes.PENIS_CHAN, Emotes.PENIS, Emotes.CUM, Emotes.FAP, Emotes.PUSSY, Emotes.BJ, Emotes.UPSSITECHED, Emotes.THIBAULT};
+            }
+
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.REDECO.getId())) {
+                emotes = new Emotes[]{Emotes.BASTIEN, Emotes.UPSSITECHED, Emotes.HORNY};
+            }
+
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.YAEL.getId())) {
+                emotes = new Emotes[]{Emotes.POULPE_CONTENT, Emotes.POULPE_PAS_CONTENT};
+            }
+
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.DORIAN.getId())) {
+                emotes = new Emotes[]{Emotes.DORIAN, Emotes.UPSSITECHED};
+            }
+
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.ERAZZED.getId())) {
+                emotes = new Emotes[]{Emotes.KILLIAN, Emotes.UPSSITECHED};
+            }
+
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.HARPIERAPACE.getId())) {
+                emotes = new Emotes[]{Emotes.TANGUY, Emotes.UPSSITECHED};
+            }
+
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.DREAMPLUME.getId())) {
+                emotes = new Emotes[]{Emotes.MATEO, Emotes.UPSSITECHED};
+            }
+
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.SWAPHOLY.getId())) {
+                emotes = new Emotes[]{Emotes.THOMAS, Emotes.UPSSITECHED};
+            }
+
+            if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.FEAVY.getId())) {
+                emotes = new Emotes[]{Emotes.OUI};
+            }
+            if (emotes == null) return;
+
+            int r = random.nextInt(emotes.length);
+            Emote emote = api.getEmoteCache().getElementById(emotes[r].getId());
+            assert emote != null;
+            message.addReaction(emote).queue();
+        }
+
     }
 }
