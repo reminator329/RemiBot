@@ -25,6 +25,12 @@ public class ReactionPersonneService extends ListenerAdapter {
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         //api.getEmoteCache().forEach(System.out::println);
 
+        User user = event.getAuthor();
+
+        if (random.nextInt(100) == 14 || user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.ALPHATASH.getId())) {
+
+            Message message = event.getMessage();
+
         if (random.nextInt(100) == 14) {
 
             Message message = event.getMessage();
