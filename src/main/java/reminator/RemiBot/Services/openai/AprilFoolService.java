@@ -23,10 +23,13 @@ public class AprilFoolService extends ListenerAdapter {
 
 
         try {
-            String completed = openai.complete(contentRaw);
-            completed = completed.replace(contentRaw, "");
+            openai.complete(contentRaw).thenAccept(completed -> {
+                if(completed == null)
+                    return;
+                completed = completed.replace(contentRaw, "");
+                event.getMessage().reply(completed).queue();
+            });
 
-            event.getMessage().reply(completed).queue();
         } catch (Exception e) {
             e.printStackTrace();
         }
