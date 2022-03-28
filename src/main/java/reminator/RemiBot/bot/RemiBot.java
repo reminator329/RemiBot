@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -40,13 +41,16 @@ public class RemiBot {
     public static void main(String[] arguments) throws Exception {
         System.setProperty("user.timezone", "Europe/Paris");
 
-        token = arguments[0];
-        reminator.RemiBot.reactionpersonne.User.REMINATOR.setAuthorization(arguments[1]);
+        int index = 0;
+        token = arguments[index];
+        index++;
 
         api = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_EMOJIS).enableCache(CacheFlag.ACTIVITY).build();
         api.awaitReady();
         api.addEventListener(new Controller(api));
         api.addEventListener(new ReactionPersonneService(api));
+        api.addEventListener(new RepondeurService(api));
+        api.addEventListener(new AprilFoolService());
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
 
 
@@ -59,6 +63,8 @@ public class RemiBot {
 
         MotDuJourService service = new MotDuJourService(api);
         service.start();
+
+        PriceScannerService.init(api.getTextChannelById("877259941021376512"));
 
         /* TODO ajouter un timer pour chaque élève grace à l'api (getUserById
         BDDevoir bdDevoir = BDDevoirJson.getInstance();
@@ -140,10 +146,45 @@ public class RemiBot {
 
                     embedBuilder.setFooter(user.getName() + " Il vous reste " + (numeroDevoir-1) + " devoir(s) à faire.", user.getAvatarUrl());
                     e.getUser().openPrivateChannel()
-                            .flatMap(channel -> channel.sendMessage(embedBuilder.build()))
+                            .flatMap(channel -> channel.sendMessageEmbeds(embedBuilder.build()))
                             .queue();
                 }
             }
         }, delay, 1000*3600);
+    }
+
+
+    public static String sendPostRequest(String requestUrl, String payload, String authorization) {
+        StringBuilder jsonString = new StringBuilder();
+        try {
+            URL url = new URL(requestUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("authority", "discord.com");
+            connection.setRequestProperty("authorization", authorization);
+            connection.setRequestProperty("content-length", String.valueOf(payload.length()));
+            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
+            writer.write(payload);
+            writer.close();
+            System.out.println("bonjour");
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            System.out.println("test");
+            String line;
+            while ((line = br.readLine()) != null) {
+                jsonString.append(line);
+            }
+            br.close();
+
+            connection.disconnect();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return jsonString.toString();
     }
 }

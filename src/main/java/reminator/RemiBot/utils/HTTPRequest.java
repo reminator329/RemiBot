@@ -40,22 +40,18 @@ public class HTTPRequest {
         return InputStreamUtils.readAsString(connection.getInputStream());
     }
 
-//    public String POST(String path, String data) throws IOException {
-//        HttpsURLConnection connection = newConnection(path);
-//        connection.setRequestMethod("POST");
-//
-//        this.parametersGET.clear();
-//
-//        OutputStream out = connection.getOutputStream();
-//        out.write(data.getBytes());
-//        out.flush();
-//        out.close();
-//
-//        connection.getResponseCode();
-//        connection.getResponseMessage();
-//
-//        return readInputStream(connection.getInputStream());
-//    }
+    public String POST(String data) throws IOException {
+        HttpsURLConnection connection = newConnection(this.url);
+        connection.setRequestMethod("POST");
+
+        OutputStream out = connection.getOutputStream();
+        out.write(data.getBytes());
+        out.flush();
+
+        InputStream inputStream = connection.getInputStream();
+
+        return InputStreamUtils.readAsString(inputStream);
+    }
 
     private HttpsURLConnection newConnection(String url) throws IOException {
         HttpsURLConnection connection = (HttpsURLConnection) new URL(url).openConnection();
