@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -18,16 +17,12 @@ import reminator.RemiBot.Commands.Devoir.Model.Devoir;
 import reminator.RemiBot.Commands.Devoir.Model.Eleve;
 import reminator.RemiBot.Commands.Japonais.model.VocabulaireParserCSV;
 import reminator.RemiBot.Services.motdujour.MotDuJourService;
+import reminator.RemiBot.Services.openai.AprilFoolService;
 import reminator.RemiBot.Services.pricescanner.PriceScannerService;
 import reminator.RemiBot.Services.reactionpersonne.ReactionPersonneService;
 import reminator.RemiBot.Services.repondeur.RepondeurService;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -52,6 +47,16 @@ public class RemiBot {
         api.addEventListener(new RepondeurService(api));
         api.addEventListener(new AprilFoolService());
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
+
+        VocabulaireParserCSV.getInstance().setURL(arguments[index]);
+        index++;
+        reminator.RemiBot.Services.reactionpersonne.User.REMINATOR.setAuthorization(arguments[index]);
+        index++;
+        reminator.RemiBot.Services.reactionpersonne.User.MOUMOUNI.setAuthorization(arguments[index]);
+        index++;
+        reminator.RemiBot.Services.reactionpersonne.User.DREAMPLUME.setAuthorization(arguments[index]);
+        index++;
+        reminator.RemiBot.Services.reactionpersonne.User.DORIAN.setAuthorization(arguments[index]);
 
 
         CommandListUpdateAction commands = api.updateCommands()
@@ -151,40 +156,5 @@ public class RemiBot {
                 }
             }
         }, delay, 1000*3600);
-    }
-
-
-    public static String sendPostRequest(String requestUrl, String payload, String authorization) {
-        StringBuilder jsonString = new StringBuilder();
-        try {
-            URL url = new URL(requestUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("authority", "discord.com");
-            connection.setRequestProperty("authorization", authorization);
-            connection.setRequestProperty("content-length", String.valueOf(payload.length()));
-            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
-            writer.write(payload);
-            writer.close();
-            System.out.println("bonjour");
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            System.out.println("test");
-            String line;
-            while ((line = br.readLine()) != null) {
-                jsonString.append(line);
-            }
-            br.close();
-
-            connection.disconnect();
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-        return jsonString.toString();
     }
 }
