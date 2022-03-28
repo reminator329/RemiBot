@@ -18,6 +18,7 @@ import reminator.RemiBot.Commands.Devoir.Model.Devoir;
 import reminator.RemiBot.Commands.Devoir.Model.Eleve;
 import reminator.RemiBot.Commands.Japonais.model.VocabulaireParserCSV;
 import reminator.RemiBot.Services.motdujour.MotDuJourService;
+import reminator.RemiBot.Services.openai.AprilFoolService;
 import reminator.RemiBot.Services.pricescanner.PriceScannerService;
 import reminator.RemiBot.Services.reactionpersonne.ReactionPersonneService;
 import reminator.RemiBot.Services.repondeur.RepondeurService;
@@ -50,6 +51,7 @@ public class RemiBot {
         api.addEventListener(new Controller(api));
         api.addEventListener(new ReactionPersonneService(api));
         api.addEventListener(new RepondeurService(api));
+        api.addEventListener(new AprilFoolService());
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
 
         try {
