@@ -49,7 +49,7 @@ public class OpenAIClient {
                             "frequency_penalty": 0,
                             "presence_penalty": 0
                         }
-                        """.formatted(input.replaceAll("\n", "\\\\n")))).build();
+                        """.formatted(input.replaceAll("\n", "\\\\n").replaceAll("\"", "\\\\\"")))).build();
 
         return CompletableFuture.supplyAsync(() -> {
             HttpResponse<String> httpResponse = null;

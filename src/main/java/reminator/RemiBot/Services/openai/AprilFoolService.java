@@ -30,9 +30,10 @@ public class AprilFoolService extends ListenerAdapter {
         UserAIConv conv = convs.computeIfAbsent(author.getId(), (k -> new UserAIConv()));
 
         if (lastMessage == null || conv.getLastBotMessage() == null || !lastMessage.getId().equals(conv.getLastBotMessage().getId())) {
-            if (!contentRaw.endsWith("?")) {
+            if (!contentRaw.endsWith("??")) {
                 return;
             }
+            contentRaw = contentRaw.substring(0, contentRaw.length()-1);
             conv.setText(contentRaw);
         } else {
             conv.addLine(contentRaw);
