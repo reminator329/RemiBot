@@ -44,6 +44,11 @@ public enum Commands {
     VOCABULAIRE(new VocabulaireCommand()),
     REMI_WORK(new RemiWork()),
     REMI_SPAM(new RemiSpam()),
+    ADD_SCAN(new AddScanCommand()),
+    REM_SCAN(new RemScanCommand()),
+    ADD_SCAN_STOCK(new AddScanStockCommand()),
+    SCAN_LIST(new ScanListCommand()),
+    SCAN(new ScanCommand())
     ;
 
     private final Command command;
