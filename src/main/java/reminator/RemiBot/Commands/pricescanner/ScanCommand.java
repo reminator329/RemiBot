@@ -7,10 +7,8 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Commands.enums.Category;
-import reminator.RemiBot.Services.pricescanner.PriceScan;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.List;
 
 import static reminator.RemiBot.Services.pricescanner.PriceScannerService.priceScanner;

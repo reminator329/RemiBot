@@ -2,13 +2,13 @@ package reminator.RemiBot.Services.pricescanner;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
+import reminator.RemiBot.Services.pricescanner.scans.ComparerMalinScan;
+import reminator.RemiBot.Services.pricescanner.scans.Scan;
 
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -51,6 +51,11 @@ public class PriceScannerService {
                 e.printStackTrace();
             }
         }
+
+        if(scans.isEmpty() || !(scans.get(0) instanceof ComparerMalinScan)) {
+            scans.add(0, new ComparerMalinScan());
+        }
+
         System.out.println("[PriceScannerService] intialized");
 
         new Timer().schedule(new TimerTask() {
@@ -73,7 +78,7 @@ public class PriceScannerService {
                     Thread.sleep(100);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    channel.sendMessage("Erreur de check prix ! "+scan.getUrl()).queue();
+                    channel.sendMessage("Une erreur est survenue : "+ e.getMessage()).queue();
                 }
             }
             if(needSave) {

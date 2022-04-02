@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.Commands.Command;
 import reminator.RemiBot.Commands.enums.Category;
-import reminator.RemiBot.Services.pricescanner.StockScan;
+import reminator.RemiBot.Services.pricescanner.scans.StockScan;
 import reminator.RemiBot.utils.StringReader;
 
 import java.awt.*;
@@ -39,7 +39,7 @@ public class AddScanStockCommand implements Command {
 
     @Override
     public String getSignature() {
-        return Command.super.getSignature() + " <url> <produit> <has|hasn't> <chaîne à trouver ou non>";
+        return Command.super.getSignature() + " <produit> <url> <has|hasn't> <chaîne à trouver ou non>";
     }
 
     /**
@@ -64,7 +64,7 @@ public class AddScanStockCommand implements Command {
             StockScan scan = new StockScan(author.getAsMention(), parts.get(0), parts.get(1), parts.get(2).equalsIgnoreCase("has"), parts.get(3));
             priceScanner().addScan(scan);
             priceScanner().save();
-            channel.sendMessageEmbeds(new EmbedBuilder().setDescription("Le scan a bien été ajouté :ok_hand: (En stock : "+scan.inStock+")").setColor(Color.GREEN).build()).queue();
+            channel.sendMessageEmbeds(new EmbedBuilder().setDescription("Le scan a bien été ajouté :ok_hand: (En stock : "+scan.product.inStock+")").setColor(Color.GREEN).build()).queue();
         } catch (IOException e) {
             e.printStackTrace();
             channel.sendMessage("Une erreur est survenue.\n```"+e.getMessage()+"```").queue();

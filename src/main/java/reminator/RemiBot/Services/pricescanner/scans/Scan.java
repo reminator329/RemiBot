@@ -1,4 +1,4 @@
-package reminator.RemiBot.Services.pricescanner;
+package reminator.RemiBot.Services.pricescanner.scans;
 
 import net.dv8tion.jda.api.entities.TextChannel;
 
