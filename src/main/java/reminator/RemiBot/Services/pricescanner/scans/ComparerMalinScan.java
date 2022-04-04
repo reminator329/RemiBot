@@ -36,7 +36,7 @@ public class ComparerMalinScan implements Scan {
             if (!this.products.containsKey(id)) {
                 this.products.put(id, product);
                 if(!isFirstScan) {
-                    embeds.add(new EmbedBuilder().setDescription("Nouveau produit ! "+product+" :smiley:").setColor(Color.GREEN).build());
+                    embeds.add(new EmbedBuilder().setDescription("Nouveau produit ! "+product+" :smiley:\n"+product.url).setColor(Color.GREEN).build());
                 }
                 updated = true;
             } else {
