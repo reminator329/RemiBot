@@ -10,6 +10,7 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 /**
  * Objectif : contenir une liste de scan de prix à observer. Sauvegarder (serializable).
@@ -78,7 +79,11 @@ public class PriceScannerService {
                     Thread.sleep(100);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    channel.sendMessage("Une erreur est survenue : "+ e.getMessage()).queue();
+                    channel.sendMessage("Une erreur est survenue : "+ e.getMessage()+"\n\n"+
+                            Arrays.stream(e.getStackTrace())
+                            .map(StackTraceElement::toString)
+                            .collect(Collectors.joining("\n"))
+                    ).queue();
                 }
             }
             if(needSave) {
