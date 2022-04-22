@@ -62,10 +62,10 @@ public class PriceScannerService {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                channel.sendMessageEmbeds(new EmbedBuilder().setDescription("Lancement du scan ("+priceScanner().getScans().size()+")...").build()).queue();
-                scan().thenRun(() -> {
+                //channel.sendMessageEmbeds(new EmbedBuilder().setDescription("Lancement du scan ("+priceScanner().getScans().size()+")...").build()).queue();
+                scan();/*.thenRun(() -> {
                     channel.sendMessageEmbeds(new EmbedBuilder().setDescription("Scan terminé !").setColor(Color.GREEN).build()).queue();
-                });
+                });*/
             }
         }, 5000, 60*60*1000);
     }
