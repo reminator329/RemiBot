@@ -85,7 +85,7 @@ public class ReactionPersonneService extends ListenerAdapter {
             }
 
             if (user.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.FEAVY.getId())) {
-                emotes = new Emotes[]{Emotes.OUI};
+                emotes = new Emotes[]{Emotes.OUI, Emotes.FOU};
             }
             if (emotes == null) return;
 

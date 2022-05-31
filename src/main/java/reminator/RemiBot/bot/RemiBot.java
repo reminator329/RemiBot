@@ -23,6 +23,11 @@ import reminator.RemiBot.Services.reactionpersonne.ReactionPersonneService;
 import reminator.RemiBot.Services.repondeur.RepondeurService;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -42,6 +47,7 @@ public class RemiBot {
 
         api = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_EMOJIS).enableCache(CacheFlag.ACTIVITY).build();
         api.awaitReady();
+
         api.addEventListener(new Controller(api));
         api.addEventListener(new ReactionPersonneService(api));
         api.addEventListener(new RepondeurService(api));

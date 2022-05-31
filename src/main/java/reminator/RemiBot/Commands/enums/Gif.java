@@ -20,7 +20,8 @@ public enum Gif {
     GIF15("https://tenor.com/view/bored-anime-boring-nothing-to-do-panda-gif-4583775"),
     GIF16("https://tenor.com/view/ahaha-wave-bye-fearless-im-out-gif-14503554"),
     GIF17("https://tenor.com/view/chi-chis-sweet-home-happy-bed-home-gif-5179902"),
-    GIF18("https://tenor.com/view/cyanide-and-happiness-im-home-animation-strip-gif-11292245");
+    GIF18("https://tenor.com/view/cyanide-and-happiness-im-home-animation-strip-gif-11292245"),
+    ;
 
     private final String url;
 
