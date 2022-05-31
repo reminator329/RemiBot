@@ -31,6 +31,8 @@ dependencies {
 
     // https://mvnrepository.com/artifact/de.sven-jacobs/loremipsum
     implementation 'de.sven-jacobs:loremipsum:1.0'
+
+    implementation 'org.jsoup:jsoup:1.14.3'
 }
 
 compileJava.options.encoding = 'UTF-8'

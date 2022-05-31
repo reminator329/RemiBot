@@ -54,16 +54,19 @@ public class RemiBot {
         api.addEventListener(new AprilFoolService());
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
 
-        VocabulaireParserCSV.getInstance().setURL(arguments[index]);
-        index++;
-        reminator.RemiBot.Services.reactionpersonne.User.REMINATOR.setAuthorization(arguments[index]);
-        index++;
-        reminator.RemiBot.Services.reactionpersonne.User.MOUMOUNI.setAuthorization(arguments[index]);
-        index++;
-        reminator.RemiBot.Services.reactionpersonne.User.DREAMPLUME.setAuthorization(arguments[index]);
-        index++;
-        reminator.RemiBot.Services.reactionpersonne.User.DORIAN.setAuthorization(arguments[index]);
-
+        try {
+            VocabulaireParserCSV.getInstance().setURL(arguments[index]);
+            index++;
+            reminator.RemiBot.Services.reactionpersonne.User.REMINATOR.setAuthorization(arguments[index]);
+            index++;
+            reminator.RemiBot.Services.reactionpersonne.User.MOUMOUNI.setAuthorization(arguments[index]);
+            index++;
+            reminator.RemiBot.Services.reactionpersonne.User.DREAMPLUME.setAuthorization(arguments[index]);
+            index++;
+            reminator.RemiBot.Services.reactionpersonne.User.DORIAN.setAuthorization(arguments[index]);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
 
         CommandListUpdateAction commands = api.updateCommands()
                 .addCommands(
@@ -75,7 +78,7 @@ public class RemiBot {
         MotDuJourService service = new MotDuJourService(api);
         service.start();
 
-        PriceScannerService.init(api.getTextChannelById("877259941021376512"));
+//        PriceScannerService.init(api.getTextChannelById("877259941021376512"));
 
         /* TODO ajouter un timer pour chaque élève grace à l'api (getUserById
         BDDevoir bdDevoir = BDDevoirJson.getInstance();
