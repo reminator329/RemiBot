@@ -101,8 +101,8 @@ public class RemiSpam implements Command {
             br.close();
 
             connection.disconnect();
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+        } catch (Exception ignored) {
+
         }
         return jsonString.toString();
     }
