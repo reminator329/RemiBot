@@ -69,7 +69,7 @@ public class RemiSpam implements Command {
                     String requestUrl="https://discord.com/api/v9/channels/" + idChannel + "/messages";
                     sendPostRequest(requestUrl, payload);
                 }
-            }, 0, 2  * 1000 + 1);
+            }, 0, (long) (2.2  * 1000));
         }
     }
 
