@@ -7,6 +7,8 @@ import reminator.RemiBot.Commands.Japonais.HiraganaCommand;
 import reminator.RemiBot.Commands.Japonais.KatakanaCommand;
 import reminator.RemiBot.Commands.Japonais.VocabulaireCommand;
 import reminator.RemiBot.Commands.music.JoinCommand;
+import reminator.RemiBot.Commands.music.LeaveCommand;
+import reminator.RemiBot.Commands.music.PlayCommand;
 import reminator.RemiBot.Commands.perso.RemiSpam;
 import reminator.RemiBot.Commands.perso.RemiWork;
 import reminator.RemiBot.Commands.pricescanner.*;
@@ -48,6 +50,8 @@ public enum Commands {
     SCAN_LIST(new ScanListCommand()),
     SCAN(new ScanCommand()),
     JOIN(new JoinCommand()),
+    PLAY(new PlayCommand()),
+    LEAVE(new LeaveCommand()),
     ;
 
     private final Command command;

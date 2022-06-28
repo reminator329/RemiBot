@@ -22,8 +22,8 @@ dependencies {
     // https://mvnrepository.com/artifact/net.dv8tion/JDA
     implementation 'net.dv8tion:JDA:5.0.0-alpha.4'
 
-    implementation('org.json:json:20211205')
-    implementation('com.google.firebase:firebase-admin:8.1.0')
+    implementation('org.json:json:20220320')
+    implementation('com.google.firebase:firebase-admin:8.2.0')
 
 
     // https://mvnrepository.com/artifact/commons-io/commons-io
@@ -33,6 +33,8 @@ dependencies {
     implementation 'de.sven-jacobs:loremipsum:1.0'
 
     implementation 'org.jsoup:jsoup:1.14.3'
+
+    implementation 'com.sedmelluq:lavaplayer:1.3.77'
 }
 
 compileJava.options.encoding = 'UTF-8'

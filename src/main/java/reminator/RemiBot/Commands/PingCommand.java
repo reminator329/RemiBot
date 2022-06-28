@@ -25,7 +25,7 @@ public class PingCommand implements Command {
 
     @Override
     public String[] getAlliass() {
-        return new String[]{"p"};
+        return new String[]{};
     }
 
     @Override
