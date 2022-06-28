@@ -6,6 +6,7 @@ import reminator.RemiBot.Commands.Japonais.CategoriesCommand;
 import reminator.RemiBot.Commands.Japonais.HiraganaCommand;
 import reminator.RemiBot.Commands.Japonais.KatakanaCommand;
 import reminator.RemiBot.Commands.Japonais.VocabulaireCommand;
+import reminator.RemiBot.Commands.music.JoinCommand;
 import reminator.RemiBot.Commands.perso.RemiSpam;
 import reminator.RemiBot.Commands.perso.RemiWork;
 import reminator.RemiBot.Commands.pricescanner.*;
@@ -35,10 +36,7 @@ public enum Commands {
     DEVOIR_FINI(new DevoirFiniCommand()),
     DEVOIR_RAPPEL(new DevoirRappelCommand()),
     GHOST_PING(new GhostPingCommand()),
-    MATEO(new Mateo()),/*
-    N(new NCommand()),
-    N_UPDATE(new NUpdateCommand()),
-    N_CATEGORIES(new NCategoriesCommand()),*/
+    MATEO(new Mateo()),
     HIRAGANA(new HiraganaCommand()),
     KATAKANA(new KatakanaCommand()),
     VOCABULAIRE(new VocabulaireCommand()),
@@ -48,7 +46,8 @@ public enum Commands {
     REM_SCAN(new RemScanCommand()),
     ADD_SCAN_STOCK(new AddScanStockCommand()),
     SCAN_LIST(new ScanListCommand()),
-    SCAN(new ScanCommand())
+    SCAN(new ScanCommand()),
+    JOIN(new JoinCommand()),
     ;
 
     private final Command command;
