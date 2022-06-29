@@ -1,20 +1,18 @@
 package reminator.RemiBot.commands.music;
 
-import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.managers.AudioManager;
-import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.commands.manager.Command;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.GuildVoiceState;
+import net.dv8tion.jda.api.entities.Member;
+import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.commands.enums.Category;
+import reminator.RemiBot.commands.manager.Command;
 import reminator.RemiBot.commands.manager.CommandExecutedEvent;
 import reminator.RemiBot.commands.music.lavaplayer.GuildMusicManager;
 import reminator.RemiBot.commands.music.lavaplayer.PlayerManager;
-import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-import java.util.List;
+public class StopCommand implements Command {
 
-public class LeaveCommand implements Command {
     @Override
     public Category getCategory() {
         return Category.MUSIQUE;
@@ -22,17 +20,17 @@ public class LeaveCommand implements Command {
 
     @Override
     public String getLabel() {
-        return "leave";
+        return "stop";
     }
 
     @Override
     public String[] getAlliass() {
-        return new String[]{"degage", "dégage"};
+        return new String[]{"arret", "s"};
     }
 
     @Override
     public String getDescription() {
-        return "Permet de me faire quitter le salon vocal dans lequel je suis.";
+        return "Permet d'arrêter la musique et de vider la queue.";
     }
 
     @Override
@@ -45,13 +43,6 @@ public class LeaveCommand implements Command {
         Member member = event.getMember();
         if (member == null) return;
 
-        GuildVoiceState voiceState = member.getVoiceState();
-        assert voiceState != null;
-        if (!voiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Tu dois être dans un salon vocal pour utiliser cette commande.");
-            return;
-        }
-
         Guild guild = event.getGuild();
         Member selfMember = guild.getMemberById(RemiBot.api.getSelfUser().getId());
         assert selfMember != null;
@@ -62,8 +53,15 @@ public class LeaveCommand implements Command {
             return;
         }
 
+        GuildVoiceState voiceState = member.getVoiceState();
+        assert voiceState != null;
+        if (!voiceState.inAudioChannel()) {
+            EnvoiMessage.sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
+            return;
+        }
+
         assert selfVoiceState.getChannel() != null;
-        if (!selfVoiceState.getChannel().equals(voiceState.getChannel())) {
+        if (!voiceState.inAudioChannel() || !selfVoiceState.getChannel().equals(voiceState.getChannel())) {
             EnvoiMessage.sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
             return;
         }
@@ -71,9 +69,6 @@ public class LeaveCommand implements Command {
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(guild);
         musicManager.stop();
 
-        AudioManager audioManager = guild.getAudioManager();
-        audioManager.closeAudioConnection();
-
-        EnvoiMessage.sendMessage(event, "Merci d'avoir écouté de la musique, à bientôt !");
+        EnvoiMessage.sendMessage(event, "Musique arrêtée et queue vidée.");
     }
 }

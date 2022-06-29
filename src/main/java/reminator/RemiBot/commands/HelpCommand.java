@@ -32,7 +32,7 @@ public class HelpCommand implements Command {
 
     @Override
     public String[] getAlliass() {
-        return new String[]{"h", "aide", "a", "commandes", "commands", "c"};
+        return new String[]{"h", "aide", "a", "commandes", "commands", "c", "H."};
     }
 
     @Override

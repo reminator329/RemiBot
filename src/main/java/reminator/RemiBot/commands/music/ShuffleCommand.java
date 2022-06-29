@@ -1,20 +1,18 @@
 package reminator.RemiBot.commands.music;
 
-import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.commands.manager.Command;
-import reminator.RemiBot.commands.enums.Category;
-import reminator.RemiBot.commands.manager.CommandExecutedEvent;
-import reminator.RemiBot.commands.music.lavaplayer.PlayerManager;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.GuildVoiceState;
+import net.dv8tion.jda.api.entities.Member;
 import reminator.RemiBot.bot.RemiBot;
+import reminator.RemiBot.commands.enums.Category;
+import reminator.RemiBot.commands.manager.Command;
+import reminator.RemiBot.commands.manager.CommandExecutedEvent;
+import reminator.RemiBot.commands.music.lavaplayer.GuildMusicManager;
+import reminator.RemiBot.commands.music.lavaplayer.PlayerManager;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
+public class ShuffleCommand implements Command {
 
-public class PlayCommand implements Command {
     @Override
     public Category getCategory() {
         return Category.MUSIQUE;
@@ -22,34 +20,21 @@ public class PlayCommand implements Command {
 
     @Override
     public String getLabel() {
-        return "play";
+        return "shuffle";
     }
 
     @Override
     public String[] getAlliass() {
-        return new String[]{"p"};
-    }
-
-    @Override
-    public String getSignature() {
-        return Command.super.getSignature() + " <Youtube URL>";
+        return new String[]{"mélange", "mix", "melange"};
     }
 
     @Override
     public String getDescription() {
-        return "Permet de jouer une musique dans le salon vocal dans lequel je me trouve.";
+        return "Permet de mélanger changer l'ordre de la queue aléatoirement.";
     }
 
     @Override
     public void execute(CommandExecutedEvent event) {
-
-        List<String> args = event.getArgs();
-        TextChannel textChannel = event.getTextChannel();
-
-        if (args.size() < 1) {
-            EnvoiMessage.sendMessage(event, "Commande mal utilisée, voir `r!help play`");
-            return;
-        }
 
         if (!event.isFromGuild()) {
             EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
@@ -61,7 +46,7 @@ public class PlayCommand implements Command {
         GuildVoiceState voiceState = member.getVoiceState();
         assert voiceState != null;
         if (!voiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Tu dois être dans un salon vocal pour utiliser cette commande.");
+            EnvoiMessage.sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
             return;
         }
 
@@ -81,23 +66,9 @@ public class PlayCommand implements Command {
             return;
         }
 
-        String link = String.join(" ", args);
+        GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(guild);
+        musicManager.getTrackScheduler().shuffle();
 
-        if (!isUrl(link)) {
-            link = "ytsearch:" + link;
-            System.out.println("teste");
-        }
-
-        PlayerManager.getInstance().loadAndPlay(textChannel, link, event.getAuthor());
-    }
-
-    private boolean isUrl(String link) {
-        try {
-            new URL(link);
-            System.out.println("url");
-            return true;
-        } catch (MalformedURLException e) {
-            return false;
-        }
+        EnvoiMessage.sendMessage(event, "Queue mélangée !");
     }
 }

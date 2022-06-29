@@ -10,6 +10,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.util.HashMap;
@@ -41,11 +42,12 @@ public class PlayerManager {
         });
     }
 
-    public void loadAndPlay(TextChannel channel, String trackUrl) {
+    public void loadAndPlay(TextChannel channel, String trackUrl, User author) {
         GuildMusicManager musicManager = this.getMusicManager(channel.getGuild());
         this.audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
+                track.setUserData(author);
                 boolean retour = musicManager.getTrackScheduler().queue(track);
                 AudioTrackInfo info = track.getInfo();
                 EnvoiMessage.sendGuild(channel, "Ajout de `" + info.title + "` de `" + info.author + "` dans la queue.");
@@ -58,6 +60,7 @@ public class PlayerManager {
                 EnvoiMessage.sendGuild(channel, "Ajout de `" + tracks.size() + "` musiques de la playlist `" + playlist.getName() + "` dans la queue.");
 
                 for (AudioTrack track : tracks) {
+                    track.setUserData(author);
                     musicManager.getTrackScheduler().queue(track);
                 }
             }

@@ -6,9 +6,7 @@ import reminator.RemiBot.commands.Japonais.HiraganaCommand;
 import reminator.RemiBot.commands.Japonais.KatakanaCommand;
 import reminator.RemiBot.commands.Japonais.VocabulaireCommand;
 import reminator.RemiBot.commands.manager.Command;
-import reminator.RemiBot.commands.music.JoinCommand;
-import reminator.RemiBot.commands.music.LeaveCommand;
-import reminator.RemiBot.commands.music.PlayCommand;
+import reminator.RemiBot.commands.music.*;
 import reminator.RemiBot.commands.perso.RemiSpam;
 import reminator.RemiBot.commands.perso.RemiWork;
 import reminator.RemiBot.commands.pricescanner.*;
@@ -52,6 +50,11 @@ public enum Commands {
     JOIN(new JoinCommand()),
     PLAY(new PlayCommand()),
     LEAVE(new LeaveCommand()),
+    STOP(new StopCommand()),
+    SKIP(new SkipCommand()),
+    NOWPLAYING(new NowPlayingCommand()),
+    QUEUE(new QueueCommand()),
+    SHUFFLE(new ShuffleCommand()),
     ;
 
     private final Command command;

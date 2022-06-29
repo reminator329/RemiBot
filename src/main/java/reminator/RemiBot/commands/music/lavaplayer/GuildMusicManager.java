@@ -28,8 +28,8 @@ public class GuildMusicManager {
         return audioPlayer;
     }
 
-    public void leave() {
-        trackScheduler.leave();
+    public void stop() {
+        trackScheduler.clearQueue();
         audioPlayer.stopTrack();
     }
 }
