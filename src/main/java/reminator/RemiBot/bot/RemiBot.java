@@ -11,23 +11,17 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-import reminator.RemiBot.Commands.Devoir.Model.BDDevoir;
-import reminator.RemiBot.Commands.Devoir.Model.BDDevoirJson;
-import reminator.RemiBot.Commands.Devoir.Model.Devoir;
-import reminator.RemiBot.Commands.Devoir.Model.Eleve;
-import reminator.RemiBot.Commands.Japonais.model.VocabulaireParserCSV;
+import reminator.RemiBot.commands.Devoir.Model.BDDevoir;
+import reminator.RemiBot.commands.Devoir.Model.BDDevoirJson;
+import reminator.RemiBot.commands.Devoir.Model.Devoir;
+import reminator.RemiBot.commands.Devoir.Model.Eleve;
+import reminator.RemiBot.commands.Japonais.model.VocabulaireParserCSV;
 import reminator.RemiBot.Services.motdujour.MotDuJourService;
 import reminator.RemiBot.Services.openai.AprilFoolService;
-import reminator.RemiBot.Services.pricescanner.PriceScannerService;
 import reminator.RemiBot.Services.reactionpersonne.ReactionPersonneService;
 import reminator.RemiBot.Services.repondeur.RepondeurService;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 

@@ -4,16 +4,25 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import reminator.RemiBot.commands.manager.CommandExecutedEvent;
 
 public class EnvoiMessage {
 
     private EnvoiMessage() {}
 
-    public static void sendMessage(MessageReceivedEvent event, MessageEmbed messageEmbed) {
+    public static void sendMessage(CommandExecutedEvent event, MessageEmbed messageEmbed) {
         if (event.isFromGuild()) {
             sendGuild(event.getChannel(), messageEmbed);
         } else {
             sendPrivate(event.getAuthor(), messageEmbed);
+        }
+    }
+
+    public static void sendMessage(CommandExecutedEvent event, String message) {
+        if (event.isFromGuild()) {
+            sendGuild(event.getChannel(), message);
+        } else {
+            sendPrivate(event.getAuthor(), message);
         }
     }
 
@@ -22,6 +31,14 @@ public class EnvoiMessage {
             sendGuild(event.getChannel(), message);
         } else {
             sendPrivate(event.getAuthor(), message);
+        }
+    }
+
+    public static void sendMessage(MessageReceivedEvent event, MessageEmbed messageEmbed) {
+        if (event.isFromGuild()) {
+            sendGuild(event.getChannel(), messageEmbed);
+        } else {
+            sendPrivate(event.getAuthor(), messageEmbed);
         }
     }
 

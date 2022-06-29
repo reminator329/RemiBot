@@ -1,16 +1,19 @@
 package reminator.RemiBot.bot;
 
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import org.jetbrains.annotations.NotNull;
-import reminator.RemiBot.Commands.*;
-import reminator.RemiBot.Commands.enums.Commands;
+import reminator.RemiBot.commands.enums.Commands;
+import reminator.RemiBot.commands.manager.Command;
+import reminator.RemiBot.commands.manager.CommandExecutedEvent;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -79,7 +82,7 @@ public class Controller extends ListenerAdapter {
 
             if (prefixLabel.equalsIgnoreCase(command) || separation.length > 1 && cmd.isAlias(separation[1])) {
                 args.remove(0);
-                c.getCommand().execute(event, event.getAuthor(), event.getChannel(), args);
+                c.getCommand().execute(new CommandExecutedEvent(event, args));
                 break;
             }
         }
@@ -127,9 +130,11 @@ public class Controller extends ListenerAdapter {
 
  */
     }
-/*
+
+    /*
     @Override
-    public void onGuildMessageUpdate(@NotNull GuildMessageUpdateEvent event) {
+    public void onMessageUpdate(@NotNull MessageUpdateEvent event) {
+
         if (event.getAuthor().isBot()) return;
         Guild guild = event.getGuild();
         Member remi = guild.getMemberById("368733622246834188");
@@ -206,6 +211,7 @@ public class Controller extends ListenerAdapter {
                 .queue();
     }
 */
+
     /*
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
