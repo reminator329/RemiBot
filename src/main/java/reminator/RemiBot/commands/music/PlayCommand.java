@@ -2,6 +2,7 @@ package reminator.RemiBot.commands.music;
 
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.managers.AudioManager;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.commands.manager.Command;
 import reminator.RemiBot.commands.enums.Category;
@@ -71,14 +72,13 @@ public class PlayCommand implements Command {
         GuildVoiceState selfVoiceState = selfMember.getVoiceState();
         assert selfVoiceState != null;
         if (!selfVoiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Je dois être dans un salon vocal pour jouer une musique.");
-            return;
-        }
 
-        assert selfVoiceState.getChannel() != null;
-        if (!selfVoiceState.getChannel().equals(voiceState.getChannel())) {
-            EnvoiMessage.sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
-            return;
+            AudioManager audioManager = guild.getAudioManager();
+            AudioChannel audioChannel = voiceState.getChannel();
+
+            audioManager.openAudioConnection(audioChannel);
+            assert audioChannel != null;
+            EnvoiMessage.sendMessage(event, "Je suis maintenant connecté sur " + audioChannel.getAsMention());
         }
 
         String link = String.join(" ", args);

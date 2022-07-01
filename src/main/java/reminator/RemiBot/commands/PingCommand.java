@@ -39,7 +39,7 @@ public class PingCommand implements Command {
 
         List<String> args = event.getArgs();
 
-        EmbedBuilder builder = BotEmbed.SPOTIFY.getBuilder(event.getMember());
+        EmbedBuilder builder = BotEmbed.SPOTIFY(event.getMember());
         builder.setTitle("Pong !");
 
         EnvoiMessage.sendMessage(event, builder.build());

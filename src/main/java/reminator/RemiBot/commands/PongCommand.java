@@ -41,7 +41,7 @@ public class PongCommand implements Command {
         Member member = event.getMember();
         User author = event.getAuthor();
 
-        EmbedBuilder builder = BotEmbed.SPOTIFY.getBuilder(member);
+        EmbedBuilder builder = BotEmbed.SPOTIFY(member);
         builder.setTitle("Ping !");
 
         EnvoiMessage.sendMessage(event, builder.build());

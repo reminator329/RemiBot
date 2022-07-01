@@ -4,6 +4,9 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import reminator.RemiBot.bot.BotEmbed;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
@@ -14,6 +17,7 @@ public class TrackScheduler extends AudioEventAdapter {
 
     private final AudioPlayer player;
     private final BlockingQueue<AudioTrack> queue;
+    private MessageChannel displayChannel;
 
     public TrackScheduler(AudioPlayer player) {
         this.player = player;
@@ -25,12 +29,22 @@ public class TrackScheduler extends AudioEventAdapter {
         // On ajoute dans la queue uniquement s'il y a déjà une musique en cours
         if (!this.player.startTrack(track, true)) {
             return this.queue.offer(track);
+        } else {
+            displayChannel(track);
         }
         return true;
     }
 
     public void nextTrack() {
-        this.player.startTrack(this.queue.poll(), false);
+        AudioTrack track = this.queue.poll();
+        displayChannel(track);
+        this.player.startTrack(track, false);
+    }
+
+    private void displayChannel(AudioTrack track) {
+        if (displayChannel != null) {
+            EnvoiMessage.sendGuild(displayChannel, BotEmbed.NOW_PLAYING(track).build());
+        }
     }
 
     @Override
@@ -53,5 +67,9 @@ public class TrackScheduler extends AudioEventAdapter {
         Collections.shuffle(liste);
         queue.clear();
         queue.addAll(liste);
+    }
+
+    public void setDisplayChannel(MessageChannel channel) {
+        displayChannel = channel;
     }
 }

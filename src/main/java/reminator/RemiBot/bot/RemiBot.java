@@ -29,6 +29,7 @@ import java.util.*;
 public class RemiBot {
 
     public static String prefix = "r!";
+    public static String botName = "Rémi Bot";
     public static final Color color = Color.RED;
     public static String token;
     public static JDA api;

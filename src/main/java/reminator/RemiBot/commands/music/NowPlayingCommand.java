@@ -52,9 +52,9 @@ public class NowPlayingCommand implements Command {
             return;
         }
 
-        playingTrack.setUserData(((TrackUserData) playingTrack.getUserData()).withCommandUser(event.getMember().getUser()));
+        ((TrackUserData) playingTrack.getUserData()).withCommandUser(event.getMember().getUser());
 
-        EmbedBuilder builder = BotEmbed.NOW_PLAYING.getBuilder(playingTrack);
+        EmbedBuilder builder = BotEmbed.NOW_PLAYING(playingTrack);
         EnvoiMessage.sendMessage(event, builder.build());
     }
 }

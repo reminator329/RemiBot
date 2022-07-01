@@ -2,12 +2,14 @@ package reminator.RemiBot.commands.music.lavaplayer;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
+import net.dv8tion.jda.api.entities.MessageChannel;
 
 public class GuildMusicManager {
 
     private final AudioPlayer audioPlayer;
     private final TrackScheduler trackScheduler;
     private final AudioPlayerSendHandler sendHandler;
+
 
     public GuildMusicManager(AudioPlayerManager manager) {
         this.audioPlayer = manager.createPlayer();
@@ -31,5 +33,9 @@ public class GuildMusicManager {
     public void stop() {
         trackScheduler.clearQueue();
         audioPlayer.stopTrack();
+    }
+
+    public void setDisplayChannel(MessageChannel channel) {
+        trackScheduler.setDisplayChannel(channel);
     }
 }

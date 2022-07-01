@@ -55,6 +55,7 @@ public enum Commands {
     NOWPLAYING(new NowPlayingCommand()),
     QUEUE(new QueueCommand()),
     SHUFFLE(new ShuffleCommand()),
+    ECOUTE_MUSIQUE(new EcouteMusiqueCommand()),
     ;
 
     private final Command command;

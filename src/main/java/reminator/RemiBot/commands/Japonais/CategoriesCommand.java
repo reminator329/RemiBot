@@ -39,7 +39,7 @@ public class CategoriesCommand implements Command {
     @Override
     public void execute(CommandExecutedEvent event) {
 
-        EmbedBuilder builder = BotEmbed.BASE_USER.getBuilder(Objects.requireNonNull(event.getMember()).getUser());
+        EmbedBuilder builder = BotEmbed.BASE_USER(Objects.requireNonNull(event.getMember()).getUser());
         builder.setTitle("Catégories disponibles");
 
         Set<Categorie> categoriesSet = VocabulaireParserCSV.getInstance().update().getCategories();

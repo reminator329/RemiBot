@@ -25,7 +25,7 @@ public class SkipCommand implements Command {
 
     @Override
     public String[] getAlliass() {
-        return new String[]{"s", "next", "passe-à-la-musique-suivante", "passe-a-la-musique-suivante", "suivante", "suivant"};
+        return new String[]{"s", "n", "next", "passe-à-la-musique-suivante", "passe-a-la-musique-suivante", "suivante", "suivant"};
     }
 
     @Override
@@ -56,7 +56,7 @@ public class SkipCommand implements Command {
         GuildVoiceState selfVoiceState = selfMember.getVoiceState();
         assert selfVoiceState != null;
         if (!selfVoiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Je dois être dans un salon vocal pour jouer une musique.");
+            EnvoiMessage.sendMessage(event, "Je dois être dans un salon vocal exécuter cette commande.");
             return;
         }
 
@@ -74,7 +74,7 @@ public class SkipCommand implements Command {
             return;
         }
 
-        musicManager.getTrackScheduler().nextTrack();
         EnvoiMessage.sendMessage(event, "Je passe à la musique suivante.");
+        musicManager.getTrackScheduler().nextTrack();
     }
 }

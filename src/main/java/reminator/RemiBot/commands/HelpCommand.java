@@ -1,11 +1,9 @@
 package reminator.RemiBot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import org.jetbrains.annotations.NotNull;
+import reminator.RemiBot.bot.RemiBot;
 import reminator.RemiBot.commands.enums.Category;
 import reminator.RemiBot.commands.enums.Commands;
 import reminator.RemiBot.commands.manager.Command;
@@ -51,7 +49,7 @@ public class HelpCommand implements Command {
         Map<Category, List<Command>> commandss = Commands.getCommandsGroupedByCategory();
         TreeMap<Category, List<Command>> commandsGroupedByCategory = new TreeMap<>(commandss);
 
-        final String titre = "Liste des commandes de l'EdtBot";
+        final String titre = "Liste des commandes de " + RemiBot.botName;
         final String imageI = "https://image.flaticon.com/icons/png/512/1301/1301429.png";
 
         builder.setThumbnail(imageI);

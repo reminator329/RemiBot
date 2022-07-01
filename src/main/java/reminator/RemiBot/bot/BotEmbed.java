@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.RichPresence;
 import net.dv8tion.jda.api.entities.User;
 import reminator.RemiBot.commands.music.TrackUserData;
+import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,42 +16,55 @@ import java.util.function.Function;
 
 import static reminator.RemiBot.utils.TimeUtils.formatTime;
 
-public enum BotEmbed {
+public class BotEmbed {
 
-    BASE(o -> new EmbedBuilder()
-            .setColor(RemiBot.color)),
+    private BotEmbed() {}
 
-    BASE_USER(o -> {
-        if (!(o instanceof User user))
-            return BotEmbed.BASE.getBuilder(null);
-        return BotEmbed.BASE.getBuilder(null)
-                .setFooter(user.getName(), user.getAvatarUrl());
-    }),
+    public static EmbedBuilder BASE() {
+        return new EmbedBuilder()
+                .setColor(RemiBot.color);
+    }
 
-    NOW_PLAYING(o -> {
-        if (!(o instanceof AudioTrack track))
-            return BotEmbed.BASE.getBuilder(null);
+    public static EmbedBuilder BASE_USER(User user) {
+        if (user == null) {
+            return BASE();
+        }
+        return BASE().setFooter(user.getName(), user.getAvatarUrl());
+    }
 
-        TrackUserData data = (TrackUserData) track.getUserData();
-        AudioTrackInfo info = track.getInfo();
+    public static EmbedBuilder NOW_PLAYING(AudioTrack audioTrack) {
+        if (audioTrack == null)
+            return BASE();
+
+        TrackUserData data = (TrackUserData) audioTrack.getUserData();
+        AudioTrackInfo info = audioTrack.getInfo();
 
         User requestedUser = data.getRequestedUser();
         User commandUser = data.getCommandUser();
         String avatarUrl = requestedUser.getAvatarUrl();
 
-        return BASE_USER.getBuilder(commandUser)
+        EmbedBuilder builder;
+
+        if (commandUser == null) {
+            builder = BASE();
+        } else {
+            builder = BASE_USER(commandUser);
+        }
+
+        return builder
                 .setAuthor("Musique en cours", avatarUrl, avatarUrl)
                 .setTitle("`" + info.title + "`", info.uri)
 
                 .addField("Demandé par", requestedUser.getAsMention(), true)
                 .addField("Auteur", info.author, true)
-                .addField("Durée", formatTime(track.getDuration()), true);
-    }),
+                .addField("Durée", formatTime(audioTrack.getDuration()), true);
+    }
 
-    SPOTIFY(o -> {
-        if (!(o instanceof Member member))
-            return BotEmbed.BASE.getBuilder(null);
-        EmbedBuilder builder = BotEmbed.BASE.getBuilder(null);
+    public static EmbedBuilder SPOTIFY(Member member) {
+        if (member == null)
+            return BASE();
+
+        EmbedBuilder builder = BASE();
         List<Activity> activities = member.getActivities();
         for (Activity a : activities) {
             if (a.getName().equalsIgnoreCase("Spotify")) {
@@ -58,17 +72,6 @@ public enum BotEmbed {
             }
         }
         return builder;
-    }),
-    ;
-
-    private final Function<Object, EmbedBuilder> f;
-
-    BotEmbed(Function<Object, EmbedBuilder> function) {
-        f = function;
-    }
-
-    public EmbedBuilder getBuilder(Object o) {
-        return f.apply(o);
     }
 
     private static void addActivitySpotify(EmbedBuilder builder, Activity a, Member member) {
