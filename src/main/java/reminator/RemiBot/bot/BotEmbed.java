@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.RichPresence;
 import net.dv8tion.jda.api.entities.User;
+import reminator.RemiBot.commands.music.TrackUserData;
 
 import java.util.List;
 import java.util.Objects;
@@ -16,30 +17,34 @@ import static reminator.RemiBot.utils.TimeUtils.formatTime;
 
 public enum BotEmbed {
 
-    BASE(o -> new EmbedBuilder().setColor(RemiBot.color)),
+    BASE(o -> new EmbedBuilder()
+            .setColor(RemiBot.color)),
 
     BASE_USER(o -> {
         if (!(o instanceof User user))
             return BotEmbed.BASE.getBuilder(null);
-        return BotEmbed.BASE.getBuilder(null).setFooter(user.getName(), user.getAvatarUrl());
+        return BotEmbed.BASE.getBuilder(null)
+                .setFooter(user.getName(), user.getAvatarUrl());
     }),
 
-    MUSIQUE(o -> {
+    NOW_PLAYING(o -> {
         if (!(o instanceof AudioTrack track))
             return BotEmbed.BASE.getBuilder(null);
 
-        User user = (User) track.getUserData();
+        TrackUserData data = (TrackUserData) track.getUserData();
         AudioTrackInfo info = track.getInfo();
 
-        EmbedBuilder builder = BASE_USER.getBuilder(user)
-                .setAuthor("Now playing", user.getAvatarUrl())
+        User requestedUser = data.getRequestedUser();
+        User commandUser = data.getCommandUser();
+        String avatarUrl = requestedUser.getAvatarUrl();
+
+        return BASE_USER.getBuilder(commandUser)
+                .setAuthor("Musique en cours", avatarUrl, avatarUrl)
                 .setTitle("`" + info.title + "`", info.uri)
 
-                .addField("Demandé par", user.getAsMention(), true)
+                .addField("Demandé par", requestedUser.getAsMention(), true)
                 .addField("Auteur", info.author, true)
-                .addField("Durée", formatTime(track.getDuration()), true)
-                ;
-        return builder;
+                .addField("Durée", formatTime(track.getDuration()), true);
     }),
 
     SPOTIFY(o -> {

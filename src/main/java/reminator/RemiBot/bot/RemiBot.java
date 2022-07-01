@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
+import reminator.RemiBot.Services.reactionpersonne.Users;
 import reminator.RemiBot.commands.Devoir.Model.BDDevoir;
 import reminator.RemiBot.commands.Devoir.Model.BDDevoirJson;
 import reminator.RemiBot.commands.Devoir.Model.Devoir;
@@ -51,13 +52,13 @@ public class RemiBot {
         try {
             VocabulaireParserCSV.getInstance().setURL(arguments[index]);
             index++;
-            reminator.RemiBot.Services.reactionpersonne.User.REMINATOR.setAuthorization(arguments[index]);
+            Users.REMINATOR.setAuthorization(arguments[index]);
             index++;
-            reminator.RemiBot.Services.reactionpersonne.User.MOUMOUNI.setAuthorization(arguments[index]);
+            Users.MOUMOUNI.setAuthorization(arguments[index]);
             index++;
-            reminator.RemiBot.Services.reactionpersonne.User.DREAMPLUME.setAuthorization(arguments[index]);
+            Users.DREAMPLUME.setAuthorization(arguments[index]);
             index++;
-            reminator.RemiBot.Services.reactionpersonne.User.DORIAN.setAuthorization(arguments[index]);
+            Users.DORIAN.setAuthorization(arguments[index]);
         }catch (Exception e) {
             e.printStackTrace();
         }

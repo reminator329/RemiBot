@@ -3,8 +3,7 @@ package reminator.RemiBot.commands.perso;
 import de.svenjacobs.loremipsum.LoremIpsum;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import org.jetbrains.annotations.NotNull;
+import reminator.RemiBot.Services.reactionpersonne.Users;
 import reminator.RemiBot.commands.manager.Command;
 import reminator.RemiBot.commands.enums.Category;
 import reminator.RemiBot.commands.manager.CommandExecutedEvent;
@@ -48,7 +47,7 @@ public class RemiSpam implements Command {
         MessageChannel channel = event.getChannel();
         User author = event.getAuthor();
 
-        if (!author.getId().equals(reminator.RemiBot.Services.reactionpersonne.User.REMINATOR.getId())) {
+        if (!author.getId().equals(Users.REMINATOR.getId())) {
             channel.sendMessage("Commande réservée à Rémi !").queue();
             return;
         }
@@ -89,7 +88,7 @@ public class RemiSpam implements Command {
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("authority", "discord.com");
-            connection.setRequestProperty("authorization", reminator.RemiBot.Services.reactionpersonne.User.REMINATOR.getAuthorization());
+            connection.setRequestProperty("authorization", Users.REMINATOR.getAuthorization());
             connection.setRequestProperty("content-length", String.valueOf(payload.length()));
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
             writer.write(payload);

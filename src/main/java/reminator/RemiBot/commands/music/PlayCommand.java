@@ -88,7 +88,7 @@ public class PlayCommand implements Command {
             System.out.println("teste");
         }
 
-        PlayerManager.getInstance().loadAndPlay(textChannel, link, event.getAuthor());
+        PlayerManager.getInstance().loadAndPlay(textChannel, link, new TrackUserData().withRequestedUser(event.getAuthor()));
     }
 
     private boolean isUrl(String link) {

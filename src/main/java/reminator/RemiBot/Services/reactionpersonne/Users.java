@@ -1,6 +1,6 @@
 package reminator.RemiBot.Services.reactionpersonne;
 
-public enum User {
+public enum Users {
     ELORYA("427256562596315167"),
     FEAVY("264490592610942976"),
     REMINATOR("368733622246834188"),
@@ -19,7 +19,7 @@ public enum User {
     String id;
     String authorization;
 
-    User(String id) {
+    Users(String id) {
         this.id = id;
     }
 
