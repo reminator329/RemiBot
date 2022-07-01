@@ -7,14 +7,12 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.RichPresence;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.internal.utils.tuple.Pair;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+
+import static reminator.RemiBot.utils.TimeUtils.formatTime;
 
 public enum BotEmbed {
 
@@ -77,13 +75,5 @@ public enum BotEmbed {
             String message = member.getUser().getName() + " écoute " + rp.getDetails() + " de " + rp.getState();
             builder.setFooter(message, member.getUser().getAvatarUrl());
         }
-    }
-
-    private static String formatTime(long duration) {
-        long hours = duration / TimeUnit.HOURS.toMillis(1);
-        long minutes = duration / TimeUnit.MINUTES.toMillis(1);
-        long secondes = duration % TimeUnit.MILLISECONDS.toMillis(1) / TimeUnit.SECONDS.toMillis(1);
-
-        return String.format("%02d:%02d:%02d", hours, minutes, secondes);
     }
 }

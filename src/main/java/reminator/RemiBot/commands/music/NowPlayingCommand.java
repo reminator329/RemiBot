@@ -61,12 +61,4 @@ public class NowPlayingCommand implements Command {
         EmbedBuilder builder = BotEmbed.MUSIQUE.getBuilder(playingTrack);
         EnvoiMessage.sendMessage(event, builder.build());
     }
-
-    private String formatTime(long duration) {
-        long hours = duration / TimeUnit.HOURS.toMillis(1);
-        long minutes = duration / TimeUnit.MINUTES.toMillis(1);
-        long secondes = duration % TimeUnit.MILLISECONDS.toMillis(1) / TimeUnit.SECONDS.toMillis(1);
-
-        return String.format("%02d:%02d:%02d", hours, minutes, secondes);
-    }
 }
