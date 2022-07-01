@@ -74,6 +74,6 @@ public class LeaveCommand implements Command {
         AudioManager audioManager = guild.getAudioManager();
         audioManager.closeAudioConnection();
 
-        new EnvoiMessage().sendMessage(event, "Merci d'avoir écouté de la musique, à bientôt !");
+        new EnvoiMessage().sendMessage(event, "Merci d'avoir écouté ma musique, à bientôt !");
     }
 }

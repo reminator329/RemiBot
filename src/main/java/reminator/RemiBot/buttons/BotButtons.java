@@ -27,7 +27,12 @@ public class BotButtons {
         }
         buttons1.add(Buttons.SKIP.getButton());
 
+        List<Component> buttons2 = new ArrayList<>();
+        buttons2.add(Buttons.SHUFFLE.getButton());
+        buttons2.add(Buttons.CLEAR.getButton());
+
         buttons.add(buttons1);
+        buttons.add(buttons2);
         return buttons;
     }
 

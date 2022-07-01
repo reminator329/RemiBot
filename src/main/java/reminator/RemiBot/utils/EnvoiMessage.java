@@ -16,7 +16,7 @@ import java.util.List;
 
 public class EnvoiMessage {
 
-    private final List<List<Component>> components;
+    private final List<ActionRow> components;
 
     public EnvoiMessage() {
          components = new ArrayList<>();
@@ -79,14 +79,14 @@ public class EnvoiMessage {
     }
 
     private MessageAction addButtons(MessageAction message) {
-        for (List<Component> l : components) {
-            message = message.setActionRow(l);
-        }
+        message = message.setActionRows(this.components);
         return message;
     }
 
     public EnvoiMessage withComponents(List<List<Component>> components) {
-        this.components.addAll(components);
+        for (List<Component> l : components) {
+            this.components.add(ActionRow.of(l));
+        }
         return this;
     }
 }

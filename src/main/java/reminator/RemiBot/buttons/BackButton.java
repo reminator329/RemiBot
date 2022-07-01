@@ -9,6 +9,6 @@ import org.jetbrains.annotations.Nullable;
 public class BackButton extends Button {
 
     public BackButton() {
-        super("back", "Précédent", Emoji.fromUnicode("⏮️"));
+        super("back", "", Emoji.fromUnicode("⏮️"));
     }
 }

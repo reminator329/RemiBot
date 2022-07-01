@@ -10,20 +10,17 @@ import reminator.RemiBot.utils.EnvoiMessage;
 
 public class SkipButton extends Button {
     public SkipButton() {
-        super("skip", "Suivant", Emoji.fromUnicode("⏭️"));
+        super("skip", "", Emoji.fromUnicode("⏭️"));
     }
 
     @Override
     public void onClick(@NotNull ButtonClickEvent event) {
-        if (!event.isFromGuild()) {
-            new EnvoiMessage().sendPrivate(event.getUser(), "Tu ne peux pas cliquer sur ce bouton en privé.");
-            return;
-        }
 
         Guild guild = event.getGuild();
 
         assert guild != null;
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(guild);
+        new EnvoiMessage().sendGuild(event.getChannel(), event.getUser().getAsMention() + " a passé à la musique suivante.");
         musicManager.getTrackScheduler().nextTrack();
     }
 }

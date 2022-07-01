@@ -8,9 +8,9 @@ import reminator.RemiBot.commands.music.lavaplayer.GuildMusicManager;
 import reminator.RemiBot.commands.music.lavaplayer.PlayerManager;
 import reminator.RemiBot.utils.EnvoiMessage;
 
-public class PauseButton extends Button {
-    public PauseButton() {
-        super("pause", "", Emoji.fromUnicode("⏸️"));
+public class StopButton extends Button {
+    public StopButton() {
+        super("stop", "", Emoji.fromUnicode("⏹️"));
     }
 
     @Override
@@ -20,8 +20,7 @@ public class PauseButton extends Button {
 
         assert guild != null;
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(guild);
-        musicManager.getAudioPlayer().setPaused(true);
-        event.getInteraction().editButton(Buttons.PLAY.getButton()).queue();
-        new EnvoiMessage().sendGuild(event.getChannel(), event.getUser().getAsMention() + " a arrêter la lecture.");
+        musicManager.stop();
+        new EnvoiMessage().sendGuild(event.getChannel(), event.getUser().getAsMention() + " a vidé la queue et arrêté la lecture.");
     }
 }

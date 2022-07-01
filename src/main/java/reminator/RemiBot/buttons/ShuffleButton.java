@@ -6,11 +6,10 @@ import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.commands.music.lavaplayer.GuildMusicManager;
 import reminator.RemiBot.commands.music.lavaplayer.PlayerManager;
-import reminator.RemiBot.utils.EnvoiMessage;
 
-public class PauseButton extends Button {
-    public PauseButton() {
-        super("pause", "", Emoji.fromUnicode("⏸️"));
+public class ShuffleButton extends Button {
+    public ShuffleButton() {
+        super("shuffle", "", Emoji.fromUnicode("\uD83D\uDD00"));
     }
 
     @Override
@@ -18,10 +17,7 @@ public class PauseButton extends Button {
 
         Guild guild = event.getGuild();
 
-        assert guild != null;
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(guild);
-        musicManager.getAudioPlayer().setPaused(true);
-        event.getInteraction().editButton(Buttons.PLAY.getButton()).queue();
-        new EnvoiMessage().sendGuild(event.getChannel(), event.getUser().getAsMention() + " a arrêter la lecture.");
+        musicManager.getTrackScheduler().shuffle();
     }
 }

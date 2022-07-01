@@ -11,9 +11,12 @@ public enum Buttons {
     PAUSE(new PauseButton()),
     PLAY(new PlayButton()),
     SKIP(new SkipButton()),
+    STOP(new StopButton()),
+    SHUFFLE(new ShuffleButton()),
+    CLEAR(new ClearButton()),
     ;
 
-    Button button;
+    private final Button button;
 
     Buttons(Button b) {
         this.button = b;
