@@ -10,6 +10,8 @@ public class ButtonClickListener extends ListenerAdapter {
     public void onButtonClick(@NotNull ButtonClickEvent event) {
         event.deferEdit().queue();
 
+        System.out.println("Bouton");
+
         net.dv8tion.jda.api.interactions.components.Button eventButton = event.getButton();
         if (eventButton == null) {
             return;

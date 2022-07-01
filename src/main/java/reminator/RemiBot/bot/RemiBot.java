@@ -12,6 +12,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import reminator.RemiBot.Services.reactionpersonne.Users;
+import reminator.RemiBot.buttons.ButtonClickListener;
 import reminator.RemiBot.commands.Devoir.Model.BDDevoir;
 import reminator.RemiBot.commands.Devoir.Model.BDDevoirJson;
 import reminator.RemiBot.commands.Devoir.Model.Devoir;
@@ -45,6 +46,7 @@ public class RemiBot {
         api.awaitReady();
 
         api.addEventListener(new Controller(api));
+        api.addEventListener(new ButtonClickListener());
         api.addEventListener(new ReactionPersonneService(api));
         api.addEventListener(new RepondeurService(api));
         api.addEventListener(new AprilFoolService());
