@@ -20,7 +20,7 @@ public class AllSongsFileMaker {
     /**
      * https://developer.spotify.com/console/get-search-item/?q=abba&type=track&market=US -> GET TOKEN
      */
-    private static final String oAuthToken = "BQDCjN8r354rTFdrzMhpa8RDamxlPwIA96H8XfQPyYPG1bCAJa6oBLBc9GHgw0rnh3RO7iZwK2pNOTOi51SZF_d_HrZFuGHsMHBYfdvWUew3sZNCCDrRE5EQqpTgqhsNOhX0wJubPA";
+    private static final String oAuthToken = System.getenv("SPOTIFY_TOKEN");
 
     public static void main(String[] args) throws IOException, InterruptedException {
         File allMusics = new File("src/main/resources/song/allSongs.txt");
