@@ -37,7 +37,7 @@ public class StopCommand implements Command {
     public void execute(CommandExecutedEvent event) {
 
         if (!event.isFromGuild()) {
-            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
         Member member = event.getMember();
@@ -49,26 +49,26 @@ public class StopCommand implements Command {
         GuildVoiceState selfVoiceState = selfMember.getVoiceState();
         assert selfVoiceState != null;
         if (!selfVoiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Je dois être dans un salon vocal pour exécuter cette commande.");
+            new EnvoiMessage().sendMessage(event, "Je dois être dans un salon vocal pour exécuter cette commande.");
             return;
         }
 
         GuildVoiceState voiceState = member.getVoiceState();
         assert voiceState != null;
         if (!voiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
+            new EnvoiMessage().sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
             return;
         }
 
         assert selfVoiceState.getChannel() != null;
         if (!voiceState.inAudioChannel() || !selfVoiceState.getChannel().equals(voiceState.getChannel())) {
-            EnvoiMessage.sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
+            new EnvoiMessage().sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
             return;
         }
 
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(guild);
         musicManager.stop();
 
-        EnvoiMessage.sendMessage(event, "Musique arrêtée et queue vidée.");
+        new EnvoiMessage().sendMessage(event, "Musique arrêtée et queue vidée.");
     }
 }

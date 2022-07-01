@@ -67,17 +67,17 @@ public class VocabulaireCommand implements Command {
         Set<Categorie> cats = args.stream().map(Categorie::new).collect(Collectors.toSet());
         BDVocabulaire bdVocabulaire = VocabulaireParserCSV.getInstance().update().generateBDVocabulaire(cats);
         if (bdVocabulaire.isEmpty()) {
-            EnvoiMessage.sendMessage(event, ":warning: Aucun vocabulaire ne correspond aux catégories choisies.");
+            new EnvoiMessage().sendMessage(event, ":warning: Aucun vocabulaire ne correspond aux catégories choisies.");
             return;
         }
         final Vocabulaire[] vocabulaire = {bdVocabulaire.getRandomVocabulary()};
 
 
         final EmbedBuilder[] embedBuilder = {new EmbedBuilder().setTitle("Le premier qui trouve 10 mots de vocabulaire gagne la partie !").setDescription("Que le meilleur gagne !")};
-        EnvoiMessage.sendMessage(event, embedBuilder[0].build());
+        new EnvoiMessage().sendMessage(event, embedBuilder[0].build());
 
         embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].getFr()).setDescription("Comment dit-on ce mot en japonais ?");
-        EnvoiMessage.sendMessage(event, embedBuilder[0].build());
+        new EnvoiMessage().sendMessage(event, embedBuilder[0].build());
 
 
         RemiBot.api.addEventListener(new ListenerAdapter() {
@@ -96,7 +96,7 @@ public class VocabulaireCommand implements Command {
                 }
 
                 if(vocabulaire[0].isCorrect(msg)) {
-                    EnvoiMessage.sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + vocabulaire[0].getFr() + " se dit bien " + vocabulaire[0].getJaponais() + " (" + vocabulaire[0].getRoomaji() + ")");
+                    new EnvoiMessage().sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + vocabulaire[0].getFr() + " se dit bien " + vocabulaire[0].getJaponais() + " (" + vocabulaire[0].getRoomaji() + ")");
                     int score;
                     if (scores.containsKey(user)) {
                         score = scores.get(user) + 1;
@@ -105,30 +105,30 @@ public class VocabulaireCommand implements Command {
                         score = 1;
                         scores.put(user, score);
                     }
-                    EnvoiMessage.sendMessage(event, user.getAsMention() + " a maintenant " + score + " points !");
+                    new EnvoiMessage().sendMessage(event, user.getAsMention() + " a maintenant " + score + " points !");
                     if (score == 10) {
-                        EnvoiMessage.sendMessage(event, user.getAsMention() + " a gagné !!! :partying_face: :partying_face: :partying_face:");
+                        new EnvoiMessage().sendMessage(event, user.getAsMention() + " a gagné !!! :partying_face: :partying_face: :partying_face:");
                         EmbedBuilder classement = new EmbedBuilder().setTitle("Classement des joueurs de la partie");
                         StringBuilder s = new StringBuilder();
                         for(Map.Entry<User, Integer> e : scores.entrySet()) {
                             s.append(e.getKey().getAsMention()).append(" : ").append(e.getValue()).append("\n");
                         }
                         classement.addField("Test", s.toString(), false);
-                        EnvoiMessage.sendMessage(event, classement.build());
+                        new EnvoiMessage().sendMessage(event, classement.build());
                         event.getJDA().removeEventListener(this);
                     } else {
                         vocabulaire[0] = bdVocabulaire.getRandomVocabulary();
                         embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].getFr()).setDescription("Comment dit-on ce mot en japonais ?");
-                        EnvoiMessage.sendMessage(event, embedBuilder[0].build());
+                        new EnvoiMessage().sendMessage(event, embedBuilder[0].build());
                     }
                     return;
                 }
 
                 if(msg.equalsIgnoreCase("jsp")) {
-                    EnvoiMessage.sendMessage(event, "Dommage, " + vocabulaire[0].getFr() + " se dit " + vocabulaire[0].getJaponais() + " (" + vocabulaire[0].getRoomaji() + ")");
+                    new EnvoiMessage().sendMessage(event, "Dommage, " + vocabulaire[0].getFr() + " se dit " + vocabulaire[0].getJaponais() + " (" + vocabulaire[0].getRoomaji() + ")");
                     vocabulaire[0] = bdVocabulaire.getRandomVocabulary();
                     embedBuilder[0] = new EmbedBuilder().setTitle(vocabulaire[0].getFr()).setDescription("Comment dit-on ce mot en japonais ?");
-                    EnvoiMessage.sendMessage(event, embedBuilder[0].build());
+                    new EnvoiMessage().sendMessage(event, embedBuilder[0].build());
                 }
             }
         });

@@ -51,6 +51,6 @@ public class AlbumCommand implements Command {
         } else {
             message = "Pas de date pour le moment :/";
         }
-        EnvoiMessage.sendMessage(event, message);
+        new EnvoiMessage().sendMessage(event, message);
     }
 }

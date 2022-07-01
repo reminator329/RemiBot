@@ -1,15 +1,14 @@
 package reminator.RemiBot.bot;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.components.Button;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.commands.enums.Commands;
 import reminator.RemiBot.commands.manager.Command;
@@ -50,6 +49,7 @@ public class Controller extends ListenerAdapter {
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
         if (event.getMessage().getContentRaw().length() == 0) return;
+        // event.getChannel().sendMessageEmbeds(new EmbedBuilder().addField("field", "zoiegnzojeg", false).build()).setActionRow(Button.danger("id", "labe")).queue();
         /*
         if (Objects.equals(api.getUserById(368733622246834188L), event.getAuthor())) {
             String message = event.getMessage().getContentRaw();

@@ -47,7 +47,7 @@ public class DevoirCommand implements Command {
 
         ArrayList<Devoir> devoirs = bdDevoir.getDevoirs(event.getAuthor());
         if (devoirs.isEmpty()) {
-            EnvoiMessage.sendMessage(event, "Vous n'avez pas de devoirs à faire");
+            new EnvoiMessage().sendMessage(event, "Vous n'avez pas de devoirs à faire");
             return;
         }
         User user = event.getAuthor();
@@ -81,7 +81,7 @@ public class DevoirCommand implements Command {
         }
 
         embedBuilder.setFooter(user.getName() + " Il vous reste " + (numeroDevoir-1) + " devoir(s) à faire.", user.getAvatarUrl());
-        EnvoiMessage.sendMessage(event, embedBuilder.build());
+        new EnvoiMessage().sendMessage(event, embedBuilder.build());
     }
 
     private int ajoutDevoirs(StringBuilder message, ArrayList<Devoir> devoirs, int numeroDevoir) {

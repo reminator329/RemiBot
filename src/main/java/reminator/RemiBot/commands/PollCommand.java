@@ -60,7 +60,7 @@ public class PollCommand implements Command {
         MessageChannel channel = event.getChannel();
 
         if (!event.isFromGuild()) {
-            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
         if (args.size() > 1 && args.get(1).equalsIgnoreCase("stop")) {
@@ -84,7 +84,7 @@ public class PollCommand implements Command {
 
         EmbedBuilder embedBuilder_choix_question = new EmbedBuilder(embedBuilder_base);
         embedBuilder_choix_question.addField("Pose une question", "", false);
-        EnvoiMessage.sendMessage(event, embedBuilder_choix_question.build());
+        new EnvoiMessage().sendMessage(event, embedBuilder_choix_question.build());
 
         event.getJDA().addEventListener(new ListenerAdapter() {
             private long idMessage;
@@ -168,7 +168,7 @@ public class PollCommand implements Command {
                     question[0] = msg;
                     embedBuilder.addField(question[0], "", false);
                     embedBuilder.addField("Choisis une réponse (`r!stop` pour arrêter)", "", false);
-                    EnvoiMessage.sendMessage(event, embedBuilder.build());
+                    new EnvoiMessage().sendMessage(event, embedBuilder.build());
                     return;
                 }
 
@@ -224,7 +224,7 @@ public class PollCommand implements Command {
                 embedBuilder.addField(question[0], reponses_field.toString(), false);
                 embedBuilder.addField(fieldSuite);
 
-                EnvoiMessage.sendMessage(event, embedBuilder.build());
+                new EnvoiMessage().sendMessage(event, embedBuilder.build());
             }
         });
     }

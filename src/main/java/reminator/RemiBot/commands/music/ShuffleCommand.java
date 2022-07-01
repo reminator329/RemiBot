@@ -37,7 +37,7 @@ public class ShuffleCommand implements Command {
     public void execute(CommandExecutedEvent event) {
 
         if (!event.isFromGuild()) {
-            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
         Member member = event.getMember();
@@ -46,7 +46,7 @@ public class ShuffleCommand implements Command {
         GuildVoiceState voiceState = member.getVoiceState();
         assert voiceState != null;
         if (!voiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
+            new EnvoiMessage().sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
             return;
         }
 
@@ -56,19 +56,19 @@ public class ShuffleCommand implements Command {
         GuildVoiceState selfVoiceState = selfMember.getVoiceState();
         assert selfVoiceState != null;
         if (!selfVoiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Je dois être dans un salon vocal pour jouer une musique.");
+            new EnvoiMessage().sendMessage(event, "Je dois être dans un salon vocal pour jouer une musique.");
             return;
         }
 
         assert selfVoiceState.getChannel() != null;
         if (!selfVoiceState.getChannel().equals(voiceState.getChannel())) {
-            EnvoiMessage.sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
+            new EnvoiMessage().sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
             return;
         }
 
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(guild);
         musicManager.getTrackScheduler().shuffle();
 
-        EnvoiMessage.sendMessage(event, "Queue mélangée !");
+        new EnvoiMessage().sendMessage(event, "Queue mélangée !");
     }
 }

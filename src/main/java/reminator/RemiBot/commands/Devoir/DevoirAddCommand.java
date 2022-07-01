@@ -51,7 +51,7 @@ public class DevoirAddCommand implements Command {
         List<String> args = event.getArgs();
 
         if (args.size() < 2) {
-            EnvoiMessage.sendMessage(event, "Commande mal utilisée, voir `r!help devoir-add`");
+            new EnvoiMessage().sendMessage(event, "Commande mal utilisée, voir `r!help devoir-add`");
             return;
         }
         System.out.println(args);
@@ -87,7 +87,7 @@ public class DevoirAddCommand implements Command {
                             users.add(member.getUser());
                         }
                     } else {
-                        EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+                        new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
                         return;
                     }
                 }
@@ -101,7 +101,7 @@ public class DevoirAddCommand implements Command {
                     ids.add(m.getUser().getId());
                 }
             } else {
-                EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+                new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
                 return;
             }
             all = true;
@@ -148,6 +148,6 @@ public class DevoirAddCommand implements Command {
         }
 
         bdDevoir.addDevoir(users, matiere, description.toString(), all, date);
-        EnvoiMessage.sendMessage(event, "devoir ajouté pour " + mention);
+        new EnvoiMessage().sendMessage(event, "devoir ajouté pour " + mention);
     }
 }

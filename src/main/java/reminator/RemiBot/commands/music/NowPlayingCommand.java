@@ -5,11 +5,13 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import reminator.RemiBot.bot.BotEmbed;
+import reminator.RemiBot.buttons.BotButtons;
 import reminator.RemiBot.commands.enums.Category;
 import reminator.RemiBot.commands.manager.Command;
 import reminator.RemiBot.commands.manager.CommandExecutedEvent;
 import reminator.RemiBot.commands.music.lavaplayer.GuildMusicManager;
 import reminator.RemiBot.commands.music.lavaplayer.PlayerManager;
+import reminator.RemiBot.commands.music.lavaplayer.PlayingStatus;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 public class NowPlayingCommand implements Command {
@@ -37,7 +39,7 @@ public class NowPlayingCommand implements Command {
     public void execute(CommandExecutedEvent event) {
 
         if (!event.isFromGuild()) {
-            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
 
@@ -48,13 +50,13 @@ public class NowPlayingCommand implements Command {
         AudioTrack playingTrack = audioPlayer.getPlayingTrack();
 
         if (playingTrack == null) {
-            EnvoiMessage.sendMessage(event, "Il n'y a pas de musique en cours.");
+            new EnvoiMessage().sendMessage(event, "Il n'y a pas de musique en cours.");
             return;
         }
 
         ((TrackUserData) playingTrack.getUserData()).withCommandUser(event.getMember().getUser());
 
         EmbedBuilder builder = BotEmbed.NOW_PLAYING(playingTrack);
-        EnvoiMessage.sendMessage(event, builder.build());
+        new EnvoiMessage().withComponents(new BotButtons().withPlayingStatus(PlayingStatus.PLAY).NOW_PLAYING()).sendMessage(event, builder.build());
     }
 }

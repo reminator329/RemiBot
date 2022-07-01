@@ -42,7 +42,7 @@ public class EcouteBilalCommand implements Command {
         MessageChannel channel = event.getChannel();
 
         if (!event.isFromGuild()) {
-            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
 

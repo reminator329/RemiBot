@@ -57,7 +57,8 @@ public class BotEmbed {
 
                 .addField("Demandé par", requestedUser.getAsMention(), true)
                 .addField("Auteur", info.author, true)
-                .addField("Durée", formatTime(audioTrack.getDuration()), true);
+                .addField("Durée", formatTime(audioTrack.getDuration()), true)
+                ;
     }
 
     public static EmbedBuilder SPOTIFY(Member member) {

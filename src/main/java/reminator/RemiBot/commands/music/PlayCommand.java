@@ -48,12 +48,12 @@ public class PlayCommand implements Command {
         TextChannel textChannel = event.getTextChannel();
 
         if (args.size() < 1) {
-            EnvoiMessage.sendMessage(event, "Commande mal utilisée, voir `r!help play`");
+            new EnvoiMessage().sendMessage(event, "Commande mal utilisée, voir `r!help play`");
             return;
         }
 
         if (!event.isFromGuild()) {
-            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
         Member member = event.getMember();
@@ -62,7 +62,7 @@ public class PlayCommand implements Command {
         GuildVoiceState voiceState = member.getVoiceState();
         assert voiceState != null;
         if (!voiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Tu dois être dans un salon vocal pour utiliser cette commande.");
+            new EnvoiMessage().sendMessage(event, "Tu dois être dans un salon vocal pour utiliser cette commande.");
             return;
         }
 
@@ -78,7 +78,7 @@ public class PlayCommand implements Command {
 
             audioManager.openAudioConnection(audioChannel);
             assert audioChannel != null;
-            EnvoiMessage.sendMessage(event, "Je suis maintenant connecté sur " + audioChannel.getAsMention());
+            new EnvoiMessage().sendMessage(event, "Je suis maintenant connecté sur " + audioChannel.getAsMention());
         }
 
         String link = String.join(" ", args);

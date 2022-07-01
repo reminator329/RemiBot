@@ -50,6 +50,6 @@ public class CategoriesCommand implements Command {
             builder.addField(categorie.getNom(), "", false);
         }
 
-        EnvoiMessage.sendMessage(event, builder.build());
+        new EnvoiMessage().sendMessage(event, builder.build());
     }
 }

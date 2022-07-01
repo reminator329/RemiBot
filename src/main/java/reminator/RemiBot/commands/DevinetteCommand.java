@@ -82,13 +82,13 @@ public class DevinetteCommand implements Command {
                 String msg = event.getMessage().getContentRaw();
 
                 if(song.getTitle().equalsIgnoreCase(msg)) {
-                    EnvoiMessage.sendMessage(event, "Oui !! C'était bien **"+song.getTitle()+"** ! Tu as trouvé en "+tryAmount[0]+" essai(s). Félicitations ! :partying_face: :heart:\n"+song.getSpotifyUrl());
+                    new EnvoiMessage().sendMessage(event, "Oui !! C'était bien **"+song.getTitle()+"** ! Tu as trouvé en "+tryAmount[0]+" essai(s). Félicitations ! :partying_face: :heart:\n"+song.getSpotifyUrl());
                     event.getJDA().removeEventListener(this);
                     return;
                 }
 
                 if(msg.equalsIgnoreCase("jsp")) {
-                    EnvoiMessage.sendMessage(event, "Dommaage :sob: ! La chanson était **"+song.getTitle()+"** !!\n"+song.getSpotifyUrl());
+                    new EnvoiMessage().sendMessage(event, "Dommaage :sob: ! La chanson était **"+song.getTitle()+"** !!\n"+song.getSpotifyUrl());
                     event.getJDA().removeEventListener(this);
                     return;
                 }
@@ -100,11 +100,11 @@ public class DevinetteCommand implements Command {
 
                 tryAmount[0]++;
 
-                EnvoiMessage.sendMessage(event, "Nan ! C'est pas ça ! Essaie encore !");
+                new EnvoiMessage().sendMessage(event, "Nan ! C'est pas ça ! Essaie encore !");
             }
         });
 
-        EnvoiMessage.sendMessage(event, embedBuilder.build());
+        new EnvoiMessage().sendMessage(event, embedBuilder.build());
     }
 
     private Song getRandomSong() {

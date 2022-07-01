@@ -4,13 +4,25 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
+import net.dv8tion.jda.api.interactions.components.Button;
+import net.dv8tion.jda.api.interactions.components.Component;
+import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import reminator.RemiBot.commands.manager.CommandExecutedEvent;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class EnvoiMessage {
 
-    private EnvoiMessage() {}
+    private final List<List<Component>> components;
 
-    public static void sendMessage(CommandExecutedEvent event, MessageEmbed messageEmbed) {
+    public EnvoiMessage() {
+         components = new ArrayList<>();
+    }
+
+    public void sendMessage(CommandExecutedEvent event, MessageEmbed messageEmbed) {
         if (event.isFromGuild()) {
             sendGuild(event.getChannel(), messageEmbed);
         } else {
@@ -18,7 +30,7 @@ public class EnvoiMessage {
         }
     }
 
-    public static void sendMessage(CommandExecutedEvent event, String message) {
+    public void sendMessage(CommandExecutedEvent event, String message) {
         if (event.isFromGuild()) {
             sendGuild(event.getChannel(), message);
         } else {
@@ -26,7 +38,7 @@ public class EnvoiMessage {
         }
     }
 
-    public static void sendMessage(MessageReceivedEvent event, String message) {
+    public void sendMessage(MessageReceivedEvent event, String message) {
         if (event.isFromGuild()) {
             sendGuild(event.getChannel(), message);
         } else {
@@ -34,7 +46,7 @@ public class EnvoiMessage {
         }
     }
 
-    public static void sendMessage(MessageReceivedEvent event, MessageEmbed messageEmbed) {
+    public void sendMessage(MessageReceivedEvent event, MessageEmbed messageEmbed) {
         if (event.isFromGuild()) {
             sendGuild(event.getChannel(), messageEmbed);
         } else {
@@ -42,23 +54,39 @@ public class EnvoiMessage {
         }
     }
 
-    public static void sendPrivate(User user, String message) {
+    public void sendPrivate(User user, String message) {
         user.openPrivateChannel()
                 .flatMap(channel -> channel.sendMessage(message))
                 .queue();
     }
 
-    public static void sendPrivate(User user, MessageEmbed messageEmbed) {
+    public void sendPrivate(User user, MessageEmbed messageEmbed) {
         user.openPrivateChannel()
-                .flatMap(channel -> channel.sendMessageEmbeds(messageEmbed))
+                .flatMap(channel -> channel
+                        .sendMessageEmbeds(messageEmbed)
+                )
                 .queue();
     }
 
-    public static void sendGuild(MessageChannel messageChannel, String message) {
-        messageChannel.sendMessage(message).queue();
+    public void sendGuild(MessageChannel messageChannel, String message) {
+        MessageAction messageAction = messageChannel.sendMessage(message);
+        addButtons(messageAction).queue();
     }
 
-    public static void sendGuild(MessageChannel messageChannel, MessageEmbed messageEmbed) {
-        messageChannel.sendMessageEmbeds(messageEmbed).queue();
+    public void sendGuild(MessageChannel messageChannel, MessageEmbed messageEmbed) {
+        MessageAction messageAction = messageChannel.sendMessageEmbeds(messageEmbed);
+        addButtons(messageAction).queue();
+    }
+
+    private MessageAction addButtons(MessageAction message) {
+        for (List<Component> l : components) {
+            message = message.setActionRow(l);
+        }
+        return message;
+    }
+
+    public EnvoiMessage withComponents(List<List<Component>> components) {
+        this.components.addAll(components);
+        return this;
     }
 }

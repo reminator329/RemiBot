@@ -42,17 +42,17 @@ public class AmongusCommand implements Command {
         MessageChannel channel = event.getChannel();
 
         if (!event.isFromGuild()) {
-            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
 
         if (ecoutes.contains(channel)) {
             ecoutes.remove(channel);
-            EnvoiMessage.sendMessage(event, "Arrêt de la commande");
+            new EnvoiMessage().sendMessage(event, "Arrêt de la commande");
             timer.cancel();
             timer.purge();
         } else {
-            EnvoiMessage.sendMessage(event, "Début de la commande");
+            new EnvoiMessage().sendMessage(event, "Début de la commande");
             ecoutes.add(channel);
             java.util.List<Member> members = event.getGuild().getMembers();
             java.util.List<Role> roles = event.getGuild().getRoles();
@@ -81,7 +81,7 @@ public class AmongusCommand implements Command {
                             String j = a.getName();
                             if (j.equalsIgnoreCase("Among Us")) {
                                 if (!jeu[i].equalsIgnoreCase(j)) {
-                                    EnvoiMessage.sendMessage(event, finalEveryone.getAsMention() + "\n" + m.getUser().getAsMention() + " joue a Among Us !!!");
+                                    new EnvoiMessage().sendMessage(event, finalEveryone.getAsMention() + "\n" + m.getUser().getAsMention() + " joue a Among Us !!!");
                                 }
                                 playsAmong = true;
                                 jeu[i] = j;

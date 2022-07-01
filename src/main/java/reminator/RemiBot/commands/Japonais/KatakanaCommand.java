@@ -53,11 +53,11 @@ public class KatakanaCommand implements Command {
         Map<User, Integer> scores = new HashMap<>();
 
         final EmbedBuilder[] embedBuilder = {new EmbedBuilder().setTitle("Katakana game ! Le premier qui trouve 10 katakana gagne la partie !").setDescription("Que le meilleur gagne !")};
-        EnvoiMessage.sendMessage(event, embedBuilder[0].build());
+        new EnvoiMessage().sendMessage(event, embedBuilder[0].build());
         final Katakana[] katakana = {Katakana.getRandom()};
 
         embedBuilder[0] = new EmbedBuilder().setTitle(katakana[0].japonais()).setDescription("Comment écrit-on ce katakana en rômaji ?");
-        EnvoiMessage.sendMessage(event, embedBuilder[0].build());
+        new EnvoiMessage().sendMessage(event, embedBuilder[0].build());
 
 
         RemiBot.api.addEventListener(new ListenerAdapter() {
@@ -70,7 +70,7 @@ public class KatakanaCommand implements Command {
                 User user = event.getAuthor();
 
                 if(katakana[0].roomaji().equalsIgnoreCase(msg)) {
-                    EnvoiMessage.sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + katakana[0].japonais() + " se lit bien " + katakana[0].roomaji());
+                    new EnvoiMessage().sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + katakana[0].japonais() + " se lit bien " + katakana[0].roomaji());
                     int score;
                     if (scores.containsKey(user)) {
                         score = scores.get(user) + 1;
@@ -79,21 +79,21 @@ public class KatakanaCommand implements Command {
                         score = 1;
                         scores.put(user, score);
                     }
-                    EnvoiMessage.sendMessage(event, user.getAsMention() + " a maintenant " + score + " points !");
+                    new EnvoiMessage().sendMessage(event, user.getAsMention() + " a maintenant " + score + " points !");
                     if (score == 10) {
-                        EnvoiMessage.sendMessage(event, user.getAsMention() + " a gagné !!! :partying_face: :partying_face: :partying_face:");
+                        new EnvoiMessage().sendMessage(event, user.getAsMention() + " a gagné !!! :partying_face: :partying_face: :partying_face:");
                         EmbedBuilder classement = new EmbedBuilder().setTitle("Classement des joueurs de la partie");
                         StringBuilder s = new StringBuilder();
                         for(Map.Entry<User, Integer> e : scores.entrySet()) {
                             s.append(e.getKey().getAsMention()).append(" : ").append(e.getValue()).append("\n");
                         }
                         classement.addField("Test", s.toString(), false);
-                        EnvoiMessage.sendMessage(event, classement.build());
+                        new EnvoiMessage().sendMessage(event, classement.build());
                         event.getJDA().removeEventListener(this);
                     } else {
                         katakana[0] = Katakana.getRandom();
                         embedBuilder[0] = new EmbedBuilder().setTitle(katakana[0].japonais()).setDescription("Comment écrit-on ce katakana en rômaji ?");
-                        EnvoiMessage.sendMessage(event, embedBuilder[0].build());
+                        new EnvoiMessage().sendMessage(event, embedBuilder[0].build());
                     }
                     return;
                 }

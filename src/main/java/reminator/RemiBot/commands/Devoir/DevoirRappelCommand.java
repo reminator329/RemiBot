@@ -81,7 +81,7 @@ public class DevoirRappelCommand implements Command {
                 messageFin = "Le rappel des devoirs n'est pas activé.";
             }
             bdDevoir.setRappel(user, s, h);
-            EnvoiMessage.sendMessage(event, messageFin);
+            new EnvoiMessage().sendMessage(event, messageFin);
             return;
         }
 
@@ -125,7 +125,7 @@ public class DevoirRappelCommand implements Command {
         }
 
         if (erreur) {
-            EnvoiMessage.sendMessage(event, messageErreur.toString());
+            new EnvoiMessage().sendMessage(event, messageErreur.toString());
         }
 
         bdDevoir.setRappel(user, statut, heure);
@@ -169,6 +169,6 @@ public class DevoirRappelCommand implements Command {
                 messageFin = "Le rappel des devoirs a été désactivé (statut = false)";
             }
         }
-        EnvoiMessage.sendMessage(event, messageFin);
+        new EnvoiMessage().sendMessage(event, messageFin);
     }
 }

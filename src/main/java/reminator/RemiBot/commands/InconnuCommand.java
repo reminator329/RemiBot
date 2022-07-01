@@ -60,7 +60,7 @@ public class InconnuCommand implements Command {
         MessageChannel channel = event.getChannel();
 
         if (!event.isFromGuild()) {
-            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
 
@@ -70,7 +70,7 @@ public class InconnuCommand implements Command {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setImage("https://drive.google.com/uc?id=1GQJr-mKQjYf8QW2YtdAXOdq3M2rpppDd")
                 .setDescription("Qui est cette personne ? :face_with_monocle:");
-        EnvoiMessage.sendMessage(event, embed.build());
+        new EnvoiMessage().sendMessage(event, embed.build());
 
         event.getJDA().addEventListener(new ListenerAdapter() {
 

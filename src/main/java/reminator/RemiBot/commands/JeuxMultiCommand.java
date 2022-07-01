@@ -137,7 +137,7 @@ public class JeuxMultiCommand implements Command {
         builder.addField(" ", jeuxS.toString(), false);
         assert member != null;
         builder.setFooter(member.getUser().getName(), member.getUser().getAvatarUrl());
-        EnvoiMessage.sendMessage(event, builder.build());
+        new EnvoiMessage().sendMessage(event, builder.build());
     }
 
     private boolean estJoueur(String s, List<String> args) {

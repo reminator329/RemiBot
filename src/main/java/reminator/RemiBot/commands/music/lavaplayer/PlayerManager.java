@@ -51,14 +51,14 @@ public class PlayerManager {
                 track.setUserData(trackUserData);
                 boolean retour = musicManager.getTrackScheduler().queue(track);
                 AudioTrackInfo info = track.getInfo();
-                EnvoiMessage.sendGuild(channel, "Ajout de `" + info.title + "` de `" + info.author + "` dans la queue.");
+                new EnvoiMessage().sendGuild(channel, "Ajout de `" + info.title + "` de `" + info.author + "` dans la queue.");
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 List<AudioTrack> tracks = playlist.getTracks();
 
-                EnvoiMessage.sendGuild(channel, "Ajout de `" + tracks.size() + "` musiques de la playlist `" + playlist.getName() + "` dans la queue.");
+                new EnvoiMessage().sendGuild(channel, "Ajout de `" + tracks.size() + "` musiques de la playlist `" + playlist.getName() + "` dans la queue.");
 
                 for (AudioTrack track : tracks) {
                     track.setUserData(trackUserData);

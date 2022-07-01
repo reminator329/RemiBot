@@ -39,7 +39,7 @@ public class QueueCommand implements Command {
     public void execute(CommandExecutedEvent event) {
 
         if (!event.isFromGuild()) {
-            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
 
@@ -49,7 +49,7 @@ public class QueueCommand implements Command {
         BlockingQueue<AudioTrack> queue = musicManager.getTrackScheduler().getQueue();
 
         if (queue.isEmpty()) {
-            EnvoiMessage.sendMessage(event, "La queue est vide.");
+            new EnvoiMessage().sendMessage(event, "La queue est vide.");
             return;
         }
 
@@ -79,6 +79,6 @@ public class QueueCommand implements Command {
                     .append("` autres...");
         }
 
-        EnvoiMessage.sendMessage(event, stringBuilder.toString());
+        new EnvoiMessage().sendMessage(event, stringBuilder.toString());
     }
 }

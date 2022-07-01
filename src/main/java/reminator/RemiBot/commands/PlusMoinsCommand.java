@@ -51,7 +51,7 @@ public class PlusMoinsCommand implements Command {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Trouve le nombre entre 0 et 1 000 000 000\nÉcrit 'stop' si tu abandonnes.");
         embedBuilder.setFooter(author.getName(), author.getAvatarUrl());
-        EnvoiMessage.sendMessage(event, embedBuilder.build());
+        new EnvoiMessage().sendMessage(event, embedBuilder.build());
 
         event.getJDA().addEventListener(new ListenerAdapter() {
             @Override
@@ -71,7 +71,7 @@ public class PlusMoinsCommand implements Command {
                 if (msg.equalsIgnoreCase("stop")) {
                     builder.setTitle("" + nombre);
                     builder.appendDescription("C'était le nombre à trouver !");
-                    EnvoiMessage.sendMessage(event, builder.build());
+                    new EnvoiMessage().sendMessage(event, builder.build());
                     event.getJDA().removeEventListener(this);
                     return;
                 }
@@ -83,7 +83,7 @@ public class PlusMoinsCommand implements Command {
                         builder.setTitle("Gagné !");
                         builder.appendDescription("C'était bien " + nombre);
                         builder.addField("Nombre de coups", "" + tryAmount[0], false);
-                        EnvoiMessage.sendMessage(event, builder.build());
+                        new EnvoiMessage().sendMessage(event, builder.build());
                         event.getJDA().removeEventListener(this);
                         return;
                     }
@@ -94,7 +94,7 @@ public class PlusMoinsCommand implements Command {
                     } else {
                         builder.appendDescription("C'est moins !");
                     }
-                    EnvoiMessage.sendMessage(event, builder.build());
+                    new EnvoiMessage().sendMessage(event, builder.build());
 
 
                     tryAmount[0]++;

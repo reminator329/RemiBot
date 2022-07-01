@@ -39,7 +39,7 @@ public class GhostPingCommand implements Command {
         List<String> args = event.getArgs();
 
         if (!event.isFromGuild()) {
-            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
         if (event.getMember() == null) {

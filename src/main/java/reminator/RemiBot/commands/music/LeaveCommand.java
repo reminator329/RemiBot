@@ -39,7 +39,7 @@ public class LeaveCommand implements Command {
     public void execute(CommandExecutedEvent event) {
 
         if (!event.isFromGuild()) {
-            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
         Member member = event.getMember();
@@ -48,7 +48,7 @@ public class LeaveCommand implements Command {
         GuildVoiceState voiceState = member.getVoiceState();
         assert voiceState != null;
         if (!voiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Tu dois être dans un salon vocal pour utiliser cette commande.");
+            new EnvoiMessage().sendMessage(event, "Tu dois être dans un salon vocal pour utiliser cette commande.");
             return;
         }
 
@@ -58,13 +58,13 @@ public class LeaveCommand implements Command {
         GuildVoiceState selfVoiceState = selfMember.getVoiceState();
         assert selfVoiceState != null;
         if (!selfVoiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Je dois être dans un salon vocal pour exécuter cette commande.");
+            new EnvoiMessage().sendMessage(event, "Je dois être dans un salon vocal pour exécuter cette commande.");
             return;
         }
 
         assert selfVoiceState.getChannel() != null;
         if (!selfVoiceState.getChannel().equals(voiceState.getChannel())) {
-            EnvoiMessage.sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
+            new EnvoiMessage().sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
             return;
         }
 
@@ -74,6 +74,6 @@ public class LeaveCommand implements Command {
         AudioManager audioManager = guild.getAudioManager();
         audioManager.closeAudioConnection();
 
-        EnvoiMessage.sendMessage(event, "Merci d'avoir écouté de la musique, à bientôt !");
+        new EnvoiMessage().sendMessage(event, "Merci d'avoir écouté de la musique, à bientôt !");
     }
 }

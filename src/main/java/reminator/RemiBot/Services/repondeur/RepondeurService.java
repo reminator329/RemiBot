@@ -46,7 +46,7 @@ public class RepondeurService extends ListenerAdapter {
                 int r = random.nextInt(100);
                 if (r <= 10) {
                     String message = matcherdi.group(1).substring(2);
-                    EnvoiMessage.sendMessage(event, message.toLowerCase());
+                    new EnvoiMessage().sendMessage(event, message.toLowerCase());
                 }
             }
             if (matcherdy.find() && matcherdy.group(1).length() > 2) {
@@ -54,7 +54,7 @@ public class RepondeurService extends ListenerAdapter {
                 int r = random.nextInt(100);
                 if (r <= 10) {
                     String message = matcherdy.group(1).substring(2);
-                    EnvoiMessage.sendMessage(event, message.toLowerCase());
+                    new EnvoiMessage().sendMessage(event, message.toLowerCase());
                 }
             }
             if (matchercri.find() && matchercri.group(1).length() > 3) {
@@ -62,7 +62,7 @@ public class RepondeurService extends ListenerAdapter {
                 int r = random.nextInt(100);
                 if (r <= 10) {
                     String message = matchercri.group(1).substring(3);
-                    EnvoiMessage.sendMessage(event, message.toUpperCase());
+                    new EnvoiMessage().sendMessage(event, message.toUpperCase());
                 }
             }
         }

@@ -6,6 +6,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import reminator.RemiBot.bot.BotEmbed;
+import reminator.RemiBot.buttons.BotButtons;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.util.*;
@@ -43,7 +44,7 @@ public class TrackScheduler extends AudioEventAdapter {
 
     private void displayChannel(AudioTrack track) {
         if (displayChannel != null) {
-            EnvoiMessage.sendGuild(displayChannel, BotEmbed.NOW_PLAYING(track).build());
+            new EnvoiMessage().withComponents(new BotButtons().withPlayingStatus(PlayingStatus.PLAY).NOW_PLAYING()).sendGuild(displayChannel, BotEmbed.NOW_PLAYING(track).build());
         }
     }
 

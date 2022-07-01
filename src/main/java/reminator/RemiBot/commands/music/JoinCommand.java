@@ -36,7 +36,7 @@ public class JoinCommand implements Command {
     @Override
     public void execute(CommandExecutedEvent event) {
         if (!event.isFromGuild()) {
-            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
         Member member = event.getMember();
@@ -45,7 +45,7 @@ public class JoinCommand implements Command {
         GuildVoiceState voiceState = member.getVoiceState();
         assert voiceState != null;
         if (!voiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Tu dois être dans un salon vocal pour utiliser cette commande.");
+            new EnvoiMessage().sendMessage(event, "Tu dois être dans un salon vocal pour utiliser cette commande.");
             return;
         }
 
@@ -55,7 +55,7 @@ public class JoinCommand implements Command {
         GuildVoiceState selfVoiceState = selfMember.getVoiceState();
         assert selfVoiceState != null;
         if (selfVoiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Je suis déjà dans un channel vocal.");
+            new EnvoiMessage().sendMessage(event, "Je suis déjà dans un channel vocal.");
             return;
         }
 
@@ -64,6 +64,6 @@ public class JoinCommand implements Command {
 
         audioManager.openAudioConnection(audioChannel);
         assert audioChannel != null;
-        EnvoiMessage.sendMessage(event, "Je suis maintenant connecté sur " + audioChannel.getAsMention());
+        new EnvoiMessage().sendMessage(event, "Je suis maintenant connecté sur " + audioChannel.getAsMention());
     }
 }

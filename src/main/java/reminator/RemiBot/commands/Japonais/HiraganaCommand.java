@@ -51,11 +51,11 @@ public class HiraganaCommand implements Command {
         Map<User, Integer> scores = new HashMap<>();
 
         final EmbedBuilder[] embedBuilder = {new EmbedBuilder().setTitle("Hiragana game ! Le premier qui trouve 10 hiragana gagne la partie !").setDescription("Que le meilleur gagne !")};
-        EnvoiMessage.sendMessage(event, embedBuilder[0].build());
+        new EnvoiMessage().sendMessage(event, embedBuilder[0].build());
         final Hiragana[] hiragana = {Hiragana.getRandom()};
 
         embedBuilder[0] = new EmbedBuilder().setTitle(hiragana[0].japonais()).setDescription("Comment écrit-on ce hiragana en rômaji ?");
-        EnvoiMessage.sendMessage(event, embedBuilder[0].build());
+        new EnvoiMessage().sendMessage(event, embedBuilder[0].build());
 
 
         RemiBot.api.addEventListener(new ListenerAdapter() {
@@ -68,7 +68,7 @@ public class HiraganaCommand implements Command {
                 User user = event.getAuthor();
 
                 if(hiragana[0].roomaji().equalsIgnoreCase(msg)) {
-                    EnvoiMessage.sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + hiragana[0].japonais() + " se lit bien " + hiragana[0].roomaji());
+                    new EnvoiMessage().sendMessage(event, "** Bravo " + user.getAsMention() + "** :partying_face:\n" + hiragana[0].japonais() + " se lit bien " + hiragana[0].roomaji());
                     int score;
                     if (scores.containsKey(user)) {
                         score = scores.get(user) + 1;
@@ -77,21 +77,21 @@ public class HiraganaCommand implements Command {
                         score = 1;
                         scores.put(user, score);
                     }
-                    EnvoiMessage.sendMessage(event, user.getAsMention() + " a maintenant " + score + " points !");
+                    new EnvoiMessage().sendMessage(event, user.getAsMention() + " a maintenant " + score + " points !");
                     if (score == 10) {
-                        EnvoiMessage.sendMessage(event, user.getAsMention() + " a gagné !!! :partying_face: :partying_face: :partying_face:");
+                        new EnvoiMessage().sendMessage(event, user.getAsMention() + " a gagné !!! :partying_face: :partying_face: :partying_face:");
                         EmbedBuilder classement = new EmbedBuilder().setTitle("Classement des joueurs de la partie");
                         StringBuilder s = new StringBuilder();
                         for(Map.Entry<User, Integer> e : scores.entrySet()) {
                             s.append(e.getKey().getAsMention()).append(" : ").append(e.getValue()).append("\n");
                         }
                         classement.addField("Test", s.toString(), false);
-                        EnvoiMessage.sendMessage(event, classement.build());
+                        new EnvoiMessage().sendMessage(event, classement.build());
                         event.getJDA().removeEventListener(this);
                     } else {
                         hiragana[0] = Hiragana.getRandom();
                         embedBuilder[0] = new EmbedBuilder().setTitle(hiragana[0].japonais()).setDescription("Comment écrit-on ce hiragana en rômaji ?");
-                        EnvoiMessage.sendMessage(event, embedBuilder[0].build());
+                        new EnvoiMessage().sendMessage(event, embedBuilder[0].build());
                     }
                     return;
                 }

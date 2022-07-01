@@ -37,7 +37,7 @@ public class SkipCommand implements Command {
     public void execute(CommandExecutedEvent event) {
 
         if (!event.isFromGuild()) {
-            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
         Member member = event.getMember();
@@ -46,7 +46,7 @@ public class SkipCommand implements Command {
         GuildVoiceState voiceState = member.getVoiceState();
         assert voiceState != null;
         if (!voiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
+            new EnvoiMessage().sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
             return;
         }
 
@@ -56,13 +56,13 @@ public class SkipCommand implements Command {
         GuildVoiceState selfVoiceState = selfMember.getVoiceState();
         assert selfVoiceState != null;
         if (!selfVoiceState.inAudioChannel()) {
-            EnvoiMessage.sendMessage(event, "Je dois être dans un salon vocal exécuter cette commande.");
+            new EnvoiMessage().sendMessage(event, "Je dois être dans un salon vocal exécuter cette commande.");
             return;
         }
 
         assert selfVoiceState.getChannel() != null;
         if (!selfVoiceState.getChannel().equals(voiceState.getChannel())) {
-            EnvoiMessage.sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
+            new EnvoiMessage().sendMessage(event, "Tu dois être dans le même salon vocal que moi.");
             return;
         }
 
@@ -70,11 +70,11 @@ public class SkipCommand implements Command {
         AudioPlayer audioPlayer = musicManager.getAudioPlayer();
 
         if (audioPlayer.getPlayingTrack() == null) {
-            EnvoiMessage.sendMessage(event, "Il n'y a pas de musique en cours.");
+            new EnvoiMessage().sendMessage(event, "Il n'y a pas de musique en cours.");
             return;
         }
 
-        EnvoiMessage.sendMessage(event, "Je passe à la musique suivante.");
+        new EnvoiMessage().sendMessage(event, "Je passe à la musique suivante.");
         musicManager.getTrackScheduler().nextTrack();
     }
 }

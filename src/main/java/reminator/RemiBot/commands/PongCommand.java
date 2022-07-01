@@ -44,7 +44,7 @@ public class PongCommand implements Command {
         EmbedBuilder builder = BotEmbed.SPOTIFY(member);
         builder.setTitle("Ping !");
 
-        EnvoiMessage.sendMessage(event, builder.build());
-        EnvoiMessage.sendPrivate(author, Gif.getRandom().getUrl());
+        new EnvoiMessage().sendMessage(event, builder.build());
+        new EnvoiMessage().sendPrivate(author, Gif.getRandom().getUrl());
     }
 }

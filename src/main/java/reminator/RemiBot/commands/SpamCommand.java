@@ -57,9 +57,9 @@ public class SpamCommand implements Command {
                 @Override
                 public void run() {
                     if (event.isFromGuild())
-                        EnvoiMessage.sendMessage(event, "Je spam");
+                        new EnvoiMessage().sendMessage(event, "Je spam");
                     else
-                        EnvoiMessage.sendPrivate(author, "Je spam");
+                        new EnvoiMessage().sendPrivate(author, "Je spam");
                 }
             }, 0, 2500);
         }

@@ -49,7 +49,7 @@ public class DevoirFiniCommand implements Command {
         List<String> args = event.getArgs();
 
         if (args.size() < 1) {
-            EnvoiMessage.sendMessage(event, "Commande mal utilisé, voir `r!help devoir-fini`");
+            new EnvoiMessage().sendMessage(event, "Commande mal utilisé, voir `r!help devoir-fini`");
             return;
         }
 
@@ -57,15 +57,15 @@ public class DevoirFiniCommand implements Command {
         try {
             numeroDevoir = Integer.parseInt(args.get(0));
         } catch (Exception e) {
-            EnvoiMessage.sendMessage(event, "Commande mal utilisé, voir `r!help devoir-fini`");
+            new EnvoiMessage().sendMessage(event, "Commande mal utilisé, voir `r!help devoir-fini`");
             return;
         }
 
         Devoir devoir = bdDevoir.finiDevoir(event.getAuthor(), numeroDevoir);
         if (devoir == null) {
-            EnvoiMessage.sendMessage(event, "Erreur lors de la suppression du devoir. Vérifier le numéro du devoir `r!devoir`");
+            new EnvoiMessage().sendMessage(event, "Erreur lors de la suppression du devoir. Vérifier le numéro du devoir `r!devoir`");
         } else {
-            EnvoiMessage.sendMessage(event, "Le devoir " + devoir + " a bien été supprimé.");
+            new EnvoiMessage().sendMessage(event, "Le devoir " + devoir + " a bien été supprimé.");
         }
     }
 }

@@ -32,14 +32,14 @@ public class EcouteMusiqueCommand implements Command {
     @Override
     public void execute(CommandExecutedEvent event) {
         if (!event.isFromGuild()) {
-            EnvoiMessage.sendMessage(event, "Tu ne peux pas faire ça en privé.");
+            new EnvoiMessage().sendMessage(event, "Tu ne peux pas faire ça en privé.");
             return;
         }
 
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(event.getGuild());
         musicManager.setDisplayChannel(event.getChannel());
 
-        EnvoiMessage.sendMessage(event, "Le détail des musiques jouées sur ce serveur sera affiché dans " + event.getChannel().getAsMention());
+        new EnvoiMessage().sendMessage(event, "Le détail des musiques jouées sur ce serveur sera affiché dans " + event.getChannel().getAsMention());
         
     }
 }

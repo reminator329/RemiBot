@@ -111,12 +111,12 @@ public class HelpCommand implements Command {
         }
 
         if (message == null) {
-            EnvoiMessage.sendMessage(event, "La commande `" + args.get(0) + "` n'existe pas");
+            new EnvoiMessage().sendMessage(event, "La commande `" + args.get(0) + "` n'existe pas");
             return;
         }
 
         if (author != null)
             message.setFooter(author.getName(), author.getAvatarUrl());
-        EnvoiMessage.sendMessage(event, message.build());
+        new EnvoiMessage().sendMessage(event, message.build());
     }
 }
