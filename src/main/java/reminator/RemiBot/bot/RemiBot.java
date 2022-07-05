@@ -11,6 +11,14 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.locators.RelativeLocator;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import reminator.RemiBot.Services.ChangePseudoService;
 import reminator.RemiBot.Services.reactionpersonne.Users;
 import reminator.RemiBot.buttons.ButtonClickListener;
 import reminator.RemiBot.commands.Devoir.Model.BDDevoir;
@@ -21,11 +29,14 @@ import reminator.RemiBot.commands.Japonais.model.VocabulaireParserCSV;
 import reminator.RemiBot.Services.motdujour.MotDuJourService;
 import reminator.RemiBot.Services.openai.AprilFoolService;
 import reminator.RemiBot.Services.reactionpersonne.ReactionPersonneService;
-import reminator.RemiBot.Services.repondeur.RepondeurService;
+
 
 import java.awt.*;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.*;
+import java.util.List;
 
 public class RemiBot {
 
@@ -34,9 +45,15 @@ public class RemiBot {
     public static final Color color = Color.RED;
     public static String token;
     public static JDA api;
+    public static String mdpFB;
 
     public static void main(String[] arguments) throws Exception {
         System.setProperty("user.timezone", "Europe/Paris");
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\remil\\AppData\\Local\\chromedriver.exe");
+
+
+
+
 
         int index = 0;
         token = arguments[index];
@@ -55,6 +72,8 @@ public class RemiBot {
         try {
             VocabulaireParserCSV.getInstance().setURL(arguments[index]);
             index++;
+            mdpFB = arguments[index];
+            index++;
             Users.REMINATOR.setAuthorization(arguments[index]);
             index++;
             Users.MOUMOUNI.setAuthorization(arguments[index]);
@@ -66,6 +85,9 @@ public class RemiBot {
             e.printStackTrace();
         }
 
+
+
+
         CommandListUpdateAction commands = api.updateCommands()
                 .addCommands(
                         new CommandData("pingremi", "Retourne pong")
@@ -75,6 +97,7 @@ public class RemiBot {
 
         MotDuJourService service = new MotDuJourService(api);
         service.start();
+        new ChangePseudoService().start();
 
 //        PriceScannerService.init(api.getTextChannelById("877259941021376512"));
 
