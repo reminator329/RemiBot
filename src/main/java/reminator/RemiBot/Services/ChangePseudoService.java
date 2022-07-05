@@ -27,6 +27,7 @@ public class ChangePseudoService {
         driver = new ChromeDriver(options);
 
         driver.get("https://www.messenger.com/t/100013823291154");
+        System.out.println(driver.getCurrentUrl());
 
         WebElement emailElem = driver.findElement(By.id("email"));
         WebElement passElem = driver.findElement(By.id("pass"));
@@ -43,6 +44,8 @@ public class ChangePseudoService {
                 .pause(Duration.ofMillis(500))
                 .sendKeys(Keys.ENTER)
                 .perform();
+
+        System.out.println(driver.getCurrentUrl());
 
         Thread.sleep(10000);
         new Actions(driver)
