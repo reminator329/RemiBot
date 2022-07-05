@@ -20,6 +20,10 @@ public class ChangePseudoService {
 
     public ChangePseudoService() throws InterruptedException {
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--headless");
+        options.addArguments("--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
 
         driver.get("https://www.messenger.com/t/100013823291154");
