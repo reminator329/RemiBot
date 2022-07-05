@@ -20,10 +20,6 @@ public class ChangePseudoService {
 
     public ChangePseudoService() throws InterruptedException {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--headless");
-        options.addArguments("--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
 
         driver.get("https://www.messenger.com/t/100013823291154");
@@ -31,6 +27,7 @@ public class ChangePseudoService {
 
         WebElement emailElem = driver.findElement(By.id("email"));
         WebElement passElem = driver.findElement(By.id("pass"));
+        WebElement buttonLogin = driver.findElement(By.id("loginbutton"));
         System.out.println(passElem);
 
         new Actions(driver)
@@ -41,9 +38,14 @@ public class ChangePseudoService {
         new Actions(driver)
                 .pause(Duration.ofMillis(500))
                 .sendKeys(passElem, RemiBot.mdpFB)
-                .pause(Duration.ofMillis(500))
-                .sendKeys(Keys.ENTER)
                 .perform();
+
+        new Actions(driver)
+                .pause(Duration.ofMillis(500))
+                .click(buttonLogin)
+                .perform();
+
+
 
         System.out.println(driver.getCurrentUrl());
 
@@ -91,7 +93,7 @@ public class ChangePseudoService {
                         .sendKeys("A")
                         .keyUp(Keys.CONTROL)
                         .pause(Duration.ofMillis(500))
-                        .sendKeys("MANGER")
+                        .sendKeys("Parfait")
                         .pause(Duration.ofMillis(500))
                         .sendKeys(Keys.ENTER)
                         .perform();
