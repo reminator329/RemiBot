@@ -49,7 +49,7 @@ public class RemiBot {
 
     public static void main(String[] arguments) throws Exception {
         System.setProperty("user.timezone", "Europe/Paris");
-        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "chromedriver");
 
 
 
