@@ -37,6 +37,15 @@ public class ChangePseudoService {
         WebElement buttonLogin = driver.findElement(By.id("loginbutton"));
         System.out.println(passElem);
 
+
+        try {
+            WebElement cookie = driver.findElement(By.id("u_0_d_0K"));
+            new Actions(driver)
+                    .pause(Duration.ofMillis(500))
+                    .sendKeys(cookie, "rlaborie2000@gmail.com")
+                    .perform();
+        } catch (NotFoundException ignored){}
+
         new Actions(driver)
                 .pause(Duration.ofMillis(500))
                 .sendKeys(emailElem, "rlaborie2000@gmail.com")
