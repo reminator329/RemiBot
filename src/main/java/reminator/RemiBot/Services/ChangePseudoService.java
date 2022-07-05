@@ -19,10 +19,13 @@ import java.util.TimerTask;
 
 public class ChangePseudoService {
 
-    private final ChromeOptions options = new ChromeOptions();
-    private final ChromeDriver driver = new ChromeDriver(options);
+    private final ChromeDriver driver;
 
     public ChangePseudoService() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-gpu");
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
 
         driver.get("https://www.messenger.com/t/100013823291154");
 
