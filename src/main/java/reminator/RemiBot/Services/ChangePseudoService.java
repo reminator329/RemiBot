@@ -31,6 +31,7 @@ public class ChangePseudoService {
         WebElement emailElem = driver.findElement(By.id("email"));
         WebElement passElem = driver.findElement(By.id("pass"));
         System.out.println(passElem);
+        System.out.println(RemiBot.mdpFB);
 
         new Actions(driver)
                 .pause(Duration.ofMillis(500))
