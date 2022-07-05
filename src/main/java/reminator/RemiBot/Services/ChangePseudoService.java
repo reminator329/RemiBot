@@ -23,6 +23,7 @@ public class ChangePseudoService {
 
     public ChangePseudoService() {
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox");
         options.addArguments("--disable-gpu");
         options.addArguments("--headless");
         options.addArguments("--disable-dev-shm-usage");
