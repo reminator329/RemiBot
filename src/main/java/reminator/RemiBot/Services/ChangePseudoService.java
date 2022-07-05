@@ -31,7 +31,6 @@ public class ChangePseudoService {
         WebElement emailElem = driver.findElement(By.id("email"));
         WebElement passElem = driver.findElement(By.id("pass"));
         System.out.println(passElem);
-        System.out.println(RemiBot.mdpFB);
 
         new Actions(driver)
                 .pause(Duration.ofMillis(500))
@@ -42,12 +41,11 @@ public class ChangePseudoService {
                 .pause(Duration.ofMillis(500))
                 .sendKeys(passElem, RemiBot.mdpFB)
                 .sendKeys(Keys.ENTER)
-                .pause(Duration.ofMillis(10000))
                 .perform();
 
 
         new Actions(driver)
-                .pause(Duration.ofMillis(1000))
+                .pause(Duration.ofMillis(10000))
                 .click(driver.findElement(By.xpath("//div[contains(@class, 'j9ispegn pmk7jnqg k4urcfbm datstx6m b5wmifdl kr520xx4 mdpwds66 b2cqd1jy n13yt9zj eh67sqbx')]")))
                 .perform();
 
