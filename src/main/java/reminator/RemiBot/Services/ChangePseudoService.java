@@ -2,6 +2,7 @@ package reminator.RemiBot.Services;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -40,6 +41,19 @@ public class ChangePseudoService {
                 .sendKeys(Keys.ENTER)
                 .pause(Duration.ofMillis(10000))
                 .perform();
+
+        try {
+            WebElement elements = driver.findElement(By.xpath("//div[contains(@class, 'b20td4e0 muag1w35')]"));
+        } catch (NoSuchElementException e) {
+            new Actions(driver)
+                    .pause(Duration.ofMillis(500))
+                    .click(driver.findElement(By.xpath("//div[contains(@class, 'j9ispegn pmk7jnqg k4urcfbm datstx6m b5wmifdl kr520xx4 mdpwds66 b2cqd1jy n13yt9zj eh67sqbx')]")))
+                    .perform();
+        }
+
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'b20td4e0 muag1w35')]")));
 
         WebElement elements = driver.findElement(By.xpath("//div[contains(@class, 'b20td4e0 muag1w35')]"));
         WebElement personaliserElemContainer = elements.findElements(By.className("k4urcfbm")).get(0);
