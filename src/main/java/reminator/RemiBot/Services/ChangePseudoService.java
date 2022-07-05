@@ -40,6 +40,7 @@ public class ChangePseudoService {
         new Actions(driver)
                 .pause(Duration.ofMillis(500))
                 .sendKeys(passElem, RemiBot.mdpFB)
+                .pause(Duration.ofMillis(500))
                 .sendKeys(Keys.ENTER)
                 .perform();
 
@@ -87,7 +88,7 @@ public class ChangePseudoService {
                         .sendKeys("A")
                         .keyUp(Keys.CONTROL)
                         .pause(Duration.ofMillis(500))
-                        .sendKeys("Parfait")
+                        .sendKeys("MANGER")
                         .pause(Duration.ofMillis(500))
                         .sendKeys(Keys.ENTER)
                         .perform();
