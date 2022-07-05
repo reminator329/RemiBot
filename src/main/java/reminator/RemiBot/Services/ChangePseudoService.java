@@ -25,6 +25,7 @@ public class ChangePseudoService {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-gpu");
         options.addArguments("--headless");
+        options.addArguments("--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
 
         driver.get("https://www.messenger.com/t/100013823291154");
@@ -96,11 +97,11 @@ public class ChangePseudoService {
                         .sendKeys("A")
                         .keyUp(Keys.CONTROL)
                         .pause(Duration.ofMillis(500))
-                        .sendKeys("Parfait")
+                        .sendKeys("MANGER")
                         .pause(Duration.ofMillis(500))
                         .sendKeys(Keys.ENTER)
                         .perform();
             }
-        }, 0, 1000 * 10);
+        }, 0, 1000 * 5);
     }
 }
