@@ -54,14 +54,15 @@ public class ChangePseudoService {
 
 
 
+        Thread.sleep(10000);
         System.out.println(driver.getCurrentUrl());
         new File("page.html");
         PrintWriter printWriter = new PrintWriter("page.html");
-        printWriter.write(driver.findElement(By.xpath("/html/body")).getText());
+        printWriter.write(driver.getPageSource());
         printWriter.close();
-        
 
-        Thread.sleep(10000);
+
+
         new Actions(driver)
                 .click(driver.findElement(By.xpath("//div[contains(@class, 'j9ispegn pmk7jnqg k4urcfbm datstx6m b5wmifdl kr520xx4 mdpwds66 b2cqd1jy n13yt9zj eh67sqbx')]")))
                 .perform();
