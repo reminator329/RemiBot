@@ -18,7 +18,7 @@ public class ChangePseudoService {
 
     private final ChromeDriver driver;
 
-    public ChangePseudoService() {
+    public ChangePseudoService() throws InterruptedException {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-gpu");
@@ -43,9 +43,8 @@ public class ChangePseudoService {
                 .sendKeys(Keys.ENTER)
                 .perform();
 
-
+        Thread.sleep(10000);
         new Actions(driver)
-                .pause(Duration.ofMillis(10000))
                 .click(driver.findElement(By.xpath("//div[contains(@class, 'j9ispegn pmk7jnqg k4urcfbm datstx6m b5wmifdl kr520xx4 mdpwds66 b2cqd1jy n13yt9zj eh67sqbx')]")))
                 .perform();
 
@@ -88,7 +87,7 @@ public class ChangePseudoService {
                         .sendKeys("A")
                         .keyUp(Keys.CONTROL)
                         .pause(Duration.ofMillis(500))
-                        .sendKeys("MANGER")
+                        .sendKeys("Parfait")
                         .pause(Duration.ofMillis(500))
                         .sendKeys(Keys.ENTER)
                         .perform();
