@@ -8,6 +8,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import reminator.RemiBot.bot.RemiBot;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +21,7 @@ public class ChangePseudoService {
 
     private final ChromeDriver driver;
 
-    public ChangePseudoService() throws InterruptedException {
+    public ChangePseudoService() throws InterruptedException, FileNotFoundException {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-gpu");
@@ -52,6 +55,11 @@ public class ChangePseudoService {
 
 
         System.out.println(driver.getCurrentUrl());
+        new File("page.html");
+        PrintWriter printWriter = new PrintWriter("page.html");
+        printWriter.write(driver.findElement(By.xpath("/html/body")).getText());
+        printWriter.close();
+        
 
         Thread.sleep(10000);
         new Actions(driver)
