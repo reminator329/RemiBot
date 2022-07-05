@@ -42,7 +42,7 @@ public class ChangePseudoService {
             WebElement cookie = driver.findElement(By.id("u_0_d_0K"));
             new Actions(driver)
                     .pause(Duration.ofMillis(500))
-                    .sendKeys(cookie, "rlaborie2000@gmail.com")
+                    .click(cookie)
                     .perform();
         } catch (NotFoundException ignored){}
 
