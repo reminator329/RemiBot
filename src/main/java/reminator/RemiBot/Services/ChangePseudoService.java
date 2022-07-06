@@ -32,10 +32,11 @@ public class ChangePseudoService {
         driver.get("https://www.messenger.com/t/100013823291154");
         System.out.println(driver.getCurrentUrl());
 
-        WebElement buttonLogin = driver.findElement(By.id("loginbutton"));
+        System.out.println("avant login");
 
 
         try {
+            System.out.println("avant cookie1");
             WebElement cookie = driver.findElement(By.xpath("//button[@title='Only allow essential cookies']"));
             new Actions(driver)
                     .pause(Duration.ofMillis(500))
@@ -46,6 +47,7 @@ public class ChangePseudoService {
         }
 
         try {
+            System.out.println("avant cookie2");
             WebElement cookie = driver.findElement(By.xpath("//button[@title='Only allow essential cookies']"));
             new Actions(driver)
                     .pause(Duration.ofMillis(500))
