@@ -58,7 +58,9 @@ public class ChangePseudoService {
         }
 
 
+        System.out.println("avant mail");
         WebElement emailElem = driver.findElement(By.id("email"));
+        System.out.println("avant pass");
         WebElement passElem = driver.findElement(By.id("pass"));
 
         new Actions(driver)
@@ -133,7 +135,7 @@ public class ChangePseudoService {
                         .sendKeys("A")
                         .keyUp(Keys.CONTROL)
                         .pause(Duration.ofMillis(500))
-                        .sendKeys("Miam")
+                        .sendKeys("Miame")
                         .pause(Duration.ofMillis(500))
                         .sendKeys(Keys.ENTER)
                         .perform();
