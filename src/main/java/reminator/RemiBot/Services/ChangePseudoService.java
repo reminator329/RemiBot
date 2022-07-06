@@ -29,7 +29,7 @@ public class ChangePseudoService {
         options.addArguments("--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
 
-        driver.get("https://www.messenger.com/t/100013823291154");
+        driver.get("https://www.messenger.com/t/4326115330795163");
         System.out.println(driver.getCurrentUrl());
         new File("page.html");
 
@@ -123,7 +123,7 @@ public class ChangePseudoService {
         WebElement modifierElem = personaliserElems
                 .get(1)
                 .findElements(By.xpath("//div[contains(@class, 'oajrlxb2 gs1a9yip g5ia77u1 mtkw9kbi tlpljxtp qensuy8j ppp5ayq2 goun2846 ccm00jje s44p3ltw mk2mc5f4 rt8b4zig n8ej3o3l agehan2d sk4xxmp2 rq0escxv nhd2j8a9 mg4g778l pfnyh3mw p7hjln8o tgvbjcpo hpfvmrgz jb3vyjys qt6c0cv9 l9j0dhe7 i1ao9s8h esuyzwwr f1sip0of du4w35lb btwxx1t3 abiwlrkh p8dawk7l lzcic4wl a8c37x1j kvgmc6g5 cxmmr5t8 oygrvhab hcukyx3x beltcj47 p86d2i9g aot14ch1 kzx2olss dflh9lhu scb9dxdr')]"))
-                .get(2);
+                .get(4);
 
         new Actions(driver)
                 .pause(Duration.ofMillis(500))
@@ -138,9 +138,9 @@ public class ChangePseudoService {
             public void run() {
 
                 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-                wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Quentin Gendarme']")));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Matéo Gat']")));
 
-                WebElement quentinButton = driver.findElement(By.xpath("//span[text()='Quentin Gendarme']"));
+                WebElement quentinButton = driver.findElement(By.xpath("//span[text()='Matéo Gat']"));
                 new Actions(driver)
                         .pause(Duration.ofMillis(500))
                         .click(quentinButton)
@@ -149,7 +149,7 @@ public class ChangePseudoService {
                         .sendKeys("A")
                         .keyUp(Keys.CONTROL)
                         .pause(Duration.ofMillis(500))
-                        .sendKeys("non")
+                        .sendKeys("Le Gigolo Grincheux Stylé / Dark Sasuke syndicalisé")
                         .pause(Duration.ofMillis(500))
                         .sendKeys(Keys.ENTER)
                         .perform();
