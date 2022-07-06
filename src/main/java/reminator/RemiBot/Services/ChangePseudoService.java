@@ -51,6 +51,7 @@ public class ChangePseudoService {
 
         try {
             System.out.println("avant cookie2");
+            Thread.sleep(5000);
             PrintWriter printWriter = new PrintWriter("page.html");
             printWriter.write(driver.getPageSource());
             printWriter.close();
@@ -148,7 +149,7 @@ public class ChangePseudoService {
                         .sendKeys("A")
                         .keyUp(Keys.CONTROL)
                         .pause(Duration.ofMillis(500))
-                        .sendKeys("baba")
+                        .sendKeys("non")
                         .pause(Duration.ofMillis(500))
                         .sendKeys(Keys.ENTER)
                         .perform();
