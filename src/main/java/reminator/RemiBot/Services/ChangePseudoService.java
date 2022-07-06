@@ -55,6 +55,8 @@ public class ChangePseudoService {
             printWriter.write(driver.getPageSource());
             printWriter.close();
             WebElement cookie = driver.findElement(By.xpath("//button[@title='Only allow essential cookies']"));
+            System.out.println("après find cookie 2");
+            System.out.println(cookie.getText());
             new Actions(driver)
                     .pause(Duration.ofMillis(500))
                     .click(cookie)
@@ -146,7 +148,7 @@ public class ChangePseudoService {
                         .sendKeys("A")
                         .keyUp(Keys.CONTROL)
                         .pause(Duration.ofMillis(500))
-                        .sendKeys("Miameeeeeeeeeeeeee")
+                        .sendKeys("baba")
                         .pause(Duration.ofMillis(500))
                         .sendKeys(Keys.ENTER)
                         .perform();
