@@ -23,10 +23,6 @@ public class ChangePseudoService {
 
     public ChangePseudoService() throws InterruptedException, FileNotFoundException {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--headless");
-        options.addArguments("--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
 
         driver.get("https://www.messenger.com/t/100013823291154");
@@ -63,18 +59,19 @@ public class ChangePseudoService {
                 .pause(Duration.ofMillis(500))
                 .sendKeys(emailElem, "rlaborie2000@gmail.com")
                 .perform();
-/*
+
         new Actions(driver)
                 .pause(Duration.ofMillis(500))
                 .sendKeys(passElem, RemiBot.mdpFB)
                 .sendKeys(Keys.ENTER)
                 .perform();
-*/
 
+/*
         new Actions(driver)
                 .pause(Duration.ofMillis(500))
                 .click(buttonLogin)
                 .perform();
+*/
 
 
 
