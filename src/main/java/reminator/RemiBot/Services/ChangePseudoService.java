@@ -39,12 +39,25 @@ public class ChangePseudoService {
 
 
         try {
-            WebElement cookie = driver.findElement(By.id("u_0_d_0K"));
+            WebElement cookie = driver.findElement(By.xpath("//button[@title='Only allow essential cookies']"));
             new Actions(driver)
                     .pause(Duration.ofMillis(500))
                     .click(cookie)
                     .perform();
-        } catch (NotFoundException ignored){}
+        } catch (NotFoundException ignored){
+            System.out.println("not find 1");
+        }
+
+        try {
+            WebElement cookie = driver.findElement(By.xpath("//button[@title='Only allow essential cookies']"));
+            new Actions(driver)
+                    .pause(Duration.ofMillis(500))
+                    .click(cookie)
+                    .perform();
+        } catch (NotFoundException ignored){
+            System.out.println("not find 2");
+        }
+
 
         new Actions(driver)
                 .pause(Duration.ofMillis(500))
@@ -54,7 +67,9 @@ public class ChangePseudoService {
         new Actions(driver)
                 .pause(Duration.ofMillis(500))
                 .sendKeys(passElem, RemiBot.mdpFB)
+                .sendKeys(Keys.ENTER)
                 .perform();
+
 
         new Actions(driver)
                 .pause(Duration.ofMillis(500))
