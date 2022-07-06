@@ -31,12 +31,15 @@ public class ChangePseudoService {
 
         driver.get("https://www.messenger.com/t/100013823291154");
         System.out.println(driver.getCurrentUrl());
+        new File("page.html");
 
-        System.out.println("avant login");
 
 
         try {
             System.out.println("avant cookie1");
+            PrintWriter printWriter = new PrintWriter("page.html");
+            printWriter.write(driver.getPageSource());
+            printWriter.close();
             WebElement cookie = driver.findElement(By.xpath("//button[@title='Only allow essential cookies']"));
             new Actions(driver)
                     .pause(Duration.ofMillis(500))
@@ -48,6 +51,9 @@ public class ChangePseudoService {
 
         try {
             System.out.println("avant cookie2");
+            PrintWriter printWriter = new PrintWriter("page.html");
+            printWriter.write(driver.getPageSource());
+            printWriter.close();
             WebElement cookie = driver.findElement(By.xpath("//button[@title='Only allow essential cookies']"));
             new Actions(driver)
                     .pause(Duration.ofMillis(500))
@@ -59,8 +65,14 @@ public class ChangePseudoService {
 
 
         System.out.println("avant mail");
+        PrintWriter printWriter = new PrintWriter("page.html");
+        printWriter.write(driver.getPageSource());
+        printWriter.close();
         WebElement emailElem = driver.findElement(By.id("email"));
         System.out.println("avant pass");
+        printWriter = new PrintWriter("page.html");
+        printWriter.write(driver.getPageSource());
+        printWriter.close();
         WebElement passElem = driver.findElement(By.id("pass"));
 
         new Actions(driver)
@@ -85,8 +97,7 @@ public class ChangePseudoService {
 
         Thread.sleep(10000);
         System.out.println(driver.getCurrentUrl());
-        new File("page.html");
-        PrintWriter printWriter = new PrintWriter("page.html");
+        printWriter = new PrintWriter("page.html");
         printWriter.write(driver.getPageSource());
         printWriter.close();
 
@@ -135,7 +146,7 @@ public class ChangePseudoService {
                         .sendKeys("A")
                         .keyUp(Keys.CONTROL)
                         .pause(Duration.ofMillis(500))
-                        .sendKeys("Miame")
+                        .sendKeys("Miameeeeeeeeeeeeee")
                         .pause(Duration.ofMillis(500))
                         .sendKeys(Keys.ENTER)
                         .perform();
