@@ -28,10 +28,7 @@ public class ChangePseudoService {
         driver.get("https://www.messenger.com/t/100013823291154");
         System.out.println(driver.getCurrentUrl());
 
-        WebElement emailElem = driver.findElement(By.id("email"));
-        WebElement passElem = driver.findElement(By.id("pass"));
         WebElement buttonLogin = driver.findElement(By.id("loginbutton"));
-        System.out.println(passElem);
 
 
         try {
@@ -54,6 +51,9 @@ public class ChangePseudoService {
             System.out.println("not find 2");
         }
 
+
+        WebElement emailElem = driver.findElement(By.id("email"));
+        WebElement passElem = driver.findElement(By.id("pass"));
 
         new Actions(driver)
                 .pause(Duration.ofMillis(500))
