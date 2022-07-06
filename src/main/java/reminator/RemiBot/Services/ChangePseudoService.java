@@ -23,10 +23,6 @@ public class ChangePseudoService {
 
     public ChangePseudoService() throws InterruptedException, FileNotFoundException {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--headless");
-        options.addArguments("--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
 
         driver.get("https://www.messenger.com/t/4326115330795163");
@@ -98,7 +94,7 @@ public class ChangePseudoService {
 
 
 
-        Thread.sleep(10000);
+        Thread.sleep(5000);
         System.out.println(driver.getCurrentUrl());
         printWriter = new PrintWriter("page.html");
         printWriter.write(driver.getPageSource());
@@ -106,9 +102,18 @@ public class ChangePseudoService {
 
 
 
-        new Actions(driver)
-                .click(driver.findElement(By.xpath("//div[contains(@class, 'j9ispegn pmk7jnqg k4urcfbm datstx6m b5wmifdl kr520xx4 mdpwds66 b2cqd1jy n13yt9zj eh67sqbx')]")))
-                .perform();
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'b20td4e0 muag1w35')]")));
+
+        } catch (TimeoutException e) {
+            new Actions(driver)
+                    .click(driver.findElement(By.xpath("//div[contains(@class, 'j9ispegn pmk7jnqg k4urcfbm datstx6m b5wmifdl kr520xx4 mdpwds66 b2cqd1jy n13yt9zj eh67sqbx')]")))
+                    .perform();
+
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'b20td4e0 muag1w35')]")));
+        }
 
 
         WebElement elements = driver.findElement(By.xpath("//div[contains(@class, 'b20td4e0 muag1w35')]"));
