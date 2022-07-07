@@ -149,13 +149,13 @@ public class ChangePseudoService {
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[1]/div/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[3]/div/div[1]/div[25]/div[1]/div/div[2]/div/div/div")));
 
 
-                WebElement divPerso = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[3]/div/div[1]/div[25]/div[1]/div/div[2]/div/div/div"));
+                WebElement divPersoMateo = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[3]/div/div[1]/div[25]/div[1]/div/div[2]/div/div/div"));
 
-                List<WebElement> noms = divPerso.findElements(By.tagName("div"));
-                System.out.println(noms);
+                List<WebElement> nomsMateo = divPersoMateo.findElements(By.tagName("div"));
+                System.out.println(nomsMateo);
 
                 boolean isMateo = false;
-                for (WebElement element : noms) {
+                for (WebElement element : nomsMateo) {
                     System.out.println(element.findElement(By.tagName("span")) + " AAAAAAAAAAAAAAAAAAAAAA " +element.findElement(By.tagName("span")).getText());
                     if (element.findElement(By.tagName("span")).getText().contains("Matéo Gat")) {
                         isMateo = true;
@@ -166,13 +166,47 @@ public class ChangePseudoService {
 
                 new Actions(driver)
                         .pause(Duration.ofMillis(500))
-                        .click(divPerso)
+                        .click(divPersoMateo)
                         .pause(Duration.ofMillis(500))
                         .keyDown(Keys.CONTROL)
                         .sendKeys("A")
                         .keyUp(Keys.CONTROL)
                         .pause(Duration.ofMillis(500))
                         .sendKeys("Le meilleur délégué")
+                        .pause(Duration.ofMillis(500))
+                        .sendKeys(Keys.ENTER)
+                        .perform();
+
+
+
+                wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[1]/div/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[3]/div/div[1]/div[22]/div[1]/div/div[2]/div/div/div")));
+
+
+                WebElement divPersoTanguy = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[3]/div/div[1]/div[22]/div[1]/div/div[2]/div/div/div"));
+
+                List<WebElement> nomsTanguy = divPersoTanguy.findElements(By.tagName("div"));
+                System.out.println(nomsTanguy);
+
+                boolean isTanguy = false;
+                for (WebElement element : nomsTanguy) {
+                    System.out.println(element.findElement(By.tagName("span")) + " AAAAAAAAAAAAAAAAAAAAAA " +element.findElement(By.tagName("span")).getText());
+                    if (element.findElement(By.tagName("span")).getText().contains("Tanguy Veyrenc de Lavalette")) {
+                        isTanguy = true;
+                        break;
+                    }
+                }
+                if (!isTanguy) return;
+
+                new Actions(driver)
+                        .pause(Duration.ofMillis(500))
+                        .click(divPersoTanguy)
+                        .pause(Duration.ofMillis(500))
+                        .keyDown(Keys.CONTROL)
+                        .sendKeys("A")
+                        .keyUp(Keys.CONTROL)
+                        .pause(Duration.ofMillis(500))
+                        .sendKeys("Traitre numéro 1")
                         .pause(Duration.ofMillis(500))
                         .sendKeys(Keys.ENTER)
                         .perform();
