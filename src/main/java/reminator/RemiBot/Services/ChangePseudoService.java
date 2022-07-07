@@ -1,6 +1,7 @@
 package reminator.RemiBot.Services;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
@@ -12,20 +13,29 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.Duration;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class ChangePseudoService {
 
     private final ChromeDriver driver;
 
+    private List<String> noms = List.of(new String[]{
+            "Matéo Gat",
+            "Tanguy Veyrenc de Lavalette",
+            "Baptiste Pomarelle"
+    });
+    private int nbTrouve;
+
+    private Map<String, Boolean> trouves = new HashMap<>();
+
     public ChangePseudoService() throws InterruptedException, FileNotFoundException {
+
+        for (String nom : noms) {
+            trouves.put(nom, false);
+        }
+        nbTrouve = 0;
+
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--headless");
-        options.addArguments("--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
 
         driver.get("https://www.messenger.com/t/4326115330795163");
@@ -144,6 +154,7 @@ public class ChangePseudoService {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
+                System.out.println("début");
                 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[1]/div/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[3]/div/div[1]")));
                 WebElement elements = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[3]/div/div[1]"));
@@ -159,18 +170,45 @@ public class ChangePseudoService {
                             WebElement elem = element.findElement(By.tagName("span"));
                             String name = elem.getText();
 
-                            if (name.contains("Matéo Gat")) {
+                            String nom = "Matéo Gat";
+                            if (name.contains(nom) && !trouves.get(nom)) {
                                 changePseudo(elem, "Le meilleur délégué");
+                                Thread.sleep(1000);
+                                trouves.put(nom, true);
+                                nbTrouve++;
+                                if (nbTrouve == noms.size()) {
+                                    nbTrouve = 0;
+                                    trouves.forEach((e, b) -> trouves.put(e, false));
+                                }
+                                return;
                             }
 
-                            if (name.contains("Tanguy Veyrenc de Lavalette")) {
+                            nom = "Tanguy Veyrenc de Lavalette";
+                            if (name.contains(nom) && !trouves.get(nom)) {
                                 changePseudo(elem, "Traitre numéro 1");
+                                Thread.sleep(1000);
+                                trouves.put(nom, true);
+                                nbTrouve++;
+                                if (nbTrouve == noms.size()) {
+                                    nbTrouve = 0;
+                                    trouves.forEach((e, b) -> trouves.put(e, false));
+                                }
+                                return;
                             }
 
-                            if (name.contains("Baptiste Pomarelle")) {
+                            nom = "Baptiste Pomarelle";
+                            if (name.contains(nom) && !trouves.get(nom)) {
                                 changePseudo(elem, "Traitre numéro 2");
+                                Thread.sleep(1000);
+                                trouves.put(nom, true);
+                                nbTrouve++;
+                                if (nbTrouve == noms.size()) {
+                                    nbTrouve = 0;
+                                    trouves.forEach((e, b) -> trouves.put(e, false));
+                                }
+                                return;
                             }
-                        } catch (NoSuchElementException | NullPointerException ignored) {}
+                        } catch (NoSuchElementException | NullPointerException | InterruptedException ignored) {}
                     }
                 }
 
