@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.Duration;
-import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,10 +22,6 @@ public class ChangePseudoService {
 
     public ChangePseudoService() throws InterruptedException, FileNotFoundException {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--headless");
-        options.addArguments("--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
 
         driver.get("https://www.messenger.com/t/4326115330795163");
@@ -147,18 +142,33 @@ public class ChangePseudoService {
             public void run() {
 
                 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-                wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Matéo Gat']")));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[1]/div/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[3]/div/div[1]/div[25]/div[1]/div/div[2]/div/div/div")));
 
-                WebElement quentinButton = driver.findElement(By.xpath("//span[text()='Matéo Gat']"));
+
+                WebElement divPerso = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[3]/div/div[1]/div[25]/div[1]/div/div[2]/div/div/div"));
+
+                List<WebElement> noms = divPerso.findElements(By.tagName("div"));
+                System.out.println(noms);
+
+                boolean isMateo = false;
+                for (WebElement element : noms) {
+                    System.out.println(element.findElement(By.tagName("span")) + " AAAAAAAAAAAAAAAAAAAAAA " +element.findElement(By.tagName("span")).getText());
+                    if (element.findElement(By.tagName("span")).getText().contains("Matéo Gat")) {
+                        isMateo = true;
+                        break;
+                    }
+                }
+                if (!isMateo) return;
+
                 new Actions(driver)
                         .pause(Duration.ofMillis(500))
-                        .click(quentinButton)
+                        .click(divPerso)
                         .pause(Duration.ofMillis(500))
                         .keyDown(Keys.CONTROL)
                         .sendKeys("A")
                         .keyUp(Keys.CONTROL)
                         .pause(Duration.ofMillis(500))
-                        .sendKeys("Le Gigolo Grincheux Stylé / Dark Sasuke syndicalisé")
+                        .sendKeys("Le meilleur délégué")
                         .pause(Duration.ofMillis(500))
                         .sendKeys(Keys.ENTER)
                         .perform();
