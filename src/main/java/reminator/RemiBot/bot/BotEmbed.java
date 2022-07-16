@@ -8,17 +8,16 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.RichPresence;
 import net.dv8tion.jda.api.entities.User;
 import reminator.RemiBot.commands.music.TrackUserData;
-import reminator.RemiBot.utils.EnvoiMessage;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 
 import static reminator.RemiBot.utils.TimeUtils.formatTime;
 
 public class BotEmbed {
 
-    private BotEmbed() {}
+    private BotEmbed() {
+    }
 
     public static EmbedBuilder BASE() {
         return new EmbedBuilder()
@@ -65,7 +64,7 @@ public class BotEmbed {
         if (member == null)
             return BASE();
 
-        EmbedBuilder builder = BASE();
+        EmbedBuilder builder = BASE_USER(member.getUser());
         List<Activity> activities = member.getActivities();
         for (Activity a : activities) {
             if (a.getName().equalsIgnoreCase("Spotify")) {
@@ -77,12 +76,14 @@ public class BotEmbed {
 
     private static void addActivitySpotify(EmbedBuilder builder, Activity a, Member member) {
         RichPresence rp = a.asRichPresence();
+
         if (rp != null) {
             try {
                 builder.setImage(Objects.requireNonNull(rp.getLargeImage()).getUrl());
-            } catch (NullPointerException ignored) {}
-            String message = member.getUser().getName() + " écoute " + rp.getDetails() + " de " + rp.getState();
-            builder.setFooter(message, member.getUser().getAvatarUrl());
+            } catch (NullPointerException ignored) {
+            }
+            String message = rp.getDetails() + " de " + rp.getState();
+            builder.setAuthor(message, "https://open.spotify.com/track/" + rp.getSyncId(), "https://cdn-icons-png.flaticon.com/512/2111/2111624.png");
         }
     }
 }

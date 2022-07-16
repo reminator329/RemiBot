@@ -10,6 +10,7 @@ public enum Category {
     PERSO("Personnel", "Les commandes qui s'exécutent sur une personne directement."),
     BILAL("Bilal", "Les commandes liées à Bilal."),
     SCANNER("Scanneur", "Les commandes liées au scanneur de prix."),
+    ADMIN("Administrateur", "Les commandes pour la gestion administrative de serveur discord.")
     ;
 
     String name, description;

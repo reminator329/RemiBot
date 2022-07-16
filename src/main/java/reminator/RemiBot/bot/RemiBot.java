@@ -11,13 +11,6 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.locators.RelativeLocator;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import reminator.RemiBot.Services.ChangePseudoService;
 import reminator.RemiBot.Services.reactionpersonne.Users;
 import reminator.RemiBot.buttons.ButtonClickListener;
@@ -50,9 +43,6 @@ public class RemiBot {
     public static void main(String[] arguments) throws Exception {
         System.setProperty("user.timezone", "Europe/Paris");
         System.setProperty("webdriver.chrome.driver", "chromedriver");
-
-
-
 
 
         int index = 0;
