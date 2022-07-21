@@ -52,6 +52,7 @@ public enum Commands {
     PLAY(new PlayCommand()),
     LEAVE(new LeaveCommand()),
     STOP(new StopCommand()),
+    BACK(new BackCommand()),
     SKIP(new SkipCommand()),
     NOWPLAYING(new NowPlayingCommand()),
     QUEUE(new QueueCommand()),

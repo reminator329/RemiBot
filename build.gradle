@@ -41,6 +41,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver
     implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.3.0'
+    implementation 'junit:junit:4.13.1'
 
 
 }

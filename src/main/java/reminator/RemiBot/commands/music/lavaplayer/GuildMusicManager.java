@@ -30,8 +30,8 @@ public class GuildMusicManager {
     }
 
     public void stop() {
-        trackScheduler.clearQueue();
         audioPlayer.stopTrack();
+        trackScheduler.clearQueue();
     }
 
     public void setDisplayChannel(MessageChannel channel) {
