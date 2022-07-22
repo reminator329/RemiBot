@@ -22,6 +22,6 @@ public class PauseButton extends Button {
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(guild);
         musicManager.getAudioPlayer().setPaused(true);
         event.getInteraction().editButton(Buttons.PLAY.getButton()).queue();
-        new EnvoiMessage().sendGuild(event.getChannel(), event.getUser().getAsMention() + " a arrêter la lecture.");
+        new EnvoiMessage().sendGuild(event.getChannel(), event.getUser().getAsMention() + " a arrêté la lecture.");
     }
 }
