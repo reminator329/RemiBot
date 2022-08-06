@@ -8,14 +8,16 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 public class ReactionPersonneService extends ListenerAdapter {
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
-    private JDA api;
+    private final JDA api;
 
     public ReactionPersonneService(JDA api) {
         this.api = api;
@@ -41,56 +43,62 @@ public class ReactionPersonneService extends ListenerAdapter {
 
         if (random.nextInt(100) == 14) {
 
-            Emotes[] emotes = null;
+            ArrayList<Emotes> emotes = new ArrayList<>();
+            emotes.add(Emotes.POULPE_CONTENT);
+            emotes.add(Emotes.POULPE_PAS_CONTENT);
+            emotes.add(Emotes.FOU);
+            emotes.add(Emotes.OUI);
+            emotes.add(Emotes.NON);
+            emotes.add(Emotes.YOUPI);
+            emotes.add(Emotes.YOUPICAT);
 
             if (user.getId().equals(Users.ELORYA.getId())) {
-                emotes = new Emotes[]{Emotes.POULPE_CONTENT, Emotes.POULPE_PAS_CONTENT, Emotes.FOU};
+
             }
 
             if (user.getId().equals(Users.REMINATOR.getId())) {
-                emotes = new Emotes[]{Emotes.REMI, Emotes.POULPE_CONTENT, Emotes.SIDRA, Emotes.NATU, Emotes.DEOXYS, Emotes.chaudetIsWatchingU, Emotes.UPSSITECHED, Emotes.FOU};
+                emotes.addAll(List.of(new Emotes[]{Emotes.REMI, Emotes.SIDRA, Emotes.NATU, Emotes.DEOXYS, Emotes.chaudetIsWatchingU, Emotes.UPSSITECHED}));
 
             }
 
             if (user.getId().equals(Users.ALPHATASH.getId())) {
-                emotes = new Emotes[]{Emotes.PENIS_CHAN, Emotes.PENIS, Emotes.CUM, Emotes.FAP, Emotes.PUSSY, Emotes.BJ, Emotes.UPSSITECHED, Emotes.THIBAULT, Emotes.FOU};
+                emotes.addAll(List.of(new Emotes[]{Emotes.PENIS_CHAN, Emotes.PENIS, Emotes.CUM, Emotes.FAP, Emotes.PUSSY, Emotes.BJ, Emotes.UPSSITECHED, Emotes.THIBAULT}));
             }
 
             if (user.getId().equals(Users.REDECO.getId())) {
-                emotes = new Emotes[]{Emotes.BASTIEN, Emotes.UPSSITECHED, Emotes.HORNY, Emotes.FOU};
+                emotes.addAll(List.of(new Emotes[]{Emotes.BASTIEN, Emotes.UPSSITECHED, Emotes.HORNY}));
             }
 
             if (user.getId().equals(Users.YAEL.getId())) {
-                emotes = new Emotes[]{Emotes.POULPE_CONTENT, Emotes.POULPE_PAS_CONTENT, Emotes.FOU};
+
             }
 
             if (user.getId().equals(Users.DORIAN.getId())) {
-                emotes = new Emotes[]{Emotes.DORIAN, Emotes.UPSSITECHED, Emotes.FOU};
+                emotes.addAll(List.of(new Emotes[]{Emotes.DORIAN, Emotes.UPSSITECHED}));
             }
 
             if (user.getId().equals(Users.ERAZZED.getId())) {
-                emotes = new Emotes[]{Emotes.KILLIAN, Emotes.UPSSITECHED, Emotes.FOU};
+                emotes.addAll(List.of(new Emotes[]{Emotes.KILLIAN, Emotes.UPSSITECHED}));
             }
 
             if (user.getId().equals(Users.HARPIERAPACE.getId())) {
-                emotes = new Emotes[]{Emotes.TANGUY, Emotes.UPSSITECHED, Emotes.FOU};
+                emotes.addAll(List.of(new Emotes[]{Emotes.TANGUY, Emotes.UPSSITECHED}));
             }
 
             if (user.getId().equals(Users.DREAMPLUME.getId())) {
-                emotes = new Emotes[]{Emotes.MATEO, Emotes.UPSSITECHED, Emotes.FOU};
+                emotes.addAll(List.of(new Emotes[]{Emotes.MATEO, Emotes.UPSSITECHED}));
             }
 
             if (user.getId().equals(Users.SWAPHOLY.getId())) {
-                emotes = new Emotes[]{Emotes.THOMAS, Emotes.UPSSITECHED, Emotes.FOU};
+                emotes.addAll(List.of(new Emotes[]{Emotes.THOMAS, Emotes.UPSSITECHED}));
             }
 
             if (user.getId().equals(Users.FEAVY.getId())) {
-                emotes = new Emotes[]{Emotes.OUI, Emotes.FOU};
-            }
-            if (emotes == null) return;
 
-            int r = random.nextInt(emotes.length);
-            Emote emote = api.getEmoteCache().getElementById(emotes[r].getId());
+            }
+
+            int r = random.nextInt(emotes.size());
+            Emote emote = api.getEmoteCache().getElementById(emotes.get(r).getId());
             assert emote != null;
             message.addReaction(emote).queue();
         }
