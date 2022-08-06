@@ -87,7 +87,11 @@ public class RemiBot {
 
         MotDuJourService service = new MotDuJourService(api);
         service.start();
-        new ChangePseudoService().start();
+        try {
+            new ChangePseudoService().start();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
 
 //        PriceScannerService.init(api.getTextChannelById("877259941021376512"));
 

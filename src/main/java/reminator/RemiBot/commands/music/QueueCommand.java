@@ -11,6 +11,8 @@ import reminator.RemiBot.commands.music.lavaplayer.PlayerManager;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 import static reminator.RemiBot.utils.TimeUtils.formatTime;
+
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
 
@@ -46,7 +48,7 @@ public class QueueCommand implements Command {
         Guild guild = event.getGuild();
 
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(guild);
-        BlockingQueue<AudioTrack> queue = musicManager.getTrackScheduler().getQueue();
+        Deque<AudioTrack> queue = musicManager.getTrackScheduler().getQueue();
 
         if (queue.isEmpty()) {
             new EnvoiMessage().sendMessage(event, "La queue est vide.");
