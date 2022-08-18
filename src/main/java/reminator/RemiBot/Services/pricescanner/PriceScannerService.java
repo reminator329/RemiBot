@@ -24,7 +24,7 @@ public class PriceScannerService {
             return;
         }
         INSTANCE = new PriceScannerService(channel);
-        System.out.println("Created PriceScannerService");
+        channel.sendMessage("PriceScannerService enabled").queue();
     }
 
     public static PriceScannerService get() {
