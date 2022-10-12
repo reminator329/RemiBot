@@ -25,7 +25,7 @@ public enum Commands {
     ECOUTE_BILAL(new EcouteBilalCommand()),
     SPAM(new SpamCommand()),
     HELP(new HelpCommand()),
-    BILAL(new BilalCommand()),
+//    BILAL(new BilalCommand()),
     INCONNU(new InconnuCommand()),
     DEVINETTE(new DevinetteCommand()),
     AMONG_US(new AmongusCommand()),

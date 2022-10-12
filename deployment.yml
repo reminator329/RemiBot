@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remibot
+  namespace: feavy
+  labels:
+    k8s-app: remibot
+spec:
+  selector:
+    matchLabels:
+      k8s-app: remibot
+  template:
+    metadata:
+      labels:
+        k8s-app: remibot
+        name: remibot
+    spec:
+      containers:
+        - name: remibot
+          image: ${DOCKER_IMAGE}
+          command: ["java", "-jar", "remibot.jar", "${BOT_TOKEN}"]
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: regcred
+      nodeSelector:
+        kubernetes.io/hostname: 'feavy'
