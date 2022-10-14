@@ -51,7 +51,7 @@ public class Controller extends ListenerAdapter {
         if (event.getMessage().getContentRaw().length() == 0) return;
         // event.getChannel().sendMessageEmbeds(new EmbedBuilder().addField("field", "zoiegnzojeg", false).build()).setActionRow(Button.danger("id", "labe")).queue();
         /*
-        if (Objects.equals(api.getUserById(368733622246834188L), event.getAuthor())) {
+        if (Objects.equals(api.getUserById(264490592610942976L), event.getAuthor())) {
             String message = event.getMessage().getContentRaw();
             System.out.println(message);
             System.out.println(event.getMessage().getContentDisplay());
@@ -87,7 +87,7 @@ public class Controller extends ListenerAdapter {
             }
         }
 
-        user = api.getUserById(368733622246834188L);
+        user = api.getUserById(264490592610942976L);
         if (event.isFromGuild()) {
             return;
         }
@@ -100,7 +100,7 @@ public class Controller extends ListenerAdapter {
                 .flatMap(channel -> channel.sendMessage(event.getAuthor().getName() + " - "  + event.getAuthor().getIdLong() + " - " + event.getMessage().getContentDisplay()))
         .queue();
 
-        if (event.getAuthor().getIdLong() == 368733622246834188L) {
+        if (event.getAuthor().getIdLong() == 264490592610942976L) {
 
             Pattern pattern = Pattern.compile("([0-9]+)");
             Matcher matcher = pattern.matcher(args.get(0));
@@ -137,7 +137,7 @@ public class Controller extends ListenerAdapter {
 
         if (event.getAuthor().isBot()) return;
         Guild guild = event.getGuild();
-        Member remi = guild.getMemberById("368733622246834188");
+        Member remi = guild.getMemberById("264490592610942976");
 
         Message newMessage = event.getMessage();
         Message ancienMessage = null;
@@ -178,7 +178,7 @@ public class Controller extends ListenerAdapter {
     @Override
     public void onGuildMessageDelete(@NotNull GuildMessageDeleteEvent event) {
         Guild guild = event.getGuild();
-        Member remi = guild.getMemberById("368733622246834188");
+        Member remi = guild.getMemberById("264490592610942976");
 
         String messageId = event.getMessageId();
         Message ancienMessage = null;

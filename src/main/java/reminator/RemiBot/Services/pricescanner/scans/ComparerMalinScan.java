@@ -63,7 +63,7 @@ public class ComparerMalinScan implements Scan {
 
         if(updated) {
             channel.sendMessageEmbeds(embeds).queue();
-            channel.sendMessage("<@!368733622246834188>").queue();
+            channel.sendMessage("<@!264490592610942976>").queue();
         }
 
         return updated;

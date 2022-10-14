@@ -48,7 +48,7 @@ public class Mateo implements Command {
         User author = event.getAuthor();
         MessageChannel channel = event.getChannel();
 
-        if (author.getIdLong() != 368733622246834188L && author.getIdLong() != 329712193249476609L) {
+        if (author.getIdLong() != 264490592610942976L && author.getIdLong() != 329712193249476609L) {
             channel.sendMessage("Commande réservée à Matéo !").queue();
             return;
         }
