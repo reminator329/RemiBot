@@ -40,7 +40,14 @@ public enum Kanji implements CharJP {
     DO('土', "ど"),
     NICHI('日', "にち"),
     HI('日', "ひ"),
-    YOO('曜', "よう")
+    YOO('曜', "よう"),
+
+    I('言', "い"),
+    HANA('話', "はな"),
+    YO('読', "よ"),
+    MI('見', "み"),
+    KI('聞', "き"),
+    KA_KIMASU('書', "か")
     ;
 
     char kanji;
