@@ -6,10 +6,13 @@ import reminator.RemiBot.Services.pricescanner.update.ProductPriceUpdate;
 import reminator.RemiBot.utils.HTTPRequest;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PriceScan implements Scan {
+    @Serial
+    private static final long serialVersionUID = 2L;
     public static final Pattern NUMBER_PATTERN = Pattern.compile("[0-9]+( [0-9]+)?([,.][0-9]+)?");
 
     public Product product;

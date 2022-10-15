@@ -57,16 +57,16 @@ public class ReactionPersonneService extends ListenerAdapter {
             }
 
             if (user.getId().equals(Users.REMINATOR.getId())) {
-                emotes.addAll(List.of(new Emotes[]{Emotes.REMI, Emotes.SIDRA, Emotes.NATU, Emotes.DEOXYS, Emotes.chaudetIsWatchingU, Emotes.UPSSITECHED}));
+                emotes.addAll(List.of(Emotes.REMI, Emotes.SIDRA, Emotes.NATU, Emotes.DEOXYS, Emotes.chaudetIsWatchingU, Emotes.UPSSITECHED));
 
             }
 
             if (user.getId().equals(Users.ALPHATASH.getId())) {
-                emotes.addAll(List.of(new Emotes[]{Emotes.PENIS_CHAN, Emotes.PENIS, Emotes.CUM, Emotes.FAP, Emotes.PUSSY, Emotes.BJ, Emotes.UPSSITECHED, Emotes.THIBAULT}));
+                emotes.addAll(List.of(Emotes.PENIS_CHAN, Emotes.PENIS, Emotes.CUM, Emotes.FAP, Emotes.PUSSY, Emotes.BJ, Emotes.UPSSITECHED, Emotes.THIBAULT));
             }
 
             if (user.getId().equals(Users.REDECO.getId())) {
-                emotes.addAll(List.of(new Emotes[]{Emotes.BASTIEN, Emotes.UPSSITECHED, Emotes.HORNY}));
+                emotes.addAll(List.of(Emotes.BASTIEN, Emotes.UPSSITECHED, Emotes.HORNY));
             }
 
             if (user.getId().equals(Users.YAEL.getId())) {
@@ -74,23 +74,23 @@ public class ReactionPersonneService extends ListenerAdapter {
             }
 
             if (user.getId().equals(Users.DORIAN.getId())) {
-                emotes.addAll(List.of(new Emotes[]{Emotes.DORIAN, Emotes.UPSSITECHED}));
+                emotes.addAll(List.of(Emotes.DORIAN, Emotes.UPSSITECHED));
             }
 
             if (user.getId().equals(Users.ERAZZED.getId())) {
-                emotes.addAll(List.of(new Emotes[]{Emotes.KILLIAN, Emotes.UPSSITECHED}));
+                emotes.addAll(List.of(Emotes.KILLIAN, Emotes.UPSSITECHED));
             }
 
             if (user.getId().equals(Users.HARPIERAPACE.getId())) {
-                emotes.addAll(List.of(new Emotes[]{Emotes.TANGUY, Emotes.UPSSITECHED}));
+                emotes.addAll(List.of(Emotes.TANGUY, Emotes.UPSSITECHED));
             }
 
             if (user.getId().equals(Users.DREAMPLUME.getId())) {
-                emotes.addAll(List.of(new Emotes[]{Emotes.MATEO, Emotes.UPSSITECHED}));
+                emotes.addAll(List.of(Emotes.MATEO, Emotes.UPSSITECHED));
             }
 
             if (user.getId().equals(Users.SWAPHOLY.getId())) {
-                emotes.addAll(List.of(new Emotes[]{Emotes.THOMAS, Emotes.UPSSITECHED}));
+                emotes.addAll(List.of(Emotes.THOMAS, Emotes.UPSSITECHED));
             }
 
             if (user.getId().equals(Users.FEAVY.getId())) {
