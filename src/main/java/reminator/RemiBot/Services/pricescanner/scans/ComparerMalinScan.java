@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.List;
 
 public class ComparerMalinScan implements Scan {
-    private static final String URL = "https://www.comparez-malin.fr/informatique/pc-portable/?order=6&page=%d&p_max=1600&size_max=16&hdd_type=2&ssd_min=1000&ram_min=16384&ram_max=32768&cpuv[]=core-i5&cpuv[]=core-i7&cpuv[]=ryzen-7&cpuv[]=ryzen-9&gpuv[]=geforce-rtx-2060&gpuv[]=geforce-rtx-2070&gpuv[]=geforce-rtx-2080&gpuv[]=geforce-rtx-2070-super&gpuv[]=geforce-rtx-2080-super&gpuv[]=geforce-rtx-2060-max-q&gpuv[]=geforce-rtx-2070-max-q&gpuv[]=geforce-rtx-2080-max-q&gpuv[]=geforce-rtx-2070-super-max-q&gpuv[]=geforce-rtx-2080-super-max-q&gpuv[]=geforce-rtx-3050-max-q&gpuv[]=geforce-rtx-3050-ti-max-q&gpuv[]=geforce-rtx-3060-max-q&gpuv[]=geforce-rtx-3070-max-q&gpuv[]=geforce-rtx-3070-ti-max-q&gpuv[]=geforce-rtx-3080-max-q&gpuv[]=geforce-rtx-3080-ti-max-q&gpuv[]=geforce-rtx-3050&gpuv[]=geforce-rtx-3050-ti&gpuv[]=geforce-rtx-3060-max-p&gpuv[]=geforce-rtx-3070-max-p&gpuv[]=geforce-rtx-3070-ti-max-p";
+    private static final String URL = "https://www.comparez-malin.fr/informatique/tablette/?order=6&page=%d&p_max=1500&stylus=1";
 
     private Map<Integer, Product> products = new HashMap<>();
 
@@ -117,8 +117,10 @@ public class ComparerMalinScan implements Scan {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("**Comparer Malin** ("+products.size()+" produits)\n");
-        for (Product product : products.values()) {
-            builder.append(product.price).append("€ - ").append(product.name).append("\n");
+        if(products.size() < 30) {
+            for (Product product : products.values()) {
+                builder.append(product.price).append("€ - ").append(product.name).append("\n");
+            }
         }
         return builder.toString();
     }

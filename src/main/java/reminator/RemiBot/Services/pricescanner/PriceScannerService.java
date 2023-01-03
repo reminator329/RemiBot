@@ -42,9 +42,9 @@ public class PriceScannerService {
 
     private PriceScannerService(TextChannel channel) {
         this.channel = channel;
-        File file = new File("prices.bin");
+        File file = new File("prices3.bin");
         if (file.exists()) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("prices.bin"))) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("prices3.bin"))) {
                 this.scans = (List<Scan>) ois.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -106,7 +106,7 @@ public class PriceScannerService {
     }
 
     public void save() throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("prices.bin"));
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("prices3.bin"));
         oos.writeObject(scans);
         oos.close();
     }
