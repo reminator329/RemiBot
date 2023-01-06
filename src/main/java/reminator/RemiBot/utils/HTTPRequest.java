@@ -13,6 +13,10 @@ public class HTTPRequest {
     private final Map<String, String> parametersGET = new HashMap<>();
     private final Map<String, String> headers = new HashMap<>();
 
+    static {
+        CookieHandler.setDefault(new CookieManager(null, CookiePolicy.ACCEPT_ALL));
+    }
+
     public HTTPRequest(String url) {
         this.url = url;
     }
@@ -35,7 +39,8 @@ public class HTTPRequest {
         }
         HttpsURLConnection connection = newConnection(this.url+args);
         connection.setRequestMethod("GET");
-
+        System.out.println(connection.getResponseCode());
+        System.out.println(connection.getResponseMessage());
 
         return InputStreamUtils.readAsString(connection.getInputStream());
     }
@@ -62,6 +67,17 @@ public class HTTPRequest {
         for (Map.Entry<String, String> entry : headers.entrySet()) {
             connection.setRequestProperty(entry.getKey(), entry.getValue());
         }
+        connection.setRequestProperty("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
+        connection.setRequestProperty("accept-language", "fr");
+        connection.setRequestProperty("sec-ch-ua", "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Microsoft Edge\";v=\"108\"");
+        connection.setRequestProperty("sec-ch-ua-mobile", "?0");
+        connection.setRequestProperty("sec-ch-ua-platform", "\"Windows\"");
+        connection.setRequestProperty("sec-fetch-dest", "document");
+        connection.setRequestProperty("sec-fetch-mode", "navigate");
+        connection.setRequestProperty("sec-fetch-site", "none");
+        connection.setRequestProperty("sec-fetch-user", "?1");
+        connection.setRequestProperty("upgrade-insecure-requests", "1");
+        connection.setRequestProperty("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54");
         return connection;
     }
 }
