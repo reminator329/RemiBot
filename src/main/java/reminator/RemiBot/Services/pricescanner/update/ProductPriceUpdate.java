@@ -17,7 +17,8 @@ public class ProductPriceUpdate implements ProductUpdate {
 
     @Override
     public boolean hasChange() {
-        return previous != next;
+        // Check that difference between previous and next price is more than 5%
+        return Math.abs(previous - next) / previous > 0.05;
     }
 
     @Override

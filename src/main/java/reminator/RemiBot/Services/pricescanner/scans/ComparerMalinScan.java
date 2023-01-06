@@ -16,8 +16,7 @@ import java.util.*;
 import java.util.List;
 
 public class ComparerMalinScan implements Scan {
-    private static final String URL = "https://www.comparez-malin.fr/informatique/tablette/?order=6&page=%d&p_max=1500&stylus=1";
-
+    private static final String URL = "https://www.comparez-malin.fr/informatique/tablette/?order=6&page=%d&p_max=1500&stylus=1&brand[]=asus&brand[]=honor&brand[]=hp&brand[]=huawei&brand[]=lenovo&brand[]=microsoft&brand[]=oppo&brand[]=realme&brand[]=samsung&brand[]=xiaomi";
     private Map<Integer, Product> products = new HashMap<>();
 
     @Override
@@ -28,6 +27,8 @@ public class ComparerMalinScan implements Scan {
 
         List<MessageEmbed> embeds = new ArrayList<>();
         Map<Integer, Product> products = getAllProducts();
+
+        List<ProductUpdate> updates = new ArrayList<>();
 
         for (Map.Entry<Integer, Product> entry : products.entrySet()) {
             int id = entry.getKey();
@@ -44,6 +45,7 @@ public class ComparerMalinScan implements Scan {
                 if(update.hasChange()) {
                     embeds.add(update.toEmbed());
                     updated = true;
+                    updates.add(update);
                 }
             }
         }
@@ -62,7 +64,9 @@ public class ComparerMalinScan implements Scan {
         }
 
         if(updated) {
-            channel.sendMessageEmbeds(embeds).queue();
+            for(int i = 0; i < embeds.size(); i += 10) {
+                channel.sendMessageEmbeds(embeds.subList(i, Math.min(i+10, embeds.size()))).queue();
+            }
             channel.sendMessage("<@!264490592610942976>").queue();
         }
 

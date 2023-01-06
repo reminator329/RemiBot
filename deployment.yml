@@ -20,6 +20,13 @@ spec:
           image: ${DOCKER_IMAGE}
           command: ["java", "-jar", "remibot.jar", "${BOT_TOKEN}"]
           imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /app/data
+              name: remibot-data
+      volumes:
+        - name: remibot-data
+          hostPath:
+            path: /mnt/remibot
       imagePullSecrets:
         - name: regcred
       nodeSelector:

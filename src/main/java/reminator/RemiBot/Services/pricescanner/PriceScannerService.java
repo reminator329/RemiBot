@@ -42,13 +42,15 @@ public class PriceScannerService {
 
     private PriceScannerService(TextChannel channel) {
         this.channel = channel;
-        File file = new File("prices3.bin");
+        File file = new File("data/prices.bin");
         if (file.exists()) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("prices3.bin"))) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("data/prices.bin"))) {
                 this.scans = (List<Scan>) ois.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        }else{
+            file.getParentFile().mkdirs();
         }
 
         if(scans.isEmpty() || !(scans.get(0) instanceof ComparerMalinScan)) {
@@ -106,7 +108,7 @@ public class PriceScannerService {
     }
 
     public void save() throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("prices3.bin"));
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("data/prices.bin"));
         oos.writeObject(scans);
         oos.close();
     }
