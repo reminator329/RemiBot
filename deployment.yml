@@ -30,4 +30,4 @@ spec:
       imagePullSecrets:
         - name: regcred
       nodeSelector:
-        kubernetes.io/hostname: 'feavy'
+        kubernetes.io/hostname: 'oracle-paris'
