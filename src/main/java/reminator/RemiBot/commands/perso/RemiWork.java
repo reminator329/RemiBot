@@ -1,7 +1,7 @@
 package reminator.RemiBot.commands.perso;
 
 import de.svenjacobs.loremipsum.LoremIpsum;
-import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import reminator.RemiBot.Services.reactionpersonne.Users;
 import reminator.RemiBot.commands.manager.Command;

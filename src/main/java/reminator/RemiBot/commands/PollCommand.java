@@ -1,10 +1,11 @@
 package reminator.RemiBot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -108,11 +109,10 @@ public class PollCommand implements Command {
 
                 String msg;
 
-                if (!event.getReactionEmote().isEmoji()) {
-                    msg = "<:" + event.getReactionEmote().getAsReactionCode() + ">";
-                } else {
-                    msg = event.getReactionEmote().getAsReactionCode();
-                }
+                msg = "<:" + event.getEmoji().getAsReactionCode() + ">";
+//                } else {
+//                    msg = event.getEmoji().getAsReactionCode();
+//                }
 
                 emojis.add(msg);
 
@@ -194,9 +194,9 @@ public class PollCommand implements Command {
                     for (int i = 0; i < 20 && i < emojis.size(); i++) {
                         String emoji = emojis.get(i);
                         if (emoji.startsWith("<:")) {
-                            reactPoll.addReaction(emoji.substring(2, emoji.length() - 1)).queue();
+                            reactPoll.addReaction(Emoji.fromFormatted(emoji.substring(2, emoji.length() - 1))).queue();
                         } else {
-                            reactPoll.addReaction(emoji).queue();
+                            reactPoll.addReaction(Emoji.fromUnicode(emoji)).queue();
                         }
                     }
                 });
@@ -206,9 +206,9 @@ public class PollCommand implements Command {
                         for (int j = finalI; j < finalI + 20 && j < emojis.size(); j++) {
                             String emoji = emojis.get(j);
                             if (emoji.startsWith("<:")) {
-                                reactPoll.addReaction(emoji.substring(2, emoji.length() - 1)).queue();
+                                reactPoll.addReaction(Emoji.fromFormatted(emoji.substring(2, emoji.length() - 1))).queue();
                             } else {
-                                reactPoll.addReaction(emoji).queue();
+                                reactPoll.addReaction(Emoji.fromUnicode(emoji)).queue();
                             }
                         }
                     });

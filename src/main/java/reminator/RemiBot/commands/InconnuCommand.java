@@ -1,11 +1,10 @@
 package reminator.RemiBot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.commands.enums.Category;
 import reminator.RemiBot.commands.manager.Command;
@@ -89,7 +88,7 @@ public class InconnuCommand implements Command {
                         ? "Félicitations !!!! Tu as deviné la personne ! :partying_face:"
                         : "Euuuh non c'est pas ça ! Essaie encore ! :slight_smile:";
 
-                channel.sendMessage(new MessageBuilder().append(feedback).build()).queue();
+                channel.sendMessage(new MessageCreateBuilder().addContent(feedback).build()).queue();
 
                 event.getJDA().removeEventListener(this);
             }

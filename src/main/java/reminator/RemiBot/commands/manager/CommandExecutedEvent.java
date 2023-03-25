@@ -2,6 +2,8 @@ package reminator.RemiBot.commands.manager;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +28,7 @@ public class CommandExecutedEvent {
     }
 
     public TextChannel getTextChannel() {
-        return event.getTextChannel();
+        return event.getChannel().asTextChannel();
     }
 
     public boolean isFromGuild() {

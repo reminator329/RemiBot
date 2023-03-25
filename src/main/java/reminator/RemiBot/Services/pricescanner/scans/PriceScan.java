@@ -1,6 +1,6 @@
 package reminator.RemiBot.Services.pricescanner.scans;
 
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import reminator.RemiBot.Services.pricescanner.Product;
 import reminator.RemiBot.Services.pricescanner.update.ProductPriceUpdate;
 import reminator.RemiBot.utils.HTTPRequest;

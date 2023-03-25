@@ -1,10 +1,8 @@
 package reminator.RemiBot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import org.jetbrains.annotations.NotNull;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
+import net.dv8tion.jda.api.utils.FileUpload;
 import reminator.RemiBot.commands.enums.Category;
 import reminator.RemiBot.commands.manager.Command;
 import reminator.RemiBot.commands.manager.CommandExecutedEvent;
@@ -51,7 +49,7 @@ public class BilalCommand implements Command {
     @Override
     public void execute(CommandExecutedEvent event) {
 
-        MessageChannel channel = event.getChannel();
+        MessageChannel channel = event.getTextChannel();
 
         /*
         if (!event.isFromGuild()) {
@@ -66,7 +64,7 @@ public class BilalCommand implements Command {
             file = new FileInputStream(randomImagePicker.getRandomImage());
             embed.setImage("attachment://bilal.png") // we specify this in sendFile as "cat.png"
                     .setDescription("BILAAAL :heart:");
-            channel.sendFile(file, "bilal.png").setEmbeds(embed.build()).queue();
+            channel.sendFiles(FileUpload.fromData(file, "bilal.png")).setEmbeds(embed.build()).queue();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

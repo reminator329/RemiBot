@@ -1,32 +1,31 @@
 package reminator.RemiBot.buttons;
 
-import net.dv8tion.jda.api.entities.Emoji;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.interactions.components.ButtonStyle;
-import net.dv8tion.jda.api.utils.data.DataObject;
-import net.dv8tion.jda.internal.interactions.ButtonImpl;
+import net.dv8tion.jda.api.entities.emoji.EmojiUnion;
+import net.dv8tion.jda.api.entities.emoji.UnicodeEmoji;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.interactions.components.buttons.ButtonStyle;
+import net.dv8tion.jda.internal.interactions.component.ButtonImpl;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import reminator.RemiBot.utils.EnvoiMessage;
 
 public abstract class Button extends ButtonImpl {
 
     private final String id;
     private final String label;
-    private final Emoji emoji;
+    private final EmojiUnion emoji;
 
-    public Button(String id, String label, Emoji emoji) {
+    public Button(String id, String label, UnicodeEmoji emoji) {
         super(id, label, ButtonStyle.SECONDARY, false, emoji);
         this.id = id;
         this.label = label;
-        this.emoji = emoji;
+        this.emoji = (EmojiUnion) emoji;
     }
 
     public String getLabel() {
         return label;
     }
 
-    public Emoji getEmoji() {
+    public EmojiUnion getEmoji() {
         return emoji;
     }
 
@@ -34,7 +33,7 @@ public abstract class Button extends ButtonImpl {
         return id;
     }
 
-    public void onClick(@NotNull ButtonClickEvent event) {
+    public void onClick(@NotNull ButtonInteractionEvent event) {
         new EnvoiMessage().sendGuild(event.getChannel(), "Ce bouton est en cours de développement.");
     }
 }

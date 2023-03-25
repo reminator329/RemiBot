@@ -1,8 +1,5 @@
 package reminator.RemiBot.buttons;
 
-import net.dv8tion.jda.api.entities.Emoji;
-import reminator.RemiBot.Services.reactionpersonne.Emotes;
-
 import javax.annotation.Nullable;
 
 public enum Buttons {

@@ -1,8 +1,7 @@
 package reminator.RemiBot.buttons;
 
-import net.dv8tion.jda.api.entities.Emoji;
-import net.dv8tion.jda.api.interactions.components.Button;
 import net.dv8tion.jda.api.interactions.components.Component;
+import net.dv8tion.jda.api.interactions.components.ItemComponent;
 import reminator.RemiBot.commands.music.lavaplayer.PlayingStatus;
 
 import java.util.ArrayList;
@@ -16,10 +15,10 @@ public class BotButtons {
         playingStatus = PlayingStatus.PAUSE;
     }
 
-    public List<List<Component>> NOW_PLAYING() {
-        List<List<Component>> buttons = new ArrayList<>();
+    public List<List<ItemComponent>> NOW_PLAYING() {
+        List<List<ItemComponent>> buttons = new ArrayList<>();
 
-        List<Component> buttons1 = new ArrayList<>();
+        List<ItemComponent> buttons1 = new ArrayList<>();
         buttons1.add(Buttons.BACK.getButton());
         switch (playingStatus) {
             case PLAY -> buttons1.add(Buttons.PAUSE.getButton());
@@ -27,7 +26,7 @@ public class BotButtons {
         }
         buttons1.add(Buttons.SKIP.getButton());
 
-        List<Component> buttons2 = new ArrayList<>();
+        List<ItemComponent> buttons2 = new ArrayList<>();
         buttons2.add(Buttons.SHUFFLE.getButton());
         buttons2.add(Buttons.CLEAR.getButton());
 

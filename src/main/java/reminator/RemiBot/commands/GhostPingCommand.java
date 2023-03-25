@@ -1,9 +1,8 @@
 package reminator.RemiBot.commands;
 
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.requests.restaction.MessageAction;
-import org.jetbrains.annotations.NotNull;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import reminator.RemiBot.commands.enums.Category;
 import reminator.RemiBot.commands.manager.Command;
 import reminator.RemiBot.commands.manager.CommandExecutedEvent;
@@ -60,7 +59,7 @@ public class GhostPingCommand implements Command {
             }
         }
         for (TextChannel c : guild.getTextChannels()) {
-            MessageAction action = c.sendMessage(message);
+            MessageCreateAction action = c.sendMessage(message);
             action.flatMap(Message::delete).queue();
         }
     }

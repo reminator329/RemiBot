@@ -2,8 +2,7 @@ package reminator.RemiBot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import org.jetbrains.annotations.NotNull;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import org.json.JSONObject;
 import reminator.RemiBot.commands.enums.Category;
 import reminator.RemiBot.commands.manager.Command;

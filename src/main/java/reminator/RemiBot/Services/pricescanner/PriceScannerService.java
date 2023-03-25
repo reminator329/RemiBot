@@ -1,6 +1,6 @@
 package reminator.RemiBot.Services.pricescanner;
 
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import reminator.RemiBot.Services.pricescanner.scans.ComparerMalinScan;
 import reminator.RemiBot.Services.pricescanner.scans.Scan;
 

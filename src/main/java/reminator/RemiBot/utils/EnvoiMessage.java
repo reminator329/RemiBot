@@ -1,22 +1,19 @@
 package reminator.RemiBot.utils;
 
-import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.interactions.components.ActionRow;
-import net.dv8tion.jda.api.interactions.components.Button;
-import net.dv8tion.jda.api.interactions.components.Component;
-import net.dv8tion.jda.api.requests.restaction.MessageAction;
+import net.dv8tion.jda.api.interactions.components.ItemComponent;
+import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import reminator.RemiBot.commands.manager.CommandExecutedEvent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class EnvoiMessage {
 
-    private final List<ActionRow> components;
+    private final List<List<ItemComponent>> components;
 
     public EnvoiMessage() {
          components = new ArrayList<>();
@@ -69,24 +66,24 @@ public class EnvoiMessage {
     }
 
     public void sendGuild(MessageChannel messageChannel, String message) {
-        MessageAction messageAction = messageChannel.sendMessage(message);
+        MessageCreateAction messageAction = messageChannel.sendMessage(message);
         addButtons(messageAction).queue();
     }
 
     public void sendGuild(MessageChannel messageChannel, MessageEmbed messageEmbed) {
-        MessageAction messageAction = messageChannel.sendMessageEmbeds(messageEmbed);
+        MessageCreateAction messageAction = messageChannel.sendMessageEmbeds(messageEmbed);
         addButtons(messageAction).queue();
     }
 
-    private MessageAction addButtons(MessageAction message) {
-        message = message.setActionRows(this.components);
+    private MessageCreateAction addButtons(MessageCreateAction message) {
+        for(List<ItemComponent> component : components) {
+            message = message.addActionRow(component);
+        }
         return message;
     }
 
-    public EnvoiMessage withComponents(List<List<Component>> components) {
-        for (List<Component> l : components) {
-            this.components.add(ActionRow.of(l));
-        }
+    public EnvoiMessage withComponents(List<List<ItemComponent>> components) {
+        this.components.addAll(components);
         return this;
     }
 }

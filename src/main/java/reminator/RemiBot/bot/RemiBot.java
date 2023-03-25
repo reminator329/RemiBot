@@ -50,7 +50,7 @@ public class RemiBot {
         token = arguments[index];
         index++;
 
-        api = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_EMOJIS, GatewayIntent.GUILD_VOICE_STATES).enableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE).build();
+        api = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_EMOJIS_AND_STICKERS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.MESSAGE_CONTENT).enableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE).build();
         api.awaitReady();
 
         api.addEventListener(new Controller(api));
@@ -76,15 +76,6 @@ public class RemiBot {
             e.printStackTrace();
         }
 
-
-
-
-        CommandListUpdateAction commands = api.updateCommands()
-                .addCommands(
-                        new CommandData("pingremi", "Retourne pong")
-                                .addOption(OptionType.BOOLEAN, "ephemeral", "Mettre à true pour que personne de voit la réponse.", false)
-                );
-        commands.queue();
 
         MotDuJourService service = new MotDuJourService(api);
         service.start();

@@ -1,10 +1,6 @@
 package reminator.RemiBot.commands.manager;
 
-import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import org.jetbrains.annotations.NotNull;
 import reminator.RemiBot.commands.enums.Category;
 import reminator.RemiBot.bot.RemiBot;
 

@@ -1,9 +1,9 @@
 package reminator.RemiBot.Services.reactionpersonne;
 
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -37,7 +37,7 @@ public class ReactionPersonneService extends ListenerAdapter {
         int mois = new Date().getMonth();
 
         if (jour == 1 && mois == 3) {
-            message.addReaction("\uD83D\uDC1F").queue();
+            message.addReaction(Emoji.fromUnicode("\uD83D\uDC1F")).queue();
         }
 
 
@@ -98,7 +98,7 @@ public class ReactionPersonneService extends ListenerAdapter {
             }
 
             int r = random.nextInt(emotes.size());
-            Emote emote = api.getEmoteCache().getElementById(emotes.get(r).getId());
+            Emoji emote = api.getEmojiCache().getElementById(emotes.get(r).getId());
             assert emote != null;
             message.addReaction(emote).queue();
         }
