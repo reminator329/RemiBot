@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
+import reminator.RemiBot.Services.reactionpersonne.Users;
 import reminator.RemiBot.commands.enums.Category;
 import reminator.RemiBot.bot.BotEmbed;
 import reminator.RemiBot.commands.manager.Command;
@@ -43,6 +44,9 @@ public class PingCommand implements Command {
         builder.setTitle("Pong !");
 
         new EnvoiMessage().sendMessage(event, builder.build());
+        if(event.getMember().getId().equals(Users.REMINATOR.getId())) {
+            event.getMessage().reply("Ceci est une fonctionnalité ***PREMIUM***").queue();
+        }
 
         System.out.println(args);
 
