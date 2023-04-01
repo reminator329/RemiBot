@@ -36,9 +36,9 @@ public class ReactionPersonneService extends ListenerAdapter {
         int jour = new Date().getDate();
         int mois = new Date().getMonth();
 
-        if (jour == 1 && mois == 3) {
-            message.addReaction(Emoji.fromUnicode("\uD83D\uDC1F")).queue();
-        }
+//        if (jour == 1 && mois == 3) {
+//            message.addReaction(Emoji.fromUnicode("\uD83D\uDC1F")).queue();
+//        }
 
 
         if (random.nextInt(100) == 14) {
