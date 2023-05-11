@@ -6,6 +6,7 @@ import reminator.RemiBot.commands.Japonais.HiraganaCommand;
 import reminator.RemiBot.commands.Japonais.KatakanaCommand;
 import reminator.RemiBot.commands.Japonais.VocabulaireCommand;
 import reminator.RemiBot.commands.admin.RemoveRoleCommand;
+import reminator.RemiBot.commands.birthday.BirthdayCommand;
 import reminator.RemiBot.commands.manager.Command;
 import reminator.RemiBot.commands.music.*;
 import reminator.RemiBot.commands.perso.RemiSpam;
@@ -58,7 +59,8 @@ public enum Commands {
     QUEUE(new QueueCommand()),
     SHUFFLE(new ShuffleCommand()),
     ECOUTE_MUSIQUE(new EcouteMusiqueCommand()),
-    REMOVE_ROLE(new RemoveRoleCommand())
+    REMOVE_ROLE(new RemoveRoleCommand()),
+    BIRTHDAY(new BirthdayCommand()),
     ;
 
     private final Command command;

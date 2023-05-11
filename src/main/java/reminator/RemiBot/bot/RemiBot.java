@@ -8,8 +8,8 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
+import reminator.RemiBot.Services.birthday.BirthdayService;
 import reminator.RemiBot.Services.pricescanner.PriceScannerService;
-import reminator.RemiBot.Services.reactionpersonne.Users;
 import reminator.RemiBot.buttons.ButtonClickListener;
 import reminator.RemiBot.commands.Devoir.Model.BDDevoir;
 import reminator.RemiBot.commands.Devoir.Model.BDDevoirJson;
@@ -58,6 +58,7 @@ public class RemiBot {
         service.start();
 
         PriceScannerService.init(api.getTextChannelById("1009883803575136306"));
+        BirthdayService.init(api.getTextChannelById("840301744445587476"));
 
         /* TODO ajouter un timer pour chaque élève grace à l'api (getUserById
         BDDevoir bdDevoir = BDDevoirJson.getInstance();
