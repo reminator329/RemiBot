@@ -6,12 +6,8 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-import reminator.RemiBot.Services.ChangePseudoService;
 import reminator.RemiBot.Services.pricescanner.PriceScannerService;
 import reminator.RemiBot.Services.reactionpersonne.Users;
 import reminator.RemiBot.buttons.ButtonClickListener;
@@ -26,11 +22,8 @@ import reminator.RemiBot.Services.reactionpersonne.ReactionPersonneService;
 
 
 import java.awt.*;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.*;
-import java.util.List;
 
 public class RemiBot {
 
@@ -60,30 +53,9 @@ public class RemiBot {
         api.addEventListener(new AprilFoolService());
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
 
-        try {
-            VocabulaireParserCSV.getInstance().setURL(arguments[index]);
-            index++;
-            mdpFB = arguments[index];
-            index++;
-            Users.REMINATOR.setAuthorization(arguments[index]);
-            index++;
-            Users.MOUMOUNI.setAuthorization(arguments[index]);
-            index++;
-            Users.DREAMPLUME.setAuthorization(arguments[index]);
-            index++;
-            Users.DORIAN.setAuthorization(arguments[index]);
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-
 
         MotDuJourService service = new MotDuJourService(api);
         service.start();
-        try {
-            new ChangePseudoService().start();
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
 
         PriceScannerService.init(api.getTextChannelById("1009883803575136306"));
 
