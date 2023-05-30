@@ -45,7 +45,7 @@ public class BirthdayService {
             public void run() {
                 check();
             }
-        }, tomorrowMidday(), 1000*60*60*24);
+        }, startDate(), 1000*60*60*24);
     }
 
     private void check() {
@@ -74,14 +74,14 @@ public class BirthdayService {
         }
     }
 
-    private static Date tomorrowMidday(){
+    private static Date startDate(){
         Calendar tomorrow = new GregorianCalendar();
         tomorrow.add(Calendar.DATE, 1);
         Calendar result = new GregorianCalendar(
                 tomorrow.get(Calendar.YEAR),
                 tomorrow.get(Calendar.MONTH),
                 tomorrow.get(Calendar.DATE),
-                12,
+                8,
                 0
         );
         return result.getTime();
