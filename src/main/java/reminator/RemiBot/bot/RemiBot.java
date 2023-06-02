@@ -57,7 +57,7 @@ public class RemiBot {
         MotDuJourService service = new MotDuJourService(api);
         service.start();
 
-        PriceScannerService.init(api.getTextChannelById("1009883803575136306"));
+//        PriceScannerService.init(api.getTextChannelById("1009883803575136306"));
         BirthdayService.init(api.getTextChannelById("840301744445587476"));
 
         /* TODO ajouter un timer pour chaque élève grace à l'api (getUserById
