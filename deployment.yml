@@ -20,6 +20,9 @@ spec:
           image: ${DOCKER_IMAGE}
           command: ["java", "-jar", "remibot.jar", "${BOT_TOKEN}"]
           imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: discord-openai-secret
           volumeMounts:
             - mountPath: /app/data
               name: remibot-data

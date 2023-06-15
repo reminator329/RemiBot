@@ -37,14 +37,8 @@ public class ReminderService {
         LocalTime now = LocalTime.now();
         for(Reminder reminder : reminders) {
             if (reminder.getTime().getMinute() == now.getMinute() && reminder.getTime().getHour() == now.getHour()) {
-                String message = pickRandom(reminder.getMessages());
-                message += " <@" + reminder.getUserId() + ">";
-                channel.sendMessage(message).queue();
+                reminder.getMessage().thenAccept(s -> channel.sendMessage(s).queue());
             }
         }
-    }
-
-    private String pickRandom(List<String> messages) {
-        return messages.get(new Random().nextInt(messages.size()));
     }
 }

@@ -13,6 +13,12 @@ version '1.0'
 repositories {
     mavenCentral() // for transitive dependencies
     maven {
+        url 'https://jitpack.io'
+        metadataSources {
+            artifact() //Look directly for artifact
+        }
+    }
+    maven {
         name 'm2-dv8tion'
         url 'https://m2.dv8tion.net/releases'
     }
@@ -43,10 +49,10 @@ dependencies {
     implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.3.0'
     implementation 'junit:junit:4.13.1'
 
-
+    implementation 'com.github.Feavy:java-simple-openai:395ffcfa8f'
 }
 
 compileJava.options.encoding = 'UTF-8'
 
-sourceCompatibility = 1.16
-targetCompatibility = 1.16
+sourceCompatibility = 1.17
+targetCompatibility = 1.17
