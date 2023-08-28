@@ -58,7 +58,7 @@ public class RemiBot {
 
 //        PriceScannerService.init(api.getTextChannelById("1009883803575136306"));
         BirthdayService.init(api.getTextChannelById("840301744445587476"));
-        ReminderService.init(api.getTextChannelById("842841293548683294"));
+        //ReminderService.init(api.getTextChannelById("842841293548683294"));
 
         /* TODO ajouter un timer pour chaque élève grace à l'api (getUserById
         BDDevoir bdDevoir = BDDevoirJson.getInstance();
