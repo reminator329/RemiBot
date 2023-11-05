@@ -14,6 +14,7 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import reminator.RemiBot.Services.ChangePseudoService;
 import reminator.RemiBot.Services.pricescanner.PriceScannerService;
 import reminator.RemiBot.Services.reactionpersonne.Users;
+import reminator.RemiBot.Services.repondeur.RepondeurService;
 import reminator.RemiBot.buttons.ButtonClickListener;
 import reminator.RemiBot.commands.Devoir.Model.BDDevoir;
 import reminator.RemiBot.commands.Devoir.Model.BDDevoirJson;
@@ -56,7 +57,7 @@ public class RemiBot {
         api.addEventListener(new Controller(api));
         api.addEventListener(new ButtonClickListener());
         api.addEventListener(new ReactionPersonneService(api));
-        // api.addEventListener(new RepondeurService(api));
+        api.addEventListener(new RepondeurService(api));
         api.addEventListener(new AprilFoolService());
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
 
