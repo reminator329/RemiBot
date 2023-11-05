@@ -45,7 +45,7 @@ jobs:
         SSH_KEY: ${{ secrets.SSH_KEY }}
         SSH_HOST: ${{ secrets.SSH_HOST }}
     - name: Stop the bot
-      run: ssh azure "sudo pkill -f 'java -jar'"
+      run: ssh azure "sudo pkill -f 'java -jar /RemiBot/'"
     - name: Add credentials
       run: |
         ssh azure 'echo "${{ secrets.CREDENTIALS }}" > /RemiBot/serviceAccountKey.json'
