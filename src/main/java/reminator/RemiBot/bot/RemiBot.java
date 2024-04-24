@@ -57,7 +57,7 @@ public class RemiBot {
         api.addEventListener(new Controller(api));
         api.addEventListener(new ButtonClickListener());
         api.addEventListener(new ReactionPersonneService(api));
-        api.addEventListener(new RepondeurService(api));
+        // api.addEventListener(new RepondeurService(api));
         api.addEventListener(new AprilFoolService());
         api.getPresence().setPresence(OnlineStatus.ONLINE, Activity.watching("r!help"));
 
