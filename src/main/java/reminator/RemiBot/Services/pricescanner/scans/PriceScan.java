@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class PriceScan implements Scan {
     @Serial
     private static final long serialVersionUID = 2L;
-    public static final Pattern NUMBER_PATTERN = Pattern.compile("[0-9]+( [0-9]+)?([,.][0-9]+)?");
+    public static final Pattern NUMBER_PATTERN = Pattern.compile("[0-9]+([ .][0-9]{3})*([,.][0-9]+)?");
 
     public Product product;
     public String mention;
@@ -39,7 +39,9 @@ public class PriceScan implements Scan {
                 if(price > 100) {
                     return price;
                 }
-                price = Float.parseFloat(m.group(0).replaceAll("\\.", "").replaceAll(" ", ""));
+            }catch (Exception ignored) { }
+            try {
+                float price = Float.parseFloat(m.group(0).replaceAll("\\.", "").replaceAll(",", ".").replaceAll(" ", ""));
                 if(price > 100) {
                     return price;
                 }
