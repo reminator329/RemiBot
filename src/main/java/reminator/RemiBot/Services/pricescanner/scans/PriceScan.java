@@ -37,6 +37,10 @@ public class PriceScan implements Scan {
                 if(price > 100) {
                     return price;
                 }
+                price = Float.parseFloat(m.group(0).replaceAll("\\.", "").replaceAll(" ", ""));
+                if(price > 100) {
+                    return price;
+                }
             }catch (Exception ignored) { }
         }
 
