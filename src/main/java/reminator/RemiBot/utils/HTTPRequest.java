@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class HTTPRequest {
+    private static final String COMMON_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0";
+
     private final String url;
 
     private final Map<String, String> parametersGET = new HashMap<>();
@@ -19,6 +21,11 @@ public class HTTPRequest {
 
     public HTTPRequest withHeader(String header, String value) {
         headers.put(header, value);
+        return this;
+    }
+
+    public HTTPRequest withCommonUserAgent() {
+        headers.put("User-Agent", COMMON_USER_AGENT);
         return this;
     }
 

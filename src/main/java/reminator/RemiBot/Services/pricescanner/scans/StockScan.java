@@ -3,7 +3,7 @@ package reminator.RemiBot.Services.pricescanner.scans;
 import net.dv8tion.jda.api.entities.TextChannel;
 import reminator.RemiBot.Services.pricescanner.Product;
 import reminator.RemiBot.Services.pricescanner.update.ProductUpdate;
-import reminator.RemiBot.music.HTTPRequest;
+import reminator.RemiBot.utils.HTTPRequest;
 
 import java.io.IOException;
 
@@ -22,7 +22,9 @@ public class StockScan implements Scan {
     }
 
     public boolean inStock(String url) throws IOException {
-        boolean found = new HTTPRequest(url).GET().contains(string);
+        boolean found = new HTTPRequest(url)
+                .withCommonUserAgent()
+                .GET().contains(string);
         return (found && shouldFind || !found && !shouldFind);
     }
 

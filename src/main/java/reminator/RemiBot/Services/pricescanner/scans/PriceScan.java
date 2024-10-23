@@ -26,7 +26,9 @@ public class PriceScan implements Scan {
     }
 
     public float retrievePrice(String url) throws IOException {
-        String rep = new HTTPRequest(url).GET();
+        String rep = new HTTPRequest(url)
+                .withCommonUserAgent()
+                .GET();
         String s = rep.split(filter+"[^0-9]*")[1];
 
         Matcher m = NUMBER_PATTERN.matcher(s);
