@@ -51,10 +51,6 @@ public class PriceScannerService {
             }
         }
 
-        if(scans.isEmpty() || !(scans.get(0) instanceof ComparerMalinScan)) {
-            scans.add(0, new ComparerMalinScan());
-        }
-
         System.out.println("[PriceScannerService] intialized");
 
         new Timer().schedule(new TimerTask() {
